@@ -2,12 +2,13 @@ package com.petmatz.api.sosboard;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.pet.dto.PetResponse;
-import com.petmatz.api.sosboard.dto.SosBoardCreateRequestDto;
-import com.petmatz.api.sosboard.dto.SosBoardResponseDto;
+import com.petmatz.api.sosboard.dto.SosBoardCreateRequest;
+import com.petmatz.api.sosboard.dto.LegercySosBoardResponse;
+import com.petmatz.api.sosboard.dto.SosBoardResponse;
 import com.petmatz.common.security.utils.JwtExtractProvider;
-import com.petmatz.domain.sosboard.SosBoardService;
-import com.petmatz.domain.sosboard.dto.PageResponseDto;
-import com.petmatz.domain.sosboard.dto.SosBoardServiceDto;
+import com.petmatz.domain.sosboard.dto.PageResponse;
+import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
+import com.petmatz.domain.sosboard.dto.SosBoardInfo;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -24,7 +25,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SosBoardController {
 
-    private final SosBoardService sosBoardService;
+    private final com.petmatz.domain.sosboard.SosBoardService sosBoardService;
     private final UserRepository userRepository;
     private final JwtExtractProvider jwtExtractProvider;
 
@@ -36,53 +37,38 @@ public class SosBoardController {
             @Parameter(name = "pageNum", description = "조회할 페이지 번호 (1부터 시작)", example = "1"),
             @Parameter(name = "size", description = "가져올 게시글 개수", example = "10")
     })
-    public Response<PageResponseDto<SosBoardResponseDto>> getAllSosBoards(
+    public Response<SosBoardResponse> getAllSosBoards(
             @RequestParam(required = false) String region,
             @RequestParam(defaultValue = "1") int pageNum, // 페이지 번호 기본값 1
             @RequestParam(defaultValue = "10") int size) { // 페이지 크기 기본값 10
 
         int adjustedPage = pageNum - 1;
-
         // 서비스 호출
-        PageResponseDto<SosBoardServiceDto> serviceDtoPageResponse = sosBoardService.getAllSosBoards(region, adjustedPage, size);
-
-        // SosBoardServiceDto → SosBoardResponseDto 변환
-        List<SosBoardResponseDto> responseDtos = serviceDtoPageResponse.content().stream()
-                .map(SosBoardResponseDto::fromServiceDto) // 변환 메서드 활용
-                .collect(Collectors.toList());
-
-        // PageResponseDto 변환
-        PageResponseDto<SosBoardResponseDto> responseDtoPageResponse = new PageResponseDto<>(
-                responseDtos,
-                serviceDtoPageResponse.totalCount(),
-                serviceDtoPageResponse.totalPages(),
-                serviceDtoPageResponse.currentPage()
-        );
-
-        return Response.success(responseDtoPageResponse);
+        SosBoardInfo serviceDtoPageResponse = sosBoardService.getAllSosBoards(region, adjustedPage, size);
+        SosBoardResponse sosBoardResponse = SosBoardResponse.of(serviceDtoPageResponse);
+        return Response.success(sosBoardResponse);
     }
 
 
     // 2. 돌봄 SOS 페이지 게시글 작성
     @PostMapping
     @Operation(summary = "SOS 게시글 작성", description = "SOS 게시판에 새로운 게시글을 작성합니다.")
-    public Response<SosBoardResponseDto> createSosBoard(@RequestBody SosBoardCreateRequestDto requestDto) {
+    public Response<LegercySosBoardResponse> createSosBoard(@RequestBody SosBoardCreateRequest requestDto) {
         User user = getAuthenticatedUser(); // 인증된 사용자 가져오기
-        SosBoardServiceDto serviceDto = requestDto.toServiceDto(user); // 프레젠테이션 DTO → 서비스 DTO 변환
-        // 서비스 계층 호출
-        SosBoardServiceDto createdBoard = sosBoardService.createSosBoard(serviceDto);
-        SosBoardResponseDto responseDto = SosBoardResponseDto.fromServiceDto(createdBoard);
-        return Response.success(responseDto);
+        sosBoardService.createSosBoard(requestDto.of(), user);
+//        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(createdBoard);
+//        return Response.success(responseDto);
+        return null;
     }
 
     //돌봄 SOS 페이지 특정 게시글 조회
     @GetMapping("/{id}")
     @Operation(summary = "특정 SOS 게시글 조회", description = "게시글 ID를 통해 특정 SOS 게시글을 조회합니다.")
     @Parameter(name = "id", description = "조회할 게시글의 ID", example = "1")
-    public Response<SosBoardResponseDto> getSosBoardById(@PathVariable Long id) {
-        SosBoardServiceDto serviceDto = sosBoardService.getSosBoardById(id);
+    public Response<LegercySosBoardResponse> getSosBoardById(@PathVariable Long id) {
+        LegercySosBoardInfo serviceDto = sosBoardService.getSosBoardById(id);
 
-        SosBoardResponseDto responseDto = SosBoardResponseDto.fromServiceDto(serviceDto);
+        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(serviceDto);
 
         return Response.success(responseDto);
     }
@@ -90,14 +76,14 @@ public class SosBoardController {
     // 돌봄 SOS 페이지 글 수정
     @PutMapping("/{id}")
     @Operation(summary = "SOS 게시글 수정", description = "SOS 게시판의 게시글을 수정합니다.")
-    public Response<SosBoardResponseDto> updateSosBoard(
+    public Response<LegercySosBoardResponse> updateSosBoard(
             @PathVariable Long id,
-            @RequestBody SosBoardCreateRequestDto requestDto) {
+            @RequestBody SosBoardCreateRequest requestDto) {
 
         User user = getAuthenticatedUser(); // 인증된 사용자 가져오기
-        SosBoardServiceDto serviceDto = requestDto.toServiceDto(user);
-        SosBoardServiceDto updatedBoard = sosBoardService.updateSosBoard(id, serviceDto, user);
-        SosBoardResponseDto responseDto = SosBoardResponseDto.fromServiceDto(updatedBoard);
+        LegercySosBoardInfo serviceDto = requestDto.toServiceDto(user);
+        LegercySosBoardInfo updatedBoard = sosBoardService.updateSosBoard(id, serviceDto, user);
+        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(updatedBoard);
 
         return Response.success(responseDto);
     }
@@ -129,7 +115,7 @@ public class SosBoardController {
             @Parameter(name = "pageNum", description = "페이지 번호", example = "1"),
             @Parameter(name = "size", description = "가져올 게시글 개수", example = "10")
     })
-    public Response<PageResponseDto<SosBoardResponseDto>> getUserSosBoardsByNickname(
+    public Response<PageResponse<LegercySosBoardResponse>> getUserSosBoardsByNickname(
             @PathVariable String nickname,
             @RequestParam(defaultValue = "1") int pageNum,
             @RequestParam(defaultValue = "10") int size) {
@@ -137,15 +123,15 @@ public class SosBoardController {
         int adjustedPage = pageNum - 1;
 
         // 서비스 계층 호출
-        PageResponseDto<SosBoardServiceDto> serviceDtoPageResponse = sosBoardService.getUserSosBoardsByNickname(nickname, adjustedPage, size);
+        PageResponse<LegercySosBoardInfo> serviceDtoPageResponse = sosBoardService.getUserSosBoardsByNickname(nickname, adjustedPage, size);
 
         // SosBoardServiceDto → SosBoardResponseDto 변환
-        List<SosBoardResponseDto> responseDtos = serviceDtoPageResponse.content().stream()
-                .map(SosBoardResponseDto::fromServiceDto)
+        List<LegercySosBoardResponse> responseDtos = serviceDtoPageResponse.content().stream()
+                .map(LegercySosBoardResponse::fromServiceDto)
                 .collect(Collectors.toList());
 
         // PageResponseDto 변환
-        PageResponseDto<SosBoardResponseDto> responseDtoPageResponse = new PageResponseDto<>(
+        PageResponse<LegercySosBoardResponse> responseDtoPageResponse = new PageResponse<>(
                 responseDtos,
                 serviceDtoPageResponse.totalCount(),
                 serviceDtoPageResponse.totalPages(),

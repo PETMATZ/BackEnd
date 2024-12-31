@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record SosBoardResponse(
+public record LegercySosBoardResponse(
         Long id,
         Long userId,
         String accountId,
@@ -30,8 +30,8 @@ public record SosBoardResponse(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
         LocalDateTime updatedAt
 ) {
-    public static SosBoardResponse of(SosBoard sosBoard) {
-        return new SosBoardResponse(
+    public static LegercySosBoardResponse of(SosBoard sosBoard) {
+        return new LegercySosBoardResponse(
                 sosBoard.getId(),
                 sosBoard.getUser().getId(),
                 sosBoard.getUser().getAccountId(),
@@ -54,11 +54,11 @@ public record SosBoardResponse(
         );
     }
 
-    public static SosBoardResponse fromServiceDto(LegercySosBoardInfo serviceDto) {
+    public static LegercySosBoardResponse fromServiceDto(LegercySosBoardInfo serviceDto) {
         // PetResponse 리스트를 Service DTO에서 가져옴
         List<PetResponse> petResponses = serviceDto.petResponses();
 
-        return new SosBoardResponse(
+        return new LegercySosBoardResponse(
                 serviceDto.id(),
                 serviceDto.userId(),
                 serviceDto.accountId(),

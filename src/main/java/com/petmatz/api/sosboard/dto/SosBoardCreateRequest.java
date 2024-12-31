@@ -3,7 +3,8 @@ package com.petmatz.api.sosboard.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.dto.SosBoardService;
+import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
+import com.petmatz.domain.sosboard.dto.SosBoardCreateInfo;
 import com.petmatz.domain.user.entity.User;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-public record SosBoardCreateRequestDto(
+public record SosBoardCreateRequest(
         Long id,
         Long userId,
         String title,
@@ -29,26 +30,21 @@ public record SosBoardCreateRequestDto(
 
 ) {
     // 변환 메서드, 컨트롤러 계층에서 요청 데이터를 서비스 계층으로 전달할 때 변환함
-    public SosBoardService toServiceDto(User user) {
-        return new SosBoardService(
-                this.id(),
-                user.getId(),
-                user.getAccountId(),
-                this.title(),
-                this.comment(),
-                PaymentType.fromString(this.paymentType()),
-                this.price(),
-                this.petIds(),
-                this.petResponses(),
-                this.startDate(),
-                this.endDate(),
-                user.getNickname(),
-                user.getProfileImg(),
-                user.getGender().toString(),
-                user.getRegion(),
-                this.createdAt(),
-                this.updatedAt()
-        );
+    public SosBoardCreateInfo of() {
+        return SosBoardCreateInfo.builder()
+                .id(id)
+                .title(title)
+                .paymentType(paymentType)
+                .price(price)
+                .comment(comment)
+                .petIds(petIds)
+                .petResponses(petResponses)
+                .startDate(startDate)
+                .endDate(endDate)
+                .createdAt(createdAt)
+                .updatedAt(updatedAt)
+                .build();
+
     }
 
 

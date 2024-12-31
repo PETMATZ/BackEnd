@@ -2,7 +2,7 @@ package com.petmatz.domain.sosboard.dto;
 
 import com.petmatz.domain.pet.entity.Pet;
 
-public record SosBoardPetDto(
+public record SosBoardPet(
         Long id,
         String petName,
         String breed,
@@ -16,8 +16,8 @@ public record SosBoardPetDto(
         String comment
 ) {
     // 정적 팩토리 메서드: Pet → SosBoardPetDto
-    public static SosBoardPetDto of(Pet pet) {
-        return new SosBoardPetDto(
+    public static SosBoardPet of(Pet pet) {
+        return new SosBoardPet(
                 pet.getId(),
                 pet.getPetName(),
                 pet.getBreed(),

@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record SosBoardInfo(
+public record LegercySosBoardInfo(
         Long id, //게시글 id
         Long userId, //유저 id
         String accountId,
@@ -34,8 +34,8 @@ public record SosBoardInfo(
 ) {
 
     // SosBoard → SosBoardServiceDto 변환
-    public static SosBoardInfo from(SosBoard sosBoard, List<PetResponse> petResponses) {
-        return new SosBoardInfo(
+    public static LegercySosBoardInfo from(SosBoard sosBoard, List<PetResponse> petResponses) {
+        return new LegercySosBoardInfo(
                 sosBoard.getId(),
                 sosBoard.getUser().getId(),
                 sosBoard.getUser().getAccountId(),
@@ -58,16 +58,6 @@ public record SosBoardInfo(
                         );
     }
 
-    public SosBoard toEntity(User user) {
-        return SosBoard.builder()
-                .user(user)
-                .title(this.title())
-                .paymentType(this.paymentType())
-                .price(this.price())
-                .comment(this.comment())
-                .startDate(this.startDate())
-                .endDate(this.endDate())
-                .build();
-    }
+
 }
 

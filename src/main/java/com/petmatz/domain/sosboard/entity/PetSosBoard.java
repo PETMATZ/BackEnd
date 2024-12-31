@@ -1,4 +1,4 @@
-package com.petmatz.domain.sosboard;
+package com.petmatz.domain.sosboard.entity;
 
 import com.petmatz.domain.global.BaseEntity;
 import com.petmatz.domain.pet.entity.Pet;

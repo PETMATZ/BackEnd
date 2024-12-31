@@ -1,7 +1,9 @@
-package com.petmatz.domain.sosboard;
+package com.petmatz.domain.sosboard.entity;
 
 
 import com.petmatz.domain.global.BaseEntity;
+import com.petmatz.domain.sosboard.PaymentType;
+import com.petmatz.domain.sosboard.dto.SosBoardCreateInfo;
 import com.petmatz.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -50,6 +52,18 @@ public class SosBoard extends BaseEntity{
 
     @Column(name = "end_date", nullable = false)
     private String endDate; // yyyy-MM-dd HH:mm 형식
+
+    public static SosBoard toEntity(User user, SosBoardCreateInfo sosBoardCreateInfo) {
+        return SosBoard.builder()
+                .user(user)
+                .title(sosBoardCreateInfo.title())
+                .paymentType(PaymentType.fromString(sosBoardCreateInfo.paymentType()))
+                .price(sosBoardCreateInfo.price())
+                .comment(sosBoardCreateInfo.comment())
+                .startDate(sosBoardCreateInfo.startDate())
+                .endDate(sosBoardCreateInfo.endDate())
+                .build();
+    }
 
     public void addPetSosBoards(List<PetSosBoard> petSosBoards) {
         if (this.petSosBoards == null) {

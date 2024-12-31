@@ -2,7 +2,7 @@ package com.petmatz.api.pet.dto;
 
 import com.petmatz.domain.pet.dto.PetInf;
 import com.petmatz.domain.pet.entity.Pet;
-import com.petmatz.domain.sosboard.dto.SosBoardPetDto;
+import com.petmatz.domain.sosboard.dto.SosBoardPet;
 
 public record PetResponse(
         Long id,
@@ -35,7 +35,7 @@ public record PetResponse(
         );
     }
 
-    public static PetResponse of(SosBoardPetDto dto) {
+    public static PetResponse of(SosBoardPet dto) {
         return new PetResponse(
                 dto.id(),
                 null,                   // dogRegNo (SosBoardPetDto에는 해당 필드가 없을 경우 null)

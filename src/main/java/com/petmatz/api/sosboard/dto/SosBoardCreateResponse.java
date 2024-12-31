@@ -9,7 +9,7 @@ import com.petmatz.domain.user.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record SosBoardCreateResponseDto(
+public record SosBoardCreateResponse(
         Long id,
         String title,
         String comment,
@@ -23,9 +23,9 @@ public record SosBoardCreateResponseDto(
         String authorGender,
         String authorRegion
 ) {
-    public static SosBoardCreateResponseDto of(SosBoard sosBoard) {
+    public static SosBoardCreateResponse of(SosBoard sosBoard) {
         User user = sosBoard.getUser();
-        return new SosBoardCreateResponseDto(
+        return new SosBoardCreateResponse(
                 sosBoard.getId(),
                 sosBoard.getTitle(),
                 sosBoard.getComment(),
