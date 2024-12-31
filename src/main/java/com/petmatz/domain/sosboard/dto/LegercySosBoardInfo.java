@@ -3,14 +3,14 @@ package com.petmatz.domain.sosboard.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.SosBoard;
+import com.petmatz.domain.sosboard.entity.SosBoard;
 import com.petmatz.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record SosBoardServiceDto(
+public record SosBoardInfo(
         Long id, //게시글 id
         Long userId, //유저 id
         String accountId,
@@ -34,8 +34,8 @@ public record SosBoardServiceDto(
 ) {
 
     // SosBoard → SosBoardServiceDto 변환
-    public static SosBoardServiceDto from(SosBoard sosBoard,  List<PetResponse> petResponses) {
-        return new SosBoardServiceDto(
+    public static SosBoardInfo from(SosBoard sosBoard, List<PetResponse> petResponses) {
+        return new SosBoardInfo(
                 sosBoard.getId(),
                 sosBoard.getUser().getId(),
                 sosBoard.getUser().getAccountId(),

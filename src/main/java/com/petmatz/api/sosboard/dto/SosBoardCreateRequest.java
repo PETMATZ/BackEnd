@@ -3,7 +3,7 @@ package com.petmatz.api.sosboard.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.dto.SosBoardServiceDto;
+import com.petmatz.domain.sosboard.dto.SosBoardService;
 import com.petmatz.domain.user.entity.User;
 
 import java.time.LocalDateTime;
@@ -29,8 +29,8 @@ public record SosBoardCreateRequestDto(
 
 ) {
     // 변환 메서드, 컨트롤러 계층에서 요청 데이터를 서비스 계층으로 전달할 때 변환함
-    public SosBoardServiceDto toServiceDto(User user) {
-        return new SosBoardServiceDto(
+    public SosBoardService toServiceDto(User user) {
+        return new SosBoardService(
                 this.id(),
                 user.getId(),
                 user.getAccountId(),

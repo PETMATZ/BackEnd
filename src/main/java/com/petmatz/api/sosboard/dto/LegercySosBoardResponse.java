@@ -2,15 +2,15 @@ package com.petmatz.api.sosboard.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.PetSosBoard;
-import com.petmatz.domain.sosboard.SosBoard;
-import com.petmatz.domain.sosboard.dto.SosBoardServiceDto;
+import com.petmatz.domain.sosboard.entity.PetSosBoard;
+import com.petmatz.domain.sosboard.entity.SosBoard;
+import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public record SosBoardResponseDto(
+public record SosBoardResponse(
         Long id,
         Long userId,
         String accountId,
@@ -30,8 +30,8 @@ public record SosBoardResponseDto(
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
         LocalDateTime updatedAt
 ) {
-    public static SosBoardResponseDto of(SosBoard sosBoard) {
-        return new SosBoardResponseDto(
+    public static SosBoardResponse of(SosBoard sosBoard) {
+        return new SosBoardResponse(
                 sosBoard.getId(),
                 sosBoard.getUser().getId(),
                 sosBoard.getUser().getAccountId(),
@@ -54,11 +54,11 @@ public record SosBoardResponseDto(
         );
     }
 
-    public static SosBoardResponseDto fromServiceDto(SosBoardServiceDto serviceDto) {
+    public static SosBoardResponse fromServiceDto(LegercySosBoardInfo serviceDto) {
         // PetResponse 리스트를 Service DTO에서 가져옴
         List<PetResponse> petResponses = serviceDto.petResponses();
 
-        return new SosBoardResponseDto(
+        return new SosBoardResponse(
                 serviceDto.id(),
                 serviceDto.userId(),
                 serviceDto.accountId(),

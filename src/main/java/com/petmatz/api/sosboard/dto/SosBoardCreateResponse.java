@@ -2,8 +2,8 @@ package com.petmatz.api.sosboard.dto;
 
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.PetSosBoard;
-import com.petmatz.domain.sosboard.SosBoard;
+import com.petmatz.domain.sosboard.entity.PetSosBoard;
+import com.petmatz.domain.sosboard.entity.SosBoard;
 import com.petmatz.domain.user.entity.User;
 
 import java.util.List;
