@@ -72,7 +72,7 @@ public class ChatMessageReader {
 
     //----아래부터는 쿼리 생성 -----//
 
-    protected Aggregation createQuerySelectChatMessagesPaging(String chatRoomsId, int pageNumber, int pageSize, LocalDateTime lastFetchTimestamp) {
+    private Aggregation createQuerySelectChatMessagesPaging(String chatRoomsId, int pageNumber, int pageSize, LocalDateTime lastFetchTimestamp) {
         int skipCount = (pageNumber - 1) * pageSize; // 시작 위치 계산
 
         if (lastFetchTimestamp == null) {
@@ -94,7 +94,7 @@ public class ChatMessageReader {
         );
     }
 
-    protected Aggregation createQuerySelectChatMessagesPaging(String chatRoomsId,String userEmail,LocalDateTime lastReadTimestamp, int pageNumber, int pageSize) {
+    private Aggregation createQuerySelectChatMessagesPaging(String chatRoomsId,String userEmail,LocalDateTime lastReadTimestamp, int pageNumber, int pageSize) {
         return Aggregation.newAggregation(
                 Aggregation.match(Criteria.where("_id").is(chatRoomsId)), // 특정 채팅방 필터
                 Aggregation.unwind("messages"), // 메시지 배열의 각 항목 분리

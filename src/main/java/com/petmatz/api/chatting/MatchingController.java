@@ -3,6 +3,7 @@ package com.petmatz.api.chatting;
 import com.petmatz.api.chatting.dto.ChatRoomMetaDataInfoResponse;
 import com.petmatz.api.chatting.dto.MatchRequest;
 import com.petmatz.api.global.dto.Response;
+import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.chatting.ChatRoomService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class MatchingController {
 
     private final ChatRoomService chatRoomService;
+    private final JwtExtractProvider jwtExtractProvider;
 
     @PostMapping
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성하는 API API")
@@ -43,9 +45,10 @@ public class MatchingController {
             @RequestParam(defaultValue = "5") int pageSize,
             @RequestParam(defaultValue = "1") int startPage
     ) {
+        String userEmail = jwtExtractProvider.findAccountIdFromJwt();
 
         return Response.success(
-                chatRoomService.selectChatRoomList(pageSize, startPage).stream()
+                chatRoomService.selectChatRoomList(pageSize, startPage, userEmail).stream()
                         .map(ChatRoomMetaDataInfoResponse::of)
                         .collect(Collectors.toList())
         );

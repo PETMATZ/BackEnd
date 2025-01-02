@@ -2,6 +2,7 @@ package com.petmatz.api.chatting;
 
 import com.petmatz.api.chatting.dto.*;
 import com.petmatz.api.global.dto.Response;
+import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.chatting.ChatMessageService;
 import com.petmatz.domain.chatting.ChatRoomService;
 import com.petmatz.domain.chatting.dto.ChatMessageInfo;
@@ -35,6 +36,7 @@ public class ChatController {
     private final SimpMessagingTemplate simpMessagingTemplate;
     private final UserServiceImpl userService;
     private final ChatRoomService chatRoomService;
+    private final JwtExtractProvider jwtExtractProvider;
 
     @MessageMapping("/chat")
     public void sendPrivateMessage(ChatMessageRequest chatMessageRequest) {
@@ -66,8 +68,8 @@ public class ChatController {
                                          @RequestParam(defaultValue = "10") int pageSize,
                                          @RequestParam(defaultValue = "1") int startPage
     ) {
-
-        String receiverEmail = chatRoomService.selectChatRoomUserInfo(chatRoomId);
+        String userEmail = jwtExtractProvider.findAccountIdFromJwt();
+        String receiverEmail = chatRoomService.selectChatRoomUserInfo(chatRoomId, userEmail);
         Page<ChatMessageInfo> chatMessageInfos = chatService.selectMessage(receiverEmail, chatRoomId, startPage, pageSize, lastFetchTimestamp);
         UserInfo userInfo = userService.selectUserInfo(receiverEmail);
 

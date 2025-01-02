@@ -4,6 +4,7 @@ import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.pet.component.PetReader;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
+import com.petmatz.domain.sosboard.component.SosBoardAppend;
 import com.petmatz.domain.sosboard.component.SosBoardReader;
 import com.petmatz.domain.sosboard.dto.*;
 import com.petmatz.domain.sosboard.entity.PetSosBoard;
@@ -24,6 +25,7 @@ import java.util.stream.Collectors;
 public class SosBoardService {
 
     private final SosBoardReader sosBoardReader;
+    private final SosBoardAppend sosBoardAppend;
     private final PetReader petReader;
 
     private final SosBoardRepository sosBoardRepository;
@@ -31,114 +33,65 @@ public class SosBoardService {
     private final PetRepository petRepository;
 
     // 전체 조회 (지역 필터링 + 인덱스 기반 페이지네이션)
-    public SosBoardInfo getAllSosBoards(String region, int pageNum, int size) {
+    public SosBoardInfoList getAllSosBoards(String region, int pageNum, int size) {
         // 페이지 응답 생성
         return sosBoardReader.selectAllSosBoards(region, pageNum, size);
     }
 
 
     // 게시글 작성
-    public LegercySosBoardInfo createSosBoard(SosBoardCreateInfo sosBoardCreateInfo, User user) {
+    public SosBoardInfo createSosBoard(SosBoardCreateInfo sosBoardCreateInfo, User user) {
         SosBoard sosBoard = SosBoard.toEntity(user, sosBoardCreateInfo);
 
-//        petReader.
-//
-//        List<PetSosBoard> petSosBoards = sosBoardCreateInfo.petIds().stream()
-//                .map(petId -> {
-//                    Pet pet = petRepository.findById(petId)
-//                            .orElseThrow(() -> new SosBoardServiceException(SosBoardErrorCode.PET_NOT_FOUND));
-//                    return PetSosBoard.builder()
-//                            .sosBoard(sosBoard)
-//                            .pet(pet)
-//                            .build();
-//                })
-//                .collect(Collectors.toList());
-//
-//        sosBoard.addPetSosBoards(petSosBoards);
-//
-//        SosBoard savedBoard = sosBoardRepository.save(sosBoard);
-//        // ServiceDto를 생성할 때 PetResponse를 포함
-//        List<PetResponse> petResponses = petSosBoards.stream()
-//                .map(PetSosBoard::getPet)
-//                .map(PetResponse::of) // Pet → PetResponse 변환
-//                .collect(Collectors.toList());
+        List<Pet> petList = petReader.getPetList(sosBoardCreateInfo.petIds());
 
-//        return LegercySosBoardInfo.from(savedBoard, petResponses);
-        return null;
+        List<PetSosBoard> petSosBoards = petList.stream()
+                .map(pet -> {
+                    return PetSosBoard.builder()
+                            .sosBoard(sosBoard)
+                            .pet(pet)
+                            .build();
+                })
+                .collect(Collectors.toList());
+
+        sosBoard.addPetSosBoards(petSosBoards);
+
+        SosBoard savedBoard = sosBoardAppend.append(sosBoard);
+
+        return SosBoardInfo.of(savedBoard, petList);
     }
 
 
     // 특정 게시물 조회
-    public LegercySosBoardInfo getSosBoardById(Long id) {
-        SosBoard sosBoard = sosBoardRepository.findById(id)
-                .orElseThrow(() -> new SosBoardServiceException(SosBoardErrorCode.BOARD_NOT_FOUND));
+    public SpecificSosBoardInfo getSosBoardById(Long boardId) {
 
-        // PetResponse 리스트 생성
-        List<PetResponse> petResponses = sosBoard.getPetSosBoards().stream()
-                .map(PetSosBoard::getPet)
-                .map(PetResponse::of) // Pet → PetResponse 변환
-                .collect(Collectors.toList());
+        SosBoard sosBoard = sosBoardReader.selectSosBoard(boardId);
 
         // SosBoardServiceDto 반환
-        return LegercySosBoardInfo.from(sosBoard, petResponses);
+        return SpecificSosBoardInfo.of(sosBoard);
     }
 
-        // 펫 정보 업데이트
-        public LegercySosBoardInfo updateSosBoard(Long id, LegercySosBoardInfo serviceDto, User user) {
-            // 기존 게시글 조회
-            SosBoard existingSosBoard = sosBoardRepository.findById(id)
-                    .orElseThrow(() -> new SosBoardServiceException(SosBoardErrorCode.BOARD_NOT_FOUND));
+    // 펫 정보 업데이트
+    public SpecificSosBoardInfo updateSosBoard(Long boardId, UpdateSosBoardInfo updateSosBoardInfo, User user) {
+        // 기존 게시글 조회
+        SosBoard sosBoard = sosBoardReader.selectSosBoard(boardId);
 
-            // 사용자 권한 확인
-            if (!existingSosBoard.getUser().getId().equals(user.getId())) {
-                throw new SosBoardServiceException(SosBoardErrorCode.UNAUTHORIZED_ACCESS);
-            }
+        //사용자 권한 확인
+        sosBoard.checkUserId(user.getId());
 
-            // 기존 PetSosBoard 관계 삭제
-            existingSosBoard.clearPetSosBoards();
+        // 게시글의 기타 필드 업데이트
+        sosBoard.updateFields(updateSosBoardInfo);
 
-            // 요청된 petIds 기반으로 새로운 PetSosBoard 설정
-            List<PetSosBoard> updatedPetSosBoards = serviceDto.petIds().stream()
-                    .map(petId -> {
-                        Pet pet = petRepository.findById(petId)
-                                .orElseThrow(() -> new SosBoardServiceException(SosBoardErrorCode.PET_NOT_FOUND));
-                        return PetSosBoard.builder()
-                                .sosBoard(existingSosBoard)
-                                .pet(pet)
-                                .build();
-                    })
-                    .collect(Collectors.toList());
-            existingSosBoard.addPetSosBoards(updatedPetSosBoards);
 
-            // 게시글의 기타 필드 업데이트
-            existingSosBoard.updateFields(
-                    serviceDto.title(),
-                    serviceDto.paymentType(),
-                    serviceDto.price(),
-                    serviceDto.comment(),
-                    serviceDto.startDate(),
-                    serviceDto.endDate()
-            );
+        return SpecificSosBoardInfo.of(sosBoard);
+    }
 
-            // 저장 후 업데이트된 데이터 반환
-            SosBoard savedBoard = sosBoardRepository.save(existingSosBoard);
-            List<PetResponse> petResponses = updatedPetSosBoards.stream()
-                    .map(PetSosBoard::getPet)
-                    .map(PetResponse::of)
-                    .collect(Collectors.toList());
+    //게시글 삭제
+    public void deleteSosBoard(Long boardId, User user) {
+        SosBoard sosBoard = sosBoardReader.selectSosBoard(boardId);
 
-            return LegercySosBoardInfo.from(savedBoard, petResponses);
-        }
-
-        //게시글 삭제
-    public void deleteSosBoard(Long id, User user) {
-        SosBoard sosBoard = sosBoardRepository.findById(id)
-                .orElseThrow(() -> new SosBoardServiceException(SosBoardErrorCode.BOARD_NOT_FOUND));
-
-        // 작성자 확인
-        if (!sosBoard.getUser().getId().equals(user.getId())) {
-            throw new SosBoardServiceException(SosBoardErrorCode.UNAUTHORIZED_ACCESS);
-        }
+        //사용자 권한 확인
+        sosBoard.checkUserId(user.getId());
 
         sosBoardRepository.delete(sosBoard);
     }

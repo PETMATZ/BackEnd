@@ -3,6 +3,8 @@ package com.petmatz.domain.pet.component;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.exception.PetServiceException;
 import com.petmatz.domain.pet.repository.PetRepository;
+import com.petmatz.domain.sosboard.exception.SosBoardErrorCode;
+import com.petmatz.domain.sosboard.exception.SosBoardServiceException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -35,6 +37,12 @@ public class PetReader {
                 .collect(Collectors.toList());
     }
 
-    public List<>
+    public List<Pet> getPetList(List<Long> petsId) {
+        List<Pet> petList = petRepository.findAllById(petsId);
+        if (petList.isEmpty()) {
+            throw new SosBoardServiceException(SosBoardErrorCode.PET_NOT_FOUND);
+        }
+        return petList;
+    }
 
 }

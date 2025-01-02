@@ -34,7 +34,7 @@ public class ChatRoomService {
     private final ChatRoomMetaDataDeleter chatRoomMetaDataDeleter;
     private final ChatReadStatusDeleter chatReadStatusDeleter;
 
-    private final JwtExtractProvider jwtExtractProvider;
+//    private final JwtExtractProvider jwtExtractProvider;
 
 
     
@@ -53,8 +53,7 @@ public class ChatRoomService {
         return chatRoomId;
     }
 
-    public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage) {
-        String userEmail = jwtExtractProvider.findAccountIdFromJwt();
+    public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String userEmail) {
 
         List<UserToChatRoomEntity> chatRoomNumber = chatRoomReader.findChatRoomNumber(userEmail);
         List<String> roomNumberList = chatRoomNumber.stream()
@@ -109,8 +108,7 @@ public class ChatRoomService {
         chatReadStatusDeleter.deleteChatReadStatusDocs(strings, roomId);
     }
 
-    public String selectChatRoomUserInfo(String chatRoomId) {
-        String userEmail = jwtExtractProvider.findAccountIdFromJwt();
+    public String selectChatRoomUserInfo(String chatRoomId, String userEmail) {
         List<String> userEmailList = chatRoomReader.selectChatRoomUserList(chatRoomId);
         if (userEmailList.isEmpty()) {
             throw new NullPointerException("해당 채팅방이 존재하지 않습니다.");

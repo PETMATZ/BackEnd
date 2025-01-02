@@ -11,10 +11,8 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Table(name = "pet_sos_board")
 @Getter
-@Setter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class PetSosBoard extends BaseEntity {
 
     @Id
@@ -28,4 +26,9 @@ public class PetSosBoard extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sos_board_id", nullable = false)
     private SosBoard sosBoard;
+
+
+    public void addSosBoard(SosBoard board) {
+        sosBoard = board;
+    }
 }

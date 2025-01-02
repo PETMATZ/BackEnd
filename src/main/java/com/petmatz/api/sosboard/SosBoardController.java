@@ -2,13 +2,10 @@ package com.petmatz.api.sosboard;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.pet.dto.PetResponse;
-import com.petmatz.api.sosboard.dto.SosBoardCreateRequest;
-import com.petmatz.api.sosboard.dto.LegercySosBoardResponse;
-import com.petmatz.api.sosboard.dto.SosBoardResponse;
+import com.petmatz.api.sosboard.dto.*;
 import com.petmatz.common.security.utils.JwtExtractProvider;
-import com.petmatz.domain.sosboard.dto.PageResponse;
-import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
-import com.petmatz.domain.sosboard.dto.SosBoardInfo;
+import com.petmatz.domain.sosboard.SosBoardService;
+import com.petmatz.domain.sosboard.dto.*;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,7 +22,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class SosBoardController {
 
-    private final com.petmatz.domain.sosboard.SosBoardService sosBoardService;
+    private final SosBoardService sosBoardService;
     private final UserRepository userRepository;
     private final JwtExtractProvider jwtExtractProvider;
 
@@ -37,55 +34,50 @@ public class SosBoardController {
             @Parameter(name = "pageNum", description = "조회할 페이지 번호 (1부터 시작)", example = "1"),
             @Parameter(name = "size", description = "가져올 게시글 개수", example = "10")
     })
-    public Response<SosBoardResponse> getAllSosBoards(
+    public Response<SosBoardListResponse> getAllSosBoards(
             @RequestParam(required = false) String region,
             @RequestParam(defaultValue = "1") int pageNum, // 페이지 번호 기본값 1
             @RequestParam(defaultValue = "10") int size) { // 페이지 크기 기본값 10
 
         int adjustedPage = pageNum - 1;
         // 서비스 호출
-        SosBoardInfo serviceDtoPageResponse = sosBoardService.getAllSosBoards(region, adjustedPage, size);
-        SosBoardResponse sosBoardResponse = SosBoardResponse.of(serviceDtoPageResponse);
-        return Response.success(sosBoardResponse);
+        SosBoardInfoList serviceDtoPageResponse = sosBoardService.getAllSosBoards(region, adjustedPage, size);
+        SosBoardListResponse sosBoardListResponse = SosBoardListResponse.of(serviceDtoPageResponse);
+        return Response.success(sosBoardListResponse);
     }
 
 
     // 2. 돌봄 SOS 페이지 게시글 작성
     @PostMapping
     @Operation(summary = "SOS 게시글 작성", description = "SOS 게시판에 새로운 게시글을 작성합니다.")
-    public Response<LegercySosBoardResponse> createSosBoard(@RequestBody SosBoardCreateRequest requestDto) {
+    public Response<SosBoardResponse> createSosBoard(@RequestBody SosBoardCreateRequest requestDto) {
         User user = getAuthenticatedUser(); // 인증된 사용자 가져오기
-        sosBoardService.createSosBoard(requestDto.of(), user);
-//        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(createdBoard);
-//        return Response.success(responseDto);
-        return null;
+        SosBoardInfo sosBoard = sosBoardService.createSosBoard(requestDto.of(), user);
+        return Response.success(SosBoardResponse.of(sosBoard));
     }
 
     //돌봄 SOS 페이지 특정 게시글 조회
     @GetMapping("/{id}")
     @Operation(summary = "특정 SOS 게시글 조회", description = "게시글 ID를 통해 특정 SOS 게시글을 조회합니다.")
     @Parameter(name = "id", description = "조회할 게시글의 ID", example = "1")
-    public Response<LegercySosBoardResponse> getSosBoardById(@PathVariable Long id) {
-        LegercySosBoardInfo serviceDto = sosBoardService.getSosBoardById(id);
-
-        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(serviceDto);
-
-        return Response.success(responseDto);
+    public Response<SpecificSosBoardResponse> getSosBoardById(@PathVariable Long id) {
+        SpecificSosBoardInfo specificSosBoardInfo = sosBoardService.getSosBoardById(id);
+        SpecificSosBoardResponse specificSosBoardResponse = SpecificSosBoardResponse.of(specificSosBoardInfo);
+        return Response.success(specificSosBoardResponse);
     }
 
+    //TODO 업데이트는 아직 없음. 내 맘대로 만들면 될 듯
     // 돌봄 SOS 페이지 글 수정
-    @PutMapping("/{id}")
+    @PutMapping("/{boardId}")
     @Operation(summary = "SOS 게시글 수정", description = "SOS 게시판의 게시글을 수정합니다.")
-    public Response<LegercySosBoardResponse> updateSosBoard(
-            @PathVariable Long id,
-            @RequestBody SosBoardCreateRequest requestDto) {
+    public Response<SpecificSosBoardResponse> updateSosBoard(
+            @PathVariable Long boardId,
+            @RequestBody UpdateSosBoardRequest updateSosBoardRequest) {
 
         User user = getAuthenticatedUser(); // 인증된 사용자 가져오기
-        LegercySosBoardInfo serviceDto = requestDto.toServiceDto(user);
-        LegercySosBoardInfo updatedBoard = sosBoardService.updateSosBoard(id, serviceDto, user);
-        LegercySosBoardResponse responseDto = LegercySosBoardResponse.fromServiceDto(updatedBoard);
-
-        return Response.success(responseDto);
+        SpecificSosBoardInfo specificSosBoardInfo = sosBoardService.updateSosBoard(boardId, updateSosBoardRequest.of(), user);
+        SpecificSosBoardResponse specificSosBoardResponse = SpecificSosBoardResponse.of(specificSosBoardInfo);
+        return Response.success(specificSosBoardResponse);
     }
 
     // // 돌봄 SOS 페이지 글 삭제
@@ -107,6 +99,7 @@ public class SosBoardController {
         return Response.success(userPets);
     }
 
+    //TODO 쓰긴 하는건가?
     // 자신이 작성한 게시글 조회 API
     @GetMapping("/user/{nickname}")
     @Operation(summary = "사용자가 작성한 SOS 게시글 조회", description = "특정 사용자가 작성한 SOS 게시글을 조회합니다.")
@@ -142,6 +135,7 @@ public class SosBoardController {
     }
 
 
+    //TODO 컴포넌트로 옮기기, 추후 작업 꼴보기 싫음
     private User getAuthenticatedUser() {
         Long userId = jwtExtractProvider.findIdFromJwt();
 

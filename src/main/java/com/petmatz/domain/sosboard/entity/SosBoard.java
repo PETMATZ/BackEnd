@@ -4,6 +4,9 @@ package com.petmatz.domain.sosboard.entity;
 import com.petmatz.domain.global.BaseEntity;
 import com.petmatz.domain.sosboard.PaymentType;
 import com.petmatz.domain.sosboard.dto.SosBoardCreateInfo;
+import com.petmatz.domain.sosboard.dto.UpdateSosBoardInfo;
+import com.petmatz.domain.sosboard.exception.SosBoardErrorCode;
+import com.petmatz.domain.sosboard.exception.SosBoardServiceException;
 import com.petmatz.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -20,7 +23,6 @@ import java.util.List;
 @Getter
 @SuperBuilder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@AllArgsConstructor
 public class SosBoard extends BaseEntity{
 
     @Id
@@ -71,20 +73,21 @@ public class SosBoard extends BaseEntity{
         }
         this.petSosBoards.addAll(petSosBoards);
         // 양방향 연관 관계 설정
-        petSosBoards.forEach(petSosBoard -> petSosBoard.setSosBoard(this));
+        petSosBoards.forEach(petSosBoard -> petSosBoard.addSosBoard(this));
     }
 
-    public void updateFields(String title, PaymentType paymentType, Integer price, String comment,
-                       String startDate, String endDate) {
-        this.title = title;
-        this.paymentType = paymentType;
-        this.price = price;
-        this.comment = comment;
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public void updateFields(UpdateSosBoardInfo updateSosBoardInfo) {
+        this.title = updateSosBoardInfo.title();
+        this.paymentType = PaymentType.valueOf(updateSosBoardInfo.paymentType());
+        this.price = updateSosBoardInfo.price();
+        this.comment = updateSosBoardInfo.comment();
+        this.startDate = updateSosBoardInfo.startDate();
+        this.endDate = updateSosBoardInfo.endDate();
     }
 
-    public void clearPetSosBoards() {
-        this.petSosBoards.clear(); // 기존 리스트 비우기
+    public void checkUserId(Long userId) {
+        if (!user.getId().equals(userId)) {
+            throw new SosBoardServiceException(SosBoardErrorCode.UNAUTHORIZED_ACCESS);
+        }
     }
 }
