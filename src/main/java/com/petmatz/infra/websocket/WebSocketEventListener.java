@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
 public class WebSocketEventListener {
 
     private final static String PATTERN = "/topic/chat/(\\S+)/(\\S+)";
-    private final static Pattern  R = Pattern.compile(PATTERN);
+    private final static Pattern R = Pattern.compile(PATTERN);
 
     
     //TODO 여기 의존 바꿔야 할 수도

@@ -9,6 +9,7 @@ import com.petmatz.domain.petmission.component.*;
 import com.petmatz.domain.petmission.dto.*;
 import com.petmatz.domain.petmission.entity.*;
 import com.petmatz.domain.petmission.exception.ExistPetMissionAnswerException;
+import com.petmatz.domain.petmission.utils.*;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -53,20 +54,20 @@ public class PetMissionService {
 
         List<PetMissionAskEntity> petMissionAskEntityList = petMissionInfo.petMissionAskInfo()
                 .stream()
-                .map(PetMissionAskEntity::of)
+                .map(PetMissionMapper::of)
                 .toList();
 
-        PetMissionEntity petMissionEntity = PetMissionEntity.of(petMissionInfo);
+        PetMissionEntity petMissionEntity = PetMissionMapper.of(petMissionInfo);
         petMissionEntity.addPetMissionAsk(petMissionAskEntityList);
 
         List<PetToPetMissionEntity> petToPetMissionEntities = pets.stream()
-                .map(pet -> PetToPetMissionEntity.of(pet, petMissionEntity))
+                .map(pet -> PetToMissionMapper.of(pet, petMissionEntity))
                 .toList();
 
         petToPetMissionEntities.forEach(petMissionEntity::addPetToPetMission);
 
         List<UserToPetMissionEntity> userToPetMissionEntities = users.stream()
-                .map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
+                .map(user -> UserToPetMissionMapper.of(user, petMissionEntity, careId))
                 .toList();
 
         userToPetMissionInserter.insertUserToPetMission(userToPetMissionEntities);
@@ -120,7 +121,7 @@ public class PetMissionService {
         S3Imge petImg = awsClient.UploadImg(userEmail, petMissionCommentInfo.imgURL(), "CARE_HISTORY_IMG", String.valueOf(petMissionAskEntity.getId()));
 
         //6-1 Img 정제
-        PetMissionAnswerEntity petMissionAnswerEntity = petMissionInserter.insertPetMissionAnswer(PetMissionAnswerEntity.of(petMissionCommentInfo, petImg.uploadURL()));
+        PetMissionAnswerEntity petMissionAnswerEntity = petMissionInserter.insertPetMissionAnswer(PetMissionMapper.of(petMissionCommentInfo, petImg.uploadURL()));
         petMissionAskEntity.addPetMissionAnswer(petMissionAnswerEntity);
         return petImg.checkResultImg();
     }
@@ -130,7 +131,7 @@ public class PetMissionService {
         if (petMissionAskEntity.getMissionAnswer() == null) {
             return PetMissionAnswerInfo.builder().build();
         }
-        return petMissionAskEntity.getMissionAnswer().of();
+        return PetMissionAnswerInfo.of(petMissionAskEntity);
     }
 }
 

@@ -41,13 +41,13 @@ public class S3ServiceImpl implements S3Client {
 
     //언젠간 사용..
     @Override
-    public void deleteImg(List<String> keyList) {
-        List<KeyVersion> keyVersions = keyList.stream()
+    public void deleteImg(List<String> imgList) {
+        List<KeyVersion> imgVersions = imgList.stream()
                 .map(KeyVersion::new)
                 .collect(Collectors.toList());
 
         DeleteObjectsRequest deleteObjectsRequest = new DeleteObjectsRequest(bucketName)
-                .withKeys(keyVersions);
+                .withKeys(imgVersions);
 
         amazonS3Client.deleteObjects(deleteObjectsRequest);
     }

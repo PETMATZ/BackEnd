@@ -33,7 +33,6 @@ public class PetController {
 //    private final UserService userService;
     private final UserReader userReader;
 
-    private final UserRepository userRepository;
     private final JwtExtractProvider jwtExtractProvider;
 
     // 동물등록번호 조회

@@ -33,7 +33,6 @@ public record SosBoardInfo(
         LocalDateTime updatedAt
 ) {
 
-
     public static SosBoardInfo of(SosBoard savedBoard, List<Pet> petList) {
         User user = savedBoard.getUser();
         return SosBoardInfo.builder()

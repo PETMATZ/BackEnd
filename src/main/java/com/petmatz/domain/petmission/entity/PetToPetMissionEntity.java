@@ -30,10 +30,4 @@ public class PetToPetMissionEntity {
         this.petMission = petMission;
     }
 
-    public static PetToPetMissionEntity of(Pet pet, PetMissionEntity petMissionEntity) {
-        return PetToPetMissionEntity.builder()
-                .pet(pet)
-                .petMission(petMissionEntity)
-                .build();
-    }
 }

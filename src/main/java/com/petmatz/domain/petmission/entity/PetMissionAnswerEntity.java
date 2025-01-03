@@ -30,22 +30,6 @@ public class PetMissionAnswerEntity {
         this.imgURL = imgURL;
     }
 
-    public static PetMissionAnswerEntity of(PetMissionCommentInfo petMissionCommentInfo, String imgURL) {
-        return PetMissionAnswerEntity.builder()
-                .comment(petMissionCommentInfo.comment())
-                .imgURL(imgURL)
-                .build();
-    }
-
-    public PetMissionAnswerInfo of() {
-        return PetMissionAnswerInfo.builder()
-                .id(id)
-                .comment(comment)
-                .imgURL(imgURL)
-                .build();
-    }
-
-
     public String checkCommentNull() {
         return comment != null ? comment : "없음";
     }

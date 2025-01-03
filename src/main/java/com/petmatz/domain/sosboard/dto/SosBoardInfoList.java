@@ -16,8 +16,6 @@ public record SosBoardInfoList(
         Long totalPages,
         Long currentPage
 
-
-
 ) {
 
     @Builder

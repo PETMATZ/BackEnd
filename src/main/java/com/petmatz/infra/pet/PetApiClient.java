@@ -14,7 +14,6 @@ public class PetApiClient implements PetClient {
 
     private final OpenApiFeignClient openApiFeignClient;
 
-
     @Override
     public OpenApiPetInfo fetchPetInfo(String dogRegNo, String ownerNm) {
         OpenApiResponse<PetInfo> animalInfo = openApiFeignClient.getAnimalInfo(dogRegNo, ownerNm);

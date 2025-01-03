@@ -12,8 +12,4 @@ public record UpdateSosBoardInfo(
         String startDate,
         String endDate
 
-) {
-
-
-
-}
+) {}

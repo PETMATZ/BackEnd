@@ -32,9 +32,8 @@ public class AwsClient {
     }
 
     //이미지 연쇄 삭제
-    public void deleteImg(List<String> keyList) {
-        s3Client.deleteImg(keyList);
+    public void deleteImg(List<String> imgList) {
+        s3Client.deleteImg(imgList);
     }
-
 
 }

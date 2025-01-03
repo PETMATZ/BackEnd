@@ -1,7 +1,9 @@
 package com.petmatz.domain.sosboard.dto;
 
 import com.petmatz.domain.pet.entity.Pet;
+import lombok.Builder;
 
+@Builder
 public record SosBoardPet(
         Long id,
         String petName,
@@ -17,19 +19,18 @@ public record SosBoardPet(
 ) {
     // 정적 팩토리 메서드: Pet → SosBoardPetDto
     public static SosBoardPet of(Pet pet) {
-        return new SosBoardPet(
-                pet.getId(),
-                pet.getPetName(),
-                pet.getBreed(),
-                pet.getGender().toString(),
-                pet.getNeuterYn(), // 중성 여부
-                pet.getSize().toString(),
-                pet.getAge(),
-                pet.getTemperament(),
-                pet.getPreferredWalkingLocation(),
-                pet.getProfileImg(),
-                pet.getComment()
-        );
+        return SosBoardPet.builder()
+                .id(pet.getId())
+                .petName(pet.getPetName())
+                .breed(pet.getBreed())
+                .gender(pet.getGender().toString())
+                .neuterYn(pet.getNeuterYn())
+                .size(pet.getSize().toString())
+                .age(pet.getAge())
+                .temperament(pet.getTemperament())
+                .preferredWalkingLocation(pet.getPreferredWalkingLocation())
+                .profileImg(pet.getProfileImg())
+                .build();
     }
 }
 

@@ -45,20 +45,10 @@ public class PetMissionEntity {
         this.petMissionAsks =  new ArrayList<>();
     }
 
-
-    public static PetMissionEntity of(PetMissionInfo petMissionInfo) {
-        return PetMissionEntity.builder()
-                .petMissionStarted(petMissionInfo.missionStarted())
-                .petMissionEnd(petMissionInfo.missionEnd())
-                .status(PetMissionStatusZip.BEF)
-                .build();
-    }
-
     public void addPetMissionAsk(List<PetMissionAskEntity> ask) {
         petMissionAsks.addAll(ask);
         ask.forEach(petMissionAskEntity -> petMissionAskEntity.addPetMission(this));
     }
-
 
     public void updatePetMissionStatusZip(PetMissionStatusZip updateStatus) {
         status = updateStatus;

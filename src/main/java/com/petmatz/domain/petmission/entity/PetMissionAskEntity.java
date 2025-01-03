@@ -31,11 +31,6 @@ public class PetMissionAskEntity {
         this.petMission = petMission;
         this.missionAnswer = missionAnswer;
     }
-    public static PetMissionAskEntity of(String comment) {
-        return PetMissionAskEntity.builder()
-                .comment(comment)
-                .build();
-    }
 
     public void addPetMission(PetMissionEntity petMission) {
         this.petMission = petMission;

@@ -41,7 +41,6 @@ public class ChatRoomService {
     //채팅방 신규 생성, 존재시 해당 ChatRoomID 반환
     public long createdChatRoom(ChatRoomInfo chatRoomInfo) {
         Optional<ChatRoomEntity> chatRoomEntity = chatRoomReader.selectChatRoom(chatRoomInfo);
-        System.out.println(chatRoomEntity.toString());
 
         if (chatRoomEntity.isPresent()) {
             return chatRoomEntity.get().getId();
