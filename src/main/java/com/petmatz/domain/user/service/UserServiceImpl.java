@@ -7,6 +7,7 @@ import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
+import com.petmatz.domain.user.component.GeocodingService;
 import com.petmatz.domain.user.entity.*;
 import com.petmatz.domain.user.info.*;
 import com.petmatz.domain.user.provider.CertificationNumberProvider;

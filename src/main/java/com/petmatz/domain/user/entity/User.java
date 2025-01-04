@@ -154,7 +154,7 @@ public class User extends BaseEntity {
                 .build();
     }
 
-    public void checkLatitudeLongitude() { // (희수 : 예외나 위도 경도 범위 추후에 변경 예정입니다!)
+    public void checkLatitudeLongitude() {
         if (latitude <= 0) {
             throw new MatchException(INSUFFICIENT_LATITUDE_DATA);
         }

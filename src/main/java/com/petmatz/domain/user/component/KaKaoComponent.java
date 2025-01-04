@@ -1,10 +1,11 @@
 package com.petmatz.domain.user.component;
 
+import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.EditKakaoProfileInfo;
+import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.EditKakaoProfileResponseDto;
 import com.petmatz.domain.user.response.UpdateLocationResponseDto;
-import com.petmatz.domain.user.service.GeocodingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Slf4j
 public class KaKaoComponent {
+
+    private final JwtExtractProvider jwtExtractProvider;
+    private final UserRepository userRepository;
+    private final GeocodingService geocodingService;
 
     @Transactional
     public ResponseEntity<? super EditKakaoProfileResponseDto> editKakaoProfile(EditKakaoProfileInfo info) {

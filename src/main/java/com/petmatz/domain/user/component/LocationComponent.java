@@ -5,7 +5,6 @@ import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.UpdateLocationInfo;
 import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.UpdateLocationResponseDto;
-import com.petmatz.domain.user.service.GeocodingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;

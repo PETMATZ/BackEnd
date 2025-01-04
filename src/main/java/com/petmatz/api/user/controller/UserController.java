@@ -1,6 +1,7 @@
 package com.petmatz.api.user.controller;
 
 import com.petmatz.api.user.request.*;
+import com.petmatz.domain.user.component.AuthService;
 import com.petmatz.domain.user.response.*;
 import com.petmatz.domain.user.service.UserService;
 import com.petmatz.user.common.LogInResponseDto;
@@ -11,12 +12,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.MalformedURLException;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class UserController {
     private final UserService userService;
+    private final AuthService authService;
 
     @PostMapping("/email-certification")
     public ResponseEntity<? super EmailCertificationResponseDto> emailCertification(@RequestBody @Valid EmailCertificationRequestDto requestBody) {
@@ -33,10 +37,10 @@ public class UserController {
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<? super SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) {
-        ResponseEntity<? super SignUpResponseDto> response = userService.signUp(SignUpRequestDto.of(requestBody));
+    public ResponseEntity<SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) throws MalformedURLException {
+        SignUpResponseDto responseDto = authService.signUp(SignUpRequestDto.of(requestBody));
         log.info("[signUp]: { accountId: " + requestBody.getAccountId() + ", password: " + requestBody.getPassword());
-        return response;
+        return ResponseEntity.ok(responseDto);
     }
 
     @PostMapping("/sign-in")

@@ -13,7 +13,7 @@ public class SignUpResponseDto extends LogInResponseDto {
 
     private String imgURL;
 
-    private SignUpResponseDto(Long id, String imgURL) {
+    public SignUpResponseDto(Long id, String imgURL) {
         super();
         this.id=id;
         this.imgURL = imgURL;

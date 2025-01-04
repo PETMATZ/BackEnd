@@ -1,6 +1,7 @@
-package com.petmatz.domain.user.service;
+package com.petmatz.domain.user.component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.petmatz.domain.match.exception.MatchException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -8,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
+import static com.petmatz.domain.user.exception.MatchErrorCode.INSUFFICIENT_LOCATION_DATA;
 
 @Service
 public class GeocodingService {
@@ -55,6 +58,20 @@ public class GeocodingService {
     private void logInfo(KakaoRegion region) {
         System.out.println("Region Name: " + region.getRegionName());
         System.out.println("Region Code: " + region.getCode());
+    }
+
+    /**
+     * 좌표를 기반으로 지역 정보를 가져오고 유효성을 검증
+     */
+    public GeocodingService.KakaoRegion getValidRegion(double latitude, double longitude) {
+        GeocodingService.KakaoRegion kakaoRegion = getRegionFromCoordinates(latitude, longitude);
+
+        // 지역 정보 검증
+        if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
+            throw new MatchException(INSUFFICIENT_LOCATION_DATA);
+        }
+
+        return kakaoRegion;
     }
 
     @Data
