@@ -8,14 +8,15 @@ import lombok.RequiredArgsConstructor;
 public enum MatchErrorCode implements BaseErrorCode {
 
     INSUFFICIENT_LOCATION_DATA(404, "INSUFFICIENT_LOCATION_DATA", "유요한 위치 정보를 가져올 수 없습니다."),
+    MISS_KAKAO_LOACTION(400, "MISS_KAKAO_LOACTION", "카카오 지역 api를 호출 할 수 없습니다."),
     INSUFFICIENT_LATITUDE_DATA(400, "INSUFFICIENT_LATITUDE_DATA", "위도가 없습니다."),
     INSUFFICIENT_LONGITUDE_DATA(400, "INSUFFICIENT_LONGITUDE_DATA", "경도가 없습니다."),
     INVALID_MATCH_DATA(400, "INVALID_MATCH_DATA", "위도 또는 경도가 누락되었습니다."),
-    NULL_PREFERRED_SIZES(400, "NULL_PREFERRED_SIZES", "선호 크기 목록이 없습니다."),
-    NULL_TARGET_SIZE(400, "NULL_TARGET_SIZE", "타겟 크기가 없습니다."),
-    NULL_MATCH_DATA(204, "NULL_MATCH_DATA", "매칭 데이터가 없습니다."),
+    USER_NOT_FOUND(404, "USER_NOT_FOUND", "사용자가 존재하지 않습니다."),
+    JWT_USER_NOT_FOUND(404, "JWT_USER_NOT_FOUND", "토큰에서 추출한 사용자가 존재하지 않습니다."),
     CERTIFICATION_EXPIRED(400, "CERTIFICATION_EXPIRED", "인증 시간이 만료되었습니다."),
-    MISS_MATCH_CODE(400, "MISS_MATCH_CODE", "인증 번호가 일치하지 않습니다.");
+    MISS_MATCH_CODE(400, "MISS_MATCH_CODE", "인증 번호가 일치하지 않습니다."),
+    USER_DUPLICATE(400, "USER_DUPLICATE", "중복된 사용자가 있습니다.");
 
 
 

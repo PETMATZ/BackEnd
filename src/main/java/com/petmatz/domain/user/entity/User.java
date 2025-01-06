@@ -42,6 +42,9 @@ public class User extends BaseEntity {
     @Column(name = "account_id",unique = true)
     private String accountId;
 
+    @Column(name = "registrationId")
+    private String registrationId;
+
     @Column(name = "password")
     private String password;
 

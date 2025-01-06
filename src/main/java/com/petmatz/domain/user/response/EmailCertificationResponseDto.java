@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 @Getter
 public class EmailCertificationResponseDto extends LogInResponseDto {
 
-    private EmailCertificationResponseDto(){
-        super();
+    public EmailCertificationResponseDto(){
     }
 
 
