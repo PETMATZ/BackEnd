@@ -15,9 +15,6 @@ import static com.petmatz.domain.user.exception.MatchErrorCode.INSUFFICIENT_LOCA
 
 @Service
 public class GeocodingService {
-
-
-
     @Value("${kakao-api-url}")
     private  String KAKAO_API_URL;
     @Value("${kakao-api-key}")

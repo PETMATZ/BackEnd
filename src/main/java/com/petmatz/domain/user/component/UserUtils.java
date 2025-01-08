@@ -3,6 +3,7 @@ package com.petmatz.domain.user.component;
 import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.exception.UserException;
+import com.petmatz.domain.user.repository.HeartRepository;
 import com.petmatz.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class UserUtils {
 
     private final UserRepository userRepository;
     private final JwtExtractProvider jwtExtractProvider;
+    private final HeartRepository heartRepository;
 
     public void checkDuplicateAccountId(String accountId) {
         if (userRepository.existsByAccountId(accountId)) {
@@ -55,4 +57,9 @@ public class UserUtils {
         }
     }
 
+    public boolean checkHeart(Long myId, Long userId) {
+        if (heartRepository.existsByMyIdAndHeartedId(myId, userId)) {
+            throw new UserException(HEART_USER_NOT_FOUND);
+        }
+    }
 }

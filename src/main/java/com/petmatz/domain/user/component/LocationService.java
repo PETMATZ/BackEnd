@@ -17,34 +17,20 @@ import org.springframework.transaction.annotation.Transactional;
 public class LocationService {
 
     private final JwtExtractProvider jwtExtractProvider;
-    private final UserRepository userRepository;
     private final GeocodingService geocodingService;
-
+    private final UserUtils userUtils;
 
     @Transactional
-    public ResponseEntity<? super UpdateLocationResponseDto> updateLocation(UpdateLocationInfo info) {
-        try {
-            // JWT에서 사용자 ID 추출
+    public UpdateLocationResponseDto updateLocation(UpdateLocationInfo info) {
             Long userId = jwtExtractProvider.findIdFromJwt();
+            User user = userUtils.findIdUser(userId);
 
-            // 사용자 엔티티 조회
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + userId));
-
-
-            // GeocodingService에서 지역명과 행정코드 가져오기
-            GeocodingService.KakaoRegion kakaoRegion = geocodingService.getRegionFromCoordinates(info.getLatitude(), info.getLongitude());
-            if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
-                return UpdateLocationResponseDto.wrongLocation(); // Kakao API 호출 실패 처리
-            }
-
+            /**
+             * 현재는 static 클래스라 이렇게 접근
+             */
+            GeocodingService.KakaoRegion kakaoRegion = geocodingService.getValidRegion(info.getLatitude(), info.getLongitude());
             user.updateLocation(info, kakaoRegion.getRegionName(), kakaoRegion.getCodeAsInteger());
 
-            // 성공 응답 반환
-            return UpdateLocationResponseDto.success(kakaoRegion.getRegionName(), kakaoRegion.getCodeAsInteger());
-        } catch (Exception e) {
-            log.error("위치 업데이트 실패: {}", e.getMessage(), e);
-            return UpdateLocationResponseDto.wrongLocation();
-        }
+            return new UpdateLocationResponseDto(kakaoRegion.getRegionName(), kakaoRegion.getCodeAsInteger());
     }
 }

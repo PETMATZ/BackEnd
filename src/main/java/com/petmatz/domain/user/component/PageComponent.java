@@ -16,6 +16,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.MalformedURLException;
+
 @Component
 @RequiredArgsConstructor
 @Slf4j
@@ -29,84 +31,41 @@ public class PageComponent {
     private final UserRepository userRepository;
     private final HeartRepository heartRepository;
     private final AwsClient awsClient;
+    private final UserUtils userUtils;
 
 
-    public ResponseEntity<? super GetMyProfileResponseDto> getMypage() {
-        try {
-            String userId = jwtExtractProvider.findAccountIdFromJwt();
-            User user = userRepository.findByAccountId(userId);
-
-            boolean exists = userRepository.existsByAccountId(userId);
-            if (!exists) {
-                return GetMyProfileResponseDto.idNotFound();
-            }
-
-            return GetMyProfileResponseDto.success(user);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return GetMyProfileResponseDto.databaseError();
-        }
+    public GetMyProfileResponseDto getMypage() {
+        String userId = jwtExtractProvider.findAccountIdFromJwt();
+        User user = userUtils.findUser(userId);
+        return new GetMyProfileResponseDto(user);
     }
 
-    public ResponseEntity<? super GetOtherProfileResponseDto> getOtherMypage(Long userId) {
-        try {
-            // 현재 로그인한 사용자 ID 가져오기
-            Long myId = jwtExtractProvider.findIdFromJwt();
-            if (!userRepository.existsById(myId)) {
-                return GetMyProfileResponseDto.idNotFound();
-            }
+    public GetOtherProfileResponseDto getOtherMypage(Long userId) {
+        Long myId = jwtExtractProvider.findIdFromJwt();
+        User user = userUtils.findIdUser(myId);
 
-            // 조회 대상 사용자 정보 가져오기
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + userId));
+        // 조회 대상 사용자가 존재하는지 확인
+        userUtils.findIdUser(userId);
 
-            // 조회 대상 사용자가 존재하는지 확인
-            boolean exists = userRepository.existsById(userId);
-            if (!exists) {
-                return GetOtherProfileResponseDto.userNotFound();
-            }
+        // 현재 로그인한 사용자가 조회 대상 사용자를 찜했는지 확인
+        boolean checkHeart = userUtils.checkHeart(myId, userId);
 
-            // 현재 로그인한 사용자가 조회 대상 사용자를 찜했는지 확인
-            boolean isMyHeartUser = heartRepository.existsByMyIdAndHeartedId(myId, userId);
-
-            // 응답 생성
-            return GetOtherProfileResponseDto.success(user, isMyHeartUser);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return GetOtherProfileResponseDto.userNotFound();
-        }
+        return new GetOtherProfileResponseDto(user, checkHeart);
     }
 
-    //TODO 고쳐야함. ...?
     @Transactional
-    public ResponseEntity<? super EditMyProfileResponseDto> editMyProfile(EditMyProfileInfo info) {
-        try {
-            System.out.println("info ::" + info.isCareAvailable());
+    public EditMyProfileResponseDto editMyProfile(EditMyProfileInfo info) throws MalformedURLException {
             Long userId = jwtExtractProvider.findIdFromJwt();
             String userEmail = jwtExtractProvider.findAccountIdFromJwt();
-            boolean exists = userRepository.existsById(userId);
-            if (!exists) {
-                return EditMyProfileResponseDto.idNotFound();
-            }
+            User user = userUtils.findIdUser(userId);
 
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new IllegalArgumentException("User not found for ID: " + userId));
-
-            //6-1 Img 정제
+            //Img 정제
             S3Imge petImg = awsClient.UploadImg(userEmail, info.getProfileImg(), "CUSTOM_USER_IMG", null);
 
             // 병합된 DTO를 기반으로 엔티티 생성
             String resultImg = user.updateImgURL(info.getProfileImg(), petImg);
             user.updateProfile(info);
 
-//            반환해야 함 아래꺼
-            return EditMyProfileResponseDto.success(resultImg);
-
-        } catch (Exception e) {
-            log.info("프로필 수정 실패: {}", e);
-            return EditMyProfileResponseDto.editFailed();
-        }
+            return new EditMyProfileResponseDto(resultImg);
     }
 }
