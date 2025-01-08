@@ -29,21 +29,14 @@ public class KakaoUserComponent {
     private final JwtExtractProvider jwtExtractProvider;
     private final UserRepository userRepository;
     private final GeocodingService geocodingService;
+    private final UserUtils userUtils;
 
     @Transactional
     public void editKakaoProfile(EditKakaoProfileInfo info) {
         Long userId = jwtExtractProvider.findIdFromJwt();
-
-        if (userId == null) {
-            throw new UserException(JWT_USER_NOT_FOUND);
-        }
-
-        if (userRepository.existsById(userId)) {
-            throw new UserException(USER_DUPLICATE);
-        }
-
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+        userUtils.findJwtUser(userId);
+        userUtils.checkDuplicateId(userId);
+        User user = userUtils.findIdUser(userId);
 
         GeocodingService.KakaoRegion kakaoRegion = geocodingService.getRegionFromCoordinates(info.getLatitude(), info.getLongitude());
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {

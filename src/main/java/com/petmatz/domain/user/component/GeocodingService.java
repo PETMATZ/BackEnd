@@ -68,7 +68,6 @@ public class GeocodingService {
      */
     public GeocodingService.KakaoRegion getValidRegion(double latitude, double longitude) {
         GeocodingService.KakaoRegion kakaoRegion = getRegionFromCoordinates(latitude, longitude);
-
         // 지역 정보 검증
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
             throw new UserException(INSUFFICIENT_LOCATION_DATA);

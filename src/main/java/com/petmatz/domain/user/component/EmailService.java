@@ -1,12 +1,9 @@
 package com.petmatz.domain.user.component;
 
 import com.petmatz.api.user.request.EmailCertificationRequestDto;
-import com.petmatz.domain.user.entity.Certification;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.provider.CertificationNumberProvider;
-import com.petmatz.domain.user.repository.CertificationRepository;
 import com.petmatz.domain.user.repository.UserRepository;
-import com.petmatz.domain.user.response.EmailCertificationResponseDto;
 import com.petmatz.domain.user.response.GetMyUserDto;
 import com.petmatz.domain.user.service.EmailProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,15 +15,15 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class EmailService {
 
-    private final UserRepository userRepository;
     private final EmailProvider emailProvider;
     private final EmailComponent emailComponent;
+    private final UserUtils userUtils;
 
 
     public void emailCertification(EmailCertificationRequestDto dto) {
         String accountId = dto.getAccountId();
 
-        emailComponent.checkDuplicateAccountId(accountId);
+        userUtils.checkDuplicateAccountId(accountId);
 
         // 인증 번호 생성 및 이메일 전송
         String certificationNumber = CertificationNumberProvider.generateNumber();
@@ -37,7 +34,7 @@ public class EmailService {
 
 
     public GetMyUserDto receiverEmail(String accountId) {
-        User user = userRepository.findByAccountId(accountId);
+        User user = userUtils.findUser(accountId);
         return new GetMyUserDto(user);
     }
 }

@@ -1,0 +1,58 @@
+package com.petmatz.domain.user.component;
+
+import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.domain.user.entity.User;
+import com.petmatz.domain.user.exception.UserException;
+import com.petmatz.domain.user.repository.UserRepository;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
+
+import static com.petmatz.domain.user.exception.MatchErrorCode.*;
+
+@Component
+@RequiredArgsConstructor
+public class UserUtils {
+
+    private final UserRepository userRepository;
+    private final JwtExtractProvider jwtExtractProvider;
+
+    public void checkDuplicateAccountId(String accountId) {
+        if (userRepository.existsByAccountId(accountId)) {
+            throw new UserException(USER_DUPLICATE);
+        }
+    }
+
+    public void checkDuplicateId(Long userId) {
+        if (userRepository.existsById(userId)) {
+            throw new UserException(USER_DUPLICATE);
+        }
+    }
+    public User findUser(String accountId) {
+        User user = userRepository.findByAccountId(accountId);
+        if (user == null) {
+            throw new UserException(USER_NOT_FOUND);
+        }
+        return user;
+    }
+
+    public User findIdUser(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+        return user;
+    }
+
+
+    @Transactional
+    public User getCurrentUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
+    }
+
+    public void findJwtUser(Long userId) {
+        if (userId == null) {
+            throw new UserException(JWT_USER_NOT_FOUND);
+        }
+    }
+
+}

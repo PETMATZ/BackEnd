@@ -27,16 +27,14 @@ public class AuthenticationComponent {
     private final CertificationRepository certificationRepository;
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
+    private final UserUtils userUtils;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public User validateSignInCredentials(SignInInfo info) throws AuthenticationException {
         String accountId = info.getAccountId();
         String password = info.getPassword();
 
-        User user = userRepository.findByAccountId(accountId);
-        if (user == null) {
-            throw new AuthenticationException("사용자 조회 실패 ");
-        }
+        User user = userUtils.findUser(accountId);
 
         String encodedPassword = user.getPassword();
         if (!passwordEncoder.matches(password, encodedPassword)) {
@@ -48,7 +46,6 @@ public class AuthenticationComponent {
     public String createJwtToken(User user) {
         return jwtProvider.create(user.getId(), user.getAccountId());
     }
-
 
     /**
      * 필수 정보 누락 확인

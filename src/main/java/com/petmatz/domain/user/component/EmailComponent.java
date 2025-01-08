@@ -16,12 +16,6 @@ public class EmailComponent {
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
 
-    public void checkDuplicateAccountId(String accountId) {
-        if (userRepository.existsByAccountId(accountId)) {
-            throw new UserException(USER_DUPLICATE);
-        }
-    }
-
     public void saveCertification(String accountId, String certificationNumber) {
         Certification certification = Certification.builder()
                 .accountId(accountId)

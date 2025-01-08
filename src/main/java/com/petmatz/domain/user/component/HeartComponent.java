@@ -31,12 +31,6 @@ public class HeartComponent {
     }
 
     @Transactional
-    public User getCurrentUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
-    }
-
-    @Transactional
     public boolean toggleHeart(Long myId, Long heartId) {
         Optional<Heart> existingHeart = heartRepository.findByMyIdAndHeartedId(myId, heartId);
 
