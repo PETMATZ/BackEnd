@@ -2,6 +2,7 @@ package com.petmatz.domain.user.component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.petmatz.domain.match.exception.MatchException;
+import com.petmatz.domain.user.exception.UserException;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
@@ -15,9 +16,10 @@ import static com.petmatz.domain.user.exception.MatchErrorCode.INSUFFICIENT_LOCA
 @Service
 public class GeocodingService {
 
+
+
     @Value("${kakao-api-url}")
     private  String KAKAO_API_URL;
-
     @Value("${kakao-api-key}")
     private String KAKAO_API_KEY;
 
@@ -69,9 +71,8 @@ public class GeocodingService {
 
         // 지역 정보 검증
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
-            throw new MatchException(INSUFFICIENT_LOCATION_DATA);
+            throw new UserException(INSUFFICIENT_LOCATION_DATA);
         }
-
         return kakaoRegion;
     }
 

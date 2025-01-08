@@ -16,7 +16,8 @@ public enum MatchErrorCode implements BaseErrorCode {
     JWT_USER_NOT_FOUND(404, "JWT_USER_NOT_FOUND", "토큰에서 추출한 사용자가 존재하지 않습니다."),
     CERTIFICATION_EXPIRED(400, "CERTIFICATION_EXPIRED", "인증 시간이 만료되었습니다."),
     MISS_MATCH_CODE(400, "MISS_MATCH_CODE", "인증 번호가 일치하지 않습니다."),
-    USER_DUPLICATE(400, "USER_DUPLICATE", "중복된 사용자가 있습니다.");
+    USER_DUPLICATE(400, "USER_DUPLICATE", "중복된 사용자가 있습니다."),
+    HEART_USER_NOT_FOUND(404, "HEART_USER_DUPLICATE", "찜한 사용자를 찾을 수 없습니다.");
 
 
 
