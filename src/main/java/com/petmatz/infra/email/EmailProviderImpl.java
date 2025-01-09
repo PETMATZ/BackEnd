@@ -1,5 +1,6 @@
 package com.petmatz.infra.email;
 
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.service.EmailProvider;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import static com.petmatz.domain.user.exception.MatchErrorCode.FAIL_MAIL_SEND;
 
 @Component
 @RequiredArgsConstructor
@@ -27,8 +30,7 @@ public class EmailProviderImpl implements EmailProvider {
      * @return 이메일 전송 성공 여부 (true: 성공, false: 실패)
      */
     @Override
-    public boolean sendVerificationEmail(String email, String certificationNumber) {
-
+    public void sendVerificationEmail(String email, String certificationNumber) {
         try {
             System.out.println(certificationNumber);
             // MIME 타입의 이메일 메시지 생성
@@ -47,11 +49,8 @@ public class EmailProviderImpl implements EmailProvider {
             javaMailSender.send(message);
 
         } catch (Exception e) {
-            log.info("이메일 {} 로 전송 실패", email);
-            log.info("Error: {}", e);
-            return false;
+            throw new UserException(FAIL_MAIL_SEND);
         }
-        return true;  // 전송 성공 시 true 리턴
     }
 
     /**

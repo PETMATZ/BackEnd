@@ -1,5 +1,6 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
+import com.petmatz.domain.user.component.OAuth2UserLoader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;

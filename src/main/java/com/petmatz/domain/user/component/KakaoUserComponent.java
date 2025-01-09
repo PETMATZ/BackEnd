@@ -3,15 +3,13 @@ package com.petmatz.domain.user.component;
 import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.user.constant.LoginRole;
 import com.petmatz.domain.user.constant.LoginType;
+import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.info.EditKakaoProfileInfo;
 import com.petmatz.domain.user.repository.UserRepository;
-import com.petmatz.domain.user.response.EditKakaoProfileResponseDto;
-import com.petmatz.domain.user.response.UpdateLocationResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +26,7 @@ public class KakaoUserComponent {
 
     private final JwtExtractProvider jwtExtractProvider;
     private final UserRepository userRepository;
-    private final GeocodingService geocodingService;
+    private final GeocodingComponent geocodingComponent;
     private final UserUtils userUtils;
 
     @Transactional
@@ -38,7 +36,7 @@ public class KakaoUserComponent {
         userUtils.checkDuplicateId(userId);
         User user = userUtils.findIdUser(userId);
 
-        GeocodingService.KakaoRegion kakaoRegion = geocodingService.getRegionFromCoordinates(info.getLatitude(), info.getLongitude());
+        KakaoRegion kakaoRegion = geocodingComponent.getRegionFromCoordinates(info.getLatitude(), info.getLongitude());
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
             throw new UserException(MISS_KAKAO_LOACTION);
         }

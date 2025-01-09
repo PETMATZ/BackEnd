@@ -1,7 +1,7 @@
 package com.petmatz.api.user.controller;
 
 import com.petmatz.api.user.request.*;
-import com.petmatz.domain.user.component.AuthService;
+import com.petmatz.domain.user.service.AuthService;
 import com.petmatz.domain.user.response.*;
 import com.petmatz.domain.user.service.UserService;
 import com.petmatz.user.common.LogInResponseDto;

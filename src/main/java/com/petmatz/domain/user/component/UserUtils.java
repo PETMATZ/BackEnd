@@ -16,7 +16,6 @@ import static com.petmatz.domain.user.exception.MatchErrorCode.*;
 public class UserUtils {
 
     private final UserRepository userRepository;
-    private final JwtExtractProvider jwtExtractProvider;
     private final HeartRepository heartRepository;
 
     public void checkDuplicateAccountId(String accountId) {
@@ -59,7 +58,8 @@ public class UserUtils {
 
     public boolean checkHeart(Long myId, Long userId) {
         if (heartRepository.existsByMyIdAndHeartedId(myId, userId)) {
-            throw new UserException(HEART_USER_NOT_FOUND);
+            return false;
         }
+        return true;
     }
 }

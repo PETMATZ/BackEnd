@@ -1,9 +1,11 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
 import com.petmatz.common.security.utils.JwtProvider;
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
+import com.petmatz.domain.user.component.AuthenticationComponent;
 import com.petmatz.domain.user.entity.Certification;
+import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.entity.UserFactory;
 import com.petmatz.domain.user.info.CheckCertificationInfo;
@@ -11,15 +13,13 @@ import com.petmatz.domain.user.info.SignInInfo;
 import com.petmatz.domain.user.info.SignUpInfo;
 import com.petmatz.domain.user.repository.CertificationRepository;
 import com.petmatz.domain.user.repository.UserRepository;
-import com.petmatz.domain.user.response.CheckCertificationResponseDto;
 import com.petmatz.domain.user.response.SignInResponseDto;
 import com.petmatz.domain.user.response.SignUpResponseDto;
-import com.petmatz.user.common.LogInResponseDto;
+import com.petmatz.domain.user.component.GeocodingComponent;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -28,7 +28,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.naming.AuthenticationException;
 import java.net.MalformedURLException;
 import java.security.cert.CertificateException;
-import java.time.LocalDateTime;
 
 @Component
 @RequiredArgsConstructor
@@ -42,7 +41,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final CertificationRepository certificationRepository;
-    private final GeocodingService geocodingService;
+    private final GeocodingComponent geocodingComponent;
     private final AwsClient awsClient; // 추후에 수정
     private final JwtProvider jwtProvider;
     private final AuthenticationComponent authenticationComponent;
@@ -62,7 +61,7 @@ public class AuthService {
         String encodedPassword = passwordEncoder.encode(info.getPassword());
 
         // 지역명과 6자리 행정코드 가져오기
-        GeocodingService.KakaoRegion kakaoRegion = geocodingService.getValidRegion(info.getLatitude(), info.getLongitude());
+        KakaoRegion kakaoRegion = geocodingComponent.getValidRegion(info.getLatitude(), info.getLongitude());
 
         //6-1 Img 정제
         S3Imge petImg = awsClient.UploadImg(info.getAccountId(), info.getProfileImg(), "CUSTOM_USER_IMG", null);

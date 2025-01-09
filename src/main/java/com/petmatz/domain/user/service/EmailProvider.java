@@ -1,5 +1,5 @@
 package com.petmatz.domain.user.service;
 
 public interface EmailProvider {
-    boolean sendVerificationEmail(String email, String certificationNumber);
+    void sendVerificationEmail(String email, String certificationNumber);
 }

@@ -13,6 +13,9 @@ import static com.petmatz.domain.user.exception.MatchErrorCode.USER_NOT_FOUND;
 @RequiredArgsConstructor
 public class UserReader {
 
+    /**
+     * 이것도 utils를 만들어서 곧 지울듯
+     */
     private final UserRepository userRepository;
 
     public User getAuthenticatedUser(Long userId) {

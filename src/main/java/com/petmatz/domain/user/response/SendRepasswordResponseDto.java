@@ -10,8 +10,7 @@ import org.springframework.http.ResponseEntity;
 @Getter
 public class SendRepasswordResponseDto extends LogInResponseDto{
 
-    private SendRepasswordResponseDto(){
-        super();
+    public SendRepasswordResponseDto(){
     }
 
     public static ResponseEntity<LogInResponseDto> mailSendFail(){

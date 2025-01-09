@@ -1,6 +1,8 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
 import com.petmatz.api.user.request.EmailCertificationRequestDto;
+import com.petmatz.domain.user.component.EmailComponent;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.provider.CertificationNumberProvider;
 import com.petmatz.domain.user.repository.UserRepository;

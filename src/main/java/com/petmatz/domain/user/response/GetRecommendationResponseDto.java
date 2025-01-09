@@ -11,8 +11,7 @@ import org.springframework.http.ResponseEntity;
 public class GetRecommendationResponseDto extends LogInResponseDto {
 
     private boolean isRecommended;
-    private GetRecommendationResponseDto(boolean isRecommended) {
-        super();
+    public GetRecommendationResponseDto(boolean isRecommended) {
         this.isRecommended=isRecommended;
     }
 

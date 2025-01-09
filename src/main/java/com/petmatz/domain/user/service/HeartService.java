@@ -1,8 +1,10 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
 import com.petmatz.api.user.request.HeartedUserDto;
 import com.petmatz.api.user.request.HeartingRequestDto;
 import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.domain.user.component.HeartComponent;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.HeartRepository;
 import com.petmatz.domain.user.repository.UserRepository;
