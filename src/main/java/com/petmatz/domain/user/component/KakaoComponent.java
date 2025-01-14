@@ -3,6 +3,7 @@ package com.petmatz.domain.user.component;
 import com.petmatz.domain.user.entity.CustomOAuthUser;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
+import com.petmatz.domain.user.service.KakaoUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class KakaoComponent extends DefaultOAuth2UserService implements OAuth2UserLoader {
 
     private final UserRepository userRepository;
-    private final KakaoUserComponent kaKaoUserComponent;
+    private final KakaoUserService kaKaoUserService;
     @Override
     public boolean supports(String registrationId) {
         return "kakao".equalsIgnoreCase(registrationId);
@@ -53,11 +54,9 @@ public class KakaoComponent extends DefaultOAuth2UserService implements OAuth2Us
 
         User user = userRepository.findByAccountId(email);
         if (user == null) {
-            user = kaKaoUserComponent.createNewKakaoUser(kakaoAccountId, email, nickname, profileImage);
+            user = kaKaoUserService.createNewKakaoUser(kakaoAccountId, email, nickname, profileImage);
         }
 
         return new CustomOAuthUser(user.getId(), user.getAccountId(), attributes, oAuth2User.getAuthorities());
     }
-
-
 }

@@ -63,17 +63,16 @@ public class AuthService {
         // 지역명과 6자리 행정코드 가져오기
         KakaoRegion kakaoRegion = geocodingComponent.getValidRegion(info.getLatitude(), info.getLongitude());
 
-        //6-1 Img 정제
+        //Img 정제
         S3Imge petImg = awsClient.UploadImg(info.getAccountId(), info.getProfileImg(), "CUSTOM_USER_IMG", null);
 
-        // 7. 새로운 User 생성 및 저장
+        //새로운 User 생성 및 저장
         User user = UserFactory.createNewUser(info, encodedPassword, kakaoRegion.getRegionName(), kakaoRegion.getCodeAsInteger(), petImg.uploadURL());
         userRepository.save(user);
 
-        // 8. 인증 엔티티 삭제
+        //인증 엔티티 삭제
         certificationRepository.deleteAllByAccountId(accountId);
 
-        // 9. 성공 응답 반환
         return new SignUpResponseDto(user.getId(), petImg.checkResultImg());
     }
 

@@ -1,8 +1,9 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
 import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.EditMyProfileInfo;
 import com.petmatz.domain.user.repository.HeartRepository;
@@ -12,7 +13,6 @@ import com.petmatz.domain.user.response.GetMyProfileResponseDto;
 import com.petmatz.domain.user.response.GetOtherProfileResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,16 +20,9 @@ import java.net.MalformedURLException;
 
 @Component
 @RequiredArgsConstructor
-@Slf4j
-public class PageComponent {
-
-    /**
-     * 공통 부분 좀 빼야 할 것 같음
-     */
+public class PageService {
 
     private final JwtExtractProvider jwtExtractProvider;
-    private final UserRepository userRepository;
-    private final HeartRepository heartRepository;
     private final AwsClient awsClient;
     private final UserUtils userUtils;
 

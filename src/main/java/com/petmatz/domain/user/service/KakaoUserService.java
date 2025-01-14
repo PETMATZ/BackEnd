@@ -1,6 +1,8 @@
-package com.petmatz.domain.user.component;
+package com.petmatz.domain.user.service;
 
 import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.domain.user.component.GeocodingComponent;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.constant.LoginRole;
 import com.petmatz.domain.user.constant.LoginType;
 import com.petmatz.domain.user.entity.KakaoRegion;
@@ -18,7 +20,7 @@ import static com.petmatz.domain.user.exception.MatchErrorCode.*;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KakaoUserComponent {
+public class KakaoUserService {
 
     /**
      * 카카오 프로필 수정 어디다가 넣을지 고민중,,,
