@@ -7,8 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 public class EditKakaoProfileResponseDto extends LogInResponseDto {
-    private EditKakaoProfileResponseDto(){
-        super();
+    public EditKakaoProfileResponseDto(){
     }
 
     public static ResponseEntity<LogInResponseDto> idNotFound(){

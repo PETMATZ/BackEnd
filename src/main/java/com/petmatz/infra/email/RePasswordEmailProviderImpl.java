@@ -1,5 +1,6 @@
 package com.petmatz.infra.email;
 
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.service.RePasswordEmailProvider;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
+
+import static com.petmatz.domain.user.exception.MatchErrorCode.FAIL_MAIL_SEND;
 
 @Component
 @RequiredArgsConstructor
@@ -21,8 +24,7 @@ public class RePasswordEmailProviderImpl implements RePasswordEmailProvider {
 
 
     @Override
-    public boolean sendVerificationEmail(String email, String rePassword) {
-
+    public void sendVerificationEmail(String email, String rePassword) {
         try {
             // MIME 타입의 이메일 메시지 생성
             MimeMessage message = javaMailSender.createMimeMessage();
@@ -40,11 +42,8 @@ public class RePasswordEmailProviderImpl implements RePasswordEmailProvider {
             javaMailSender.send(message);
 
         } catch (Exception e) {
-            log.info("이메일 {} 로 전송 실패", email);
-            log.info("Error: {}", e);
-            return false;
+            throw new UserException(FAIL_MAIL_SEND); // 추후에 메일 예외로 변경
         }
-        return true;  // 전송 성공 시 true 리턴
     }
 
 

@@ -31,7 +31,7 @@ public class SignInResponseDto extends LogInResponseDto {
     private String region;
     private Integer regionCode;
 
-    private SignInResponseDto(User user) {
+    public SignInResponseDto(User user) {
         super();
         this.id = user.getId();
         this.accountId = user.getAccountId();
@@ -47,15 +47,5 @@ public class SignInResponseDto extends LogInResponseDto {
         this.mbti = user.getMbti();
         this.region = user.getRegion();
         this.regionCode=user.getRegionCode();
-    }
-
-    public static ResponseEntity<SignInResponseDto> success(User user) {
-        SignInResponseDto responseBody = new SignInResponseDto(user);
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
-
-    public static ResponseEntity<LogInResponseDto> signInFail() {
-        LogInResponseDto responseBody = new LogInResponseDto(ResponseCode.SIGN_IN_FAIL, ResponseMessage.SIGN_IN_FAIL);
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(responseBody);
     }
 }

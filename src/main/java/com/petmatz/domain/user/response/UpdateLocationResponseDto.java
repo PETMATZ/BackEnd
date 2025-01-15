@@ -12,8 +12,7 @@ public class UpdateLocationResponseDto extends LogInResponseDto{
     private String region;
     private Integer regionCode;
 
-    private UpdateLocationResponseDto(String region,Integer regionCode){
-        super();
+    public UpdateLocationResponseDto(String region, Integer regionCode){
         this.region = region;
         this.regionCode=regionCode;
     }

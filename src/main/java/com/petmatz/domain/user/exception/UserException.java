@@ -3,12 +3,12 @@ package com.petmatz.domain.user.exception;
 import com.petmatz.common.exception.BaseErrorCode;
 import com.petmatz.common.exception.DomainException;
 
-public class MatchException extends DomainException {
-    public MatchException(BaseErrorCode errorCode, String message) {
+public class UserException extends DomainException {
+    public UserException(BaseErrorCode errorCode, String message) {
         super(errorCode, message);
     }
 
-    public MatchException(BaseErrorCode errorCode) {
+    public UserException(BaseErrorCode errorCode) {
         super(errorCode);
     }
 }

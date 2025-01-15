@@ -30,7 +30,6 @@ public class GetMyProfileResponseDto extends LogInResponseDto {
     private Integer regionCode;
 
     public GetMyProfileResponseDto(User user) {
-        super();
         this.id = user.getId();
         this.accountId = user.getAccountId();
         this.nickname = user.getNickname();
