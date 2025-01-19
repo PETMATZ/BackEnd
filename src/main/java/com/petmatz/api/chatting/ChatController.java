@@ -6,8 +6,8 @@ import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.chatting.ChatMessageService;
 import com.petmatz.domain.chatting.ChatRoomService;
 import com.petmatz.domain.chatting.dto.ChatMessageInfo;
+import com.petmatz.domain.user.component.UserService;
 import com.petmatz.domain.user.info.UserInfo;
-import com.petmatz.domain.user.service.UserServiceImpl;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -34,7 +34,7 @@ public class ChatController {
 
     private final ChatMessageService chatService;
     private final SimpMessagingTemplate simpMessagingTemplate;
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final ChatRoomService chatRoomService;
     private final JwtExtractProvider jwtExtractProvider;
 

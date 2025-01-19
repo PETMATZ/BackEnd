@@ -12,7 +12,7 @@ import com.petmatz.domain.petmission.dto.PetMissionData;
 import com.petmatz.domain.petmission.dto.PetMissionDetails;
 import com.petmatz.domain.petmission.dto.UserToPetMissionListInfo;
 import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
-import com.petmatz.domain.user.service.UserService;
+import com.petmatz.domain.user.component.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;

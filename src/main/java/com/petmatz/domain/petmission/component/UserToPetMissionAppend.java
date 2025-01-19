@@ -9,12 +9,12 @@ import java.util.List;
 
 @Component
 @RequiredArgsConstructor
-public class UserToPetMissionInserter {
+public class UserToPetMissionAppend {
 
     private final UserToPetMissionRepository userToPetMissionRepository;
 
-    public List<UserToPetMissionEntity> insertUserToPetMission(List<UserToPetMissionEntity> list) {
-        return userToPetMissionRepository.saveAll(list);
+    public void insertUserToPetMission(List<UserToPetMissionEntity> list) {
+        userToPetMissionRepository.saveAll(list);
     }
 
 }

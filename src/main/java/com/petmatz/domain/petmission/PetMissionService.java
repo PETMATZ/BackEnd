@@ -28,10 +28,10 @@ public class PetMissionService {
     private final PetRepository petRepository;
 
     private final UserToChatRoomReader userToChatRoomReader;
-    private final UserToPetMissionInserter userToPetMissionInserter;
+    private final UserToPetMissionAppend userToPetMissionAppend;
     private final UserToPetMissionReader userToPetMissionReader;
     private final PetMissionReader petMissionReader;
-    private final PetMissionInserter petMissionInserter;
+    private final PetMissionAppend petMissionAppend;
     private final PetMissionAskReader petMissionAskReader;
     private final AwsClient awsClient;
 
@@ -69,7 +69,7 @@ public class PetMissionService {
                 .map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
                 .toList();
 
-        userToPetMissionInserter.insertUserToPetMission(userToPetMissionEntities);
+        userToPetMissionAppend.insertUserToPetMission(userToPetMissionEntities);
         return PetMissionData.of(chatRoomId, petMissionEntity);
     }
 
@@ -120,7 +120,7 @@ public class PetMissionService {
         S3Imge petImg = awsClient.UploadImg(userEmail, petMissionCommentInfo.imgURL(), "CARE_HISTORY_IMG", String.valueOf(petMissionAskEntity.getId()));
 
         //6-1 Img 정제
-        PetMissionAnswerEntity petMissionAnswerEntity = petMissionInserter.insertPetMissionAnswer(PetMissionAnswerEntity.of(petMissionCommentInfo, petImg.uploadURL()));
+        PetMissionAnswerEntity petMissionAnswerEntity = petMissionAppend.insertPetMissionAnswer(PetMissionAnswerEntity.of(petMissionCommentInfo, petImg.uploadURL()));
         petMissionAskEntity.addPetMissionAnswer(petMissionAnswerEntity);
         return petImg.checkResultImg();
     }

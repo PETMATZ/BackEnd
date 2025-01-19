@@ -50,6 +50,10 @@ public class UserService {
         petRepository.deleteAll(pets);
         userRepository.delete(user);
     }
+
+    public User findUser(Long userId) {
+        return userUtils.getCurrentUser(userId);
+    }
     
 
     public UserInfo selectUserInfo(String receiverEmail) {
