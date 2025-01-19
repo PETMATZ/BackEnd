@@ -47,7 +47,7 @@ public class UserToPetMissionEntity {
         return userId.equals(careId) ? RoleType.DOL : RoleType.MAL;
     }
 
-    public static boolean isListEmpty() {
-
-    }
+//    public static boolean isListEmpty() {
+//
+//    }
 }
