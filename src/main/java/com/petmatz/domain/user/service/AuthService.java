@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtManager;
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.user.component.AuthenticationComponent;
@@ -43,7 +43,7 @@ public class AuthService {
     private final CertificationRepository certificationRepository;
     private final GeocodingComponent geocodingComponent;
     private final AwsClient awsClient; // 추후에 수정
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
     private final AuthenticationComponent authenticationComponent;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();

@@ -1,6 +1,7 @@
-package com.petmatz.common.security.utils;
+package com.petmatz.common.security.jwt;
 
 import com.petmatz.domain.user.repository.UserRepository;
+import com.petmatz.infra.redis.component.RedisTokenComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,7 +14,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class JwtExtractProviderImpl implements JwtExtractProvider {
 
-    private final JwtProvider jwtProvider; // JWT를 검증하고 ID를 추출하는 클래스
+    private final JwtManager jwtManager; // JWT를 검증하고 ID를 추출하는 클래스
     private final UserRepository userRepository;
 
     @Override
@@ -33,7 +34,7 @@ public class JwtExtractProviderImpl implements JwtExtractProvider {
                 return (Long) principal; // Principal이 Long 타입인 경우 직접 반환
             } else if (principal instanceof String) {
                 // Principal이 String인 경우 JWT에서 ID 추출
-                return jwtProvider.validateAndGetUserId((String) principal);
+                return jwtManager.validateAndGetUserId((String) principal);
             } else {
                 throw new IllegalArgumentException("Invalid principal type: " + principal.getClass().getName());
             }
@@ -63,7 +64,7 @@ public class JwtExtractProviderImpl implements JwtExtractProvider {
                 return userRepository.findAccountIdByUserId(userId); // Repository 메서드 사용
             } else if (principal instanceof String) {
                 // Principal이 String 타입인 경우 JWT로 간주하고 accountId 추출
-                Map<String, Object> claims = jwtProvider.validate((String) principal);
+                Map<String, Object> claims = jwtManager.validate((String) principal);
                 if (claims != null && claims.containsKey("accountId")) {
                     return (String) claims.get("accountId");
                 }

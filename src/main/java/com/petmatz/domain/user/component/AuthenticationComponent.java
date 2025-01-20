@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.component;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtManager;
 import com.petmatz.domain.user.entity.Certification;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.exception.UserException;
@@ -26,7 +26,7 @@ public class AuthenticationComponent {
 
     private final CertificationRepository certificationRepository;
     private final UserRepository userRepository;
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
     private final UserUtils userUtils;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -44,7 +44,7 @@ public class AuthenticationComponent {
     }
 
     public String createJwtToken(User user) {
-        return jwtProvider.create(user.getId(), user.getAccountId());
+        return jwtManager.createAccessToken(user.getId(), user.getAccountId());
     }
 
     /**

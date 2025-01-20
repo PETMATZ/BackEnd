@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.RankUserResponse;

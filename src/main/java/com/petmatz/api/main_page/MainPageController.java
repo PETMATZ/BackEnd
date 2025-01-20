@@ -2,7 +2,7 @@ package com.petmatz.api.main_page;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.main_page.dto.MainPagePetMissionResponse;
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.petmission.PetMissionService;
 import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
 import io.swagger.v3.oas.annotations.Operation;

@@ -4,11 +4,9 @@ import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.user.request.DeleteIdRequestDto;
 import com.petmatz.api.user.request.EditKakaoProfileRequestDto;
 import com.petmatz.domain.user.service.KakaoUserService;
-import com.petmatz.domain.user.component.UserService;
-import com.petmatz.domain.user.response.EditKakaoProfileResponseDto;
+import com.petmatz.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

@@ -1,6 +1,5 @@
 package com.petmatz.domain.user.component;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.repository.HeartRepository;

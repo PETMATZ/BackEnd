@@ -1,6 +1,6 @@
 package com.petmatz.common.security.filter;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtManager;
 import com.petmatz.domain.user.constant.LoginRole;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
@@ -34,7 +34,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -45,11 +45,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (token == null) {
                 filterChain.doFilter(request, response);
                 return;
+                // 여기 예외 처리해야댐
             }
 
             // JWT 유효성 검증 및 사용자 ID 추출
-            Long userId = jwtProvider.validateAndGetUserId(token); // validate 메서드가 userId를 반환하도록 수정
+            Long userId = jwtManager.validateAndGetUserId(token); // validate 메서드가 userId를 반환하도록 수정
             if (userId == null) {
+                getRefreshTokenFromCookies
                 filterChain.doFilter(request, response);
                 return;
             }
