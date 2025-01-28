@@ -1,13 +1,17 @@
 package com.petmatz.common.security.jwt;
 
+import com.petmatz.domain.user.component.CookieComponent;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.infra.redis.component.RedisTokenComponent;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseCookie;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -27,7 +31,7 @@ import java.util.Map;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtManager {
+public class  JwtManager {
 
     @Value("${secret-access-key}")
     private String accessKey;
@@ -36,6 +40,8 @@ public class JwtManager {
     private String refreshKey;
 
     private final RedisTokenComponent redisTokenComponent;
+    private final CookieComponent cookieComponent;
+    private final UserUtils userUtils;
 
     /**
      * 주어진 사용자 ID와 계정 ID로 JWT 토큰을 생성하는 메서드.
@@ -130,7 +136,7 @@ public class JwtManager {
     }
 
     // refresh Token 으로 재발급
-    public String refreshAccessToken(String refreshToken) {
+    public void refreshAccessToken(HttpServletResponse response, String refreshToken) {
         try {
             SecretKey refreshKey = Keys.hmacShaKeyFor(this.refreshKey.getBytes(StandardCharsets.UTF_8));
 
@@ -142,16 +148,21 @@ public class JwtManager {
                     .getBody();
 
             Long userId = Long.parseLong(claims.getSubject());
+            String accountId = userUtils.findAccountIdByUserId(userId);
 
-            return createRefreshToken(userId);
+            String storedToken = redisTokenComponent.getRefreshTokenFromRedis(userId);
+            if (storedToken == null || !storedToken.equals(refreshToken)) {
+                log.error("Redis에 없는 리프레시 토큰이거나. 일치하지 않는 토큰입니당 다시 한번 확인해주세요");
+            }
+
+            String accessToken = createAccessToken(userId, accountId);
+            cookieComponent.setAccessTokenCookie(response, accessToken);
         } catch (ExpiredJwtException e) {
             // Refresh Token 만료 시 예외 처리
             log.error("Refresh token has expired." + e);
-            return null;
         } catch (Exception e) {
             // 기타 검증 실패 시 예외 처리
             log.error("Invalid refresh token." + e);
-            return null;
         }
     }
 }

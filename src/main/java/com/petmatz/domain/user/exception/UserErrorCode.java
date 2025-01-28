@@ -5,7 +5,7 @@ import com.petmatz.common.exception.ErrorReason;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public enum MatchErrorCode implements BaseErrorCode {
+public enum UserErrorCode implements BaseErrorCode {
 
     INSUFFICIENT_LOCATION_DATA(404, "INSUFFICIENT_LOCATION_DATA", "유요한 위치 정보를 가져올 수 없습니다."),
     MISS_KAKAO_LOACTION(400, "MISS_KAKAO_LOACTION", "카카오 지역 api를 호출 할 수 없습니다."),
@@ -23,8 +23,6 @@ public enum MatchErrorCode implements BaseErrorCode {
     HEART_USER_DUPLICATE(400, "HEART_USER_DUPLICATE", "찜한 사용자가 이미 존재합니다.");
 
 
-
-
     private final Integer status;
     private final String errorCode;
     private final String message;
@@ -32,6 +30,22 @@ public enum MatchErrorCode implements BaseErrorCode {
     @Override
     public ErrorReason getErrorReason() {
         return ErrorReason.of(status, errorCode, message);
+    }
+
+
+
+    UserErrorCode(int status, String errorCode, String message) {
+        this.status = status;
+        this.errorCode = errorCode;
+        this.message = message;
+    }
+
+    public int status() {
+        return status;
+    }
+
+    public String message() {
+        return message;
     }
 }
 

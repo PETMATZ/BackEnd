@@ -8,7 +8,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.*;
+import static com.petmatz.domain.user.exception.UserErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
@@ -40,6 +40,11 @@ public class UserUtils {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
         return user;
+    }
+
+    public String findAccountIdByUserId(Long userId) {
+        return userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UserException(USER_NOT_FOUND));
     }
 
 

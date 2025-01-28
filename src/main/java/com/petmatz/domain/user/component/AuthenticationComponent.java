@@ -17,8 +17,8 @@ import javax.naming.AuthenticationException;
 import java.security.cert.CertificateException;
 import java.time.LocalDateTime;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.CERTIFICATION_EXPIRED;
-import static com.petmatz.domain.user.exception.MatchErrorCode.MISS_MATCH_CODE;
+import static com.petmatz.domain.user.exception.UserErrorCode.CERTIFICATION_EXPIRED;
+import static com.petmatz.domain.user.exception.UserErrorCode.MISS_MATCH_CODE;
 
 @Component
 @RequiredArgsConstructor
@@ -30,6 +30,14 @@ public class AuthenticationComponent {
     private final UserUtils userUtils;
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    public String createJwtAccessToken(User user) {
+        return jwtManager.createAccessToken(user.getId(), user.getAccountId());
+    }
+
+    public String createJwtRefreshToken(User user) {
+        return jwtManager.createRefreshToken(user.getId());
+    }
+
     public User validateSignInCredentials(SignInInfo info) throws AuthenticationException {
         String accountId = info.getAccountId();
         String password = info.getPassword();
@@ -38,13 +46,9 @@ public class AuthenticationComponent {
 
         String encodedPassword = user.getPassword();
         if (!passwordEncoder.matches(password, encodedPassword)) {
-            throw new AuthenticationException("비밀번호 불일치");
+//            throw new UserException();
         }
         return user;
-    }
-
-    public String createJwtToken(User user) {
-        return jwtManager.createAccessToken(user.getId(), user.getAccountId());
     }
 
     /**

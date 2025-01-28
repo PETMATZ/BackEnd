@@ -45,13 +45,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (token == null) {
                 filterChain.doFilter(request, response);
                 return;
-                // 여기 예외 처리해야댐
             }
 
             // JWT 유효성 검증 및 사용자 ID 추출
             Long userId = jwtManager.validateAndGetUserId(token); // validate 메서드가 userId를 반환하도록 수정
             if (userId == null) {
-                getRefreshTokenFromCookies
                 filterChain.doFilter(request, response);
                 return;
             }

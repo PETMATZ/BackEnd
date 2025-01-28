@@ -16,6 +16,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsById(Long userId);
     boolean existsByAccountId(String accountId);
     Optional<User> findById(Long userId);
+
+    Optional<String> findByUserId(Long userId);
     User findByAccountId(String accountId);
 
     @Query("SELECT u.accountId FROM User u WHERE u.id = :userId")
@@ -27,4 +29,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     void deleteUserById(@Param("userId") Long userId);
 
     List<User> findByRegionCodeOrderByRecommendationCountDesc(Integer regionCode);
+
+
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.FAIL_MAIL_SEND;
+import static com.petmatz.domain.user.exception.UserErrorCode.FAIL_MAIL_SEND;
 
 @Component
 @RequiredArgsConstructor

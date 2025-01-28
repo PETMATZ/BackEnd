@@ -3,7 +3,6 @@ package com.petmatz.api.user.controller;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.user.request.RepasswordRequestDto;
 import com.petmatz.api.user.request.SendRepasswordRequestDto;
-import com.petmatz.domain.user.component.PasswordService;
 import com.petmatz.domain.user.response.RepasswordResponseDto;
 import com.petmatz.domain.user.response.SendRepasswordResponseDto;
 import com.petmatz.domain.user.service.PasswordService;

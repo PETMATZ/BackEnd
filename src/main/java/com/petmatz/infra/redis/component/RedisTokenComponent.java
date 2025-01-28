@@ -11,7 +11,6 @@ import java.time.Duration;
 public class RedisTokenComponent {
 
     private final RedisTemplate<String, Object> redisTemplate;
-
     public void saveRefreshToken(Long userId, String refreshToken) {
         String redisKey = "refreshToken:" + userId;
         try {
@@ -19,5 +18,9 @@ public class RedisTokenComponent {
         } catch (Exception e) {
             throw new IllegalStateException("일단은 리프레시 토큰 저장 오류입니다!");
         }
+    }
+    public String getRefreshTokenFromRedis(Long userId) {
+        String redisKey = "refreshToken:" + userId;
+        return (String) redisTemplate.opsForValue().get(redisKey);
     }
 }

@@ -1,20 +1,17 @@
 package com.petmatz.domain.user.component;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.response.KakaoGeocodingResponse;
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import com.petmatz.domain.user.entity.KakaoRegion;
 
 
 import java.util.List;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.INSUFFICIENT_LOCATION_DATA;
+import static com.petmatz.domain.user.exception.UserErrorCode.INSUFFICIENT_LOCATION_DATA;
 
 @Service
 public class GeocodingComponent {
