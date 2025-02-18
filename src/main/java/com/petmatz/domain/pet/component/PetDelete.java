@@ -18,7 +18,6 @@ public class PetDelete {
         perRepository.findByIdAndUser(petId, user)
                 .orElseThrow(() -> new PetServiceException(PET_NOT_FOUND));
         perRepository.deleteById(petId);
-//        repository.delete(pet);
     }
 
 }

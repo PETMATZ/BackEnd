@@ -23,13 +23,15 @@ import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.naming.AuthenticationException;
 import java.net.MalformedURLException;
 import java.security.cert.CertificateException;
 
-@Component
+//@Component
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class AuthService {
