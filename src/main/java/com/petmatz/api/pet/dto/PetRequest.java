@@ -1,5 +1,7 @@
 package com.petmatz.api.pet.dto;
 
+import com.petmatz.domain.pet.dto.PetSaveInfo;
+
 public record PetRequest(
         Long id,
         String dogRegNo,
@@ -15,5 +17,24 @@ public record PetRequest(
         String profileImg,
         String comment
 ) {
+
+    public PetSaveInfo of() {
+        return PetSaveInfo.builder()
+                .id(id)
+                .dogRegNo(dogRegNo)
+                .ownerNm(ownerNm)
+                .petName(petName)
+                .breed(breed)
+                .gender(gender)
+                .neuterYn(neuterYn)
+                .size(size)
+                .age(age)
+                .temperament(temperament)
+                .preferredWalkingLocation(preferredWalkingLocation)
+                .profileImg(profileImg)
+                .comment(comment)
+                .build();
+    }
+
 }
 
