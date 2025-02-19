@@ -28,7 +28,8 @@ public class UserUtils {
             throw new UserException(USER_DUPLICATE);
         }
     }
-    public User findUser(String accountId) {
+    public User findUser(Object inAccountId) {
+        String accountId = String.valueOf(inAccountId);
         User user = userRepository.findByAccountId(accountId);
         if (user == null) {
             throw new UserException(USER_NOT_FOUND);
@@ -43,7 +44,7 @@ public class UserUtils {
     }
 
     public String findAccountIdByUserId(Long userId) {
-        return userRepository.findByUserId(userId)
+        return userRepository.findUsernameById(userId)
                 .orElseThrow(() -> new UserException(USER_NOT_FOUND));
     }
 
