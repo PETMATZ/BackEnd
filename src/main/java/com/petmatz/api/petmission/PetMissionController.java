@@ -1,6 +1,7 @@
 package com.petmatz.api.petmission;
 
 import com.petmatz.api.global.dto.Response;
+import com.petmatz.api.global.utils.SendChatMessage;
 import com.petmatz.api.petmission.dto.*;
 import com.petmatz.common.constants.PetMissionStatusZip;
 import com.petmatz.common.security.utils.JwtExtractProvider;
@@ -29,9 +30,9 @@ import java.util.List;
 public class PetMissionController {
 
     private final PetMissionService petMissionService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatMessageService chatService;
     private final UserService userService;
+    private final SendChatMessage sendChatMessage;
 
     private final JwtExtractProvider jwtExtractProvider;
 
@@ -53,16 +54,14 @@ public class PetMissionController {
 
         chatService.updateMessage(petMissionRequest.ofto(), petMissionData, receiverEmail);
 
-        String destination = "/topic/chat/" + petMissionData.chatRoomId();
         //채팅 메세지에 UUID 담아서 보내기
         ChatMessageInfo chatMessageInfo = petMissionRequest.of(petMissionData.petMissionId(), careEmail,receiverEmail);
 
         PetMissionResponse petMissionResponse = PetMissionResponse.of(petMissionData);
-        simpMessagingTemplate.convertAndSend(destination, chatMessageInfo);
+        sendChatMessage.sendChatMessage(petMissionData.chatRoomId(), chatMessageInfo);
         return Response.success(petMissionResponse);
     }
 
-    //TODO 리펙토링 필수임 쿼리문 그지 같음 지금
     @Operation(summary = "멍멍이의 부탁 리스트 조회", description = "멍멍이 리스트 조회 API")
     @GetMapping
     public Response<List<UserToPetMissionListInfo>> selectPetMissionList() {
@@ -89,9 +88,8 @@ public class PetMissionController {
             String chatRoomId = petMissionService.selectChatRoomId(petMissionDetails.careEmail(), petMissionDetails.receiverEmail());
             ChatMessageInfo chatMessageInfo = petMissionUpdateRequest.of(petMissionUpdateRequest.petMissionId());
             chatService.updateMessage(petMissionUpdateRequest.of(petMissionUpdateRequest.petMissionId()), chatRoomId);
-            String destination = "/topic/chat/" + chatRoomId;
             //채팅 메세지에 UUID 담아서 보내기
-            simpMessagingTemplate.convertAndSend(destination, chatMessageInfo);
+            sendChatMessage.sendChatMessage(chatRoomId, chatMessageInfo);
             return Response.success("업데이트가 정상적으로 되었습니다.");
         }
         return Response.success("업데이트가 정상적으로 되었습니다.");
