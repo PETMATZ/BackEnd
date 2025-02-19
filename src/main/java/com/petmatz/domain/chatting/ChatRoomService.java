@@ -33,14 +33,10 @@ public class ChatRoomService {
     private final ChatRoomMetaDataDeleter chatRoomMetaDataDeleter;
     private final ChatReadStatusDeleter chatReadStatusDeleter;
 
-//    private final JwtExtractProvider jwtExtractProvider;
-
-
     
     //채팅방 신규 생성, 존재시 해당 ChatRoomID 반환
     public long createdChatRoom(ChatRoomInfo chatRoomInfo) {
         Optional<ChatRoomEntity> chatRoomEntity = chatRoomReader.selectChatRoom(chatRoomInfo);
-        System.out.println(chatRoomEntity.toString());
 
         if (chatRoomEntity.isPresent()) {
             return chatRoomEntity.get().getId();
@@ -68,18 +64,18 @@ public class ChatRoomService {
 
     private Map<String, IChatUserInfo> getUserList(List<UserToChatRoomEntity> chatRoomNumber, String userEmail) {
         Map<String, IChatUserInfo> userList = new HashMap<>();
+
         for (UserToChatRoomEntity userToChatRoomEntity : chatRoomNumber) {
-            List<UserToChatRoomEntity> participants = userToChatRoomEntity.getChatRoom().getParticipants();
-            // 현재 사용자가 아닌 다른 사용자를 찾음
-            for (UserToChatRoomEntity participant : participants) {
-                if (!participant.getUser().getAccountId().equals(userEmail)) {
-                    IChatUserInfo userInfo = IChatUserInfo.of(
-                            participant.getUser()
-                    );
-                    userList.put(userToChatRoomEntity.getChatRoom().getId().toString(), userInfo);
-                    break; // 다른 참여자를 하나만 찾으면 됨
-                }
-            }
+            String chatRoomId = userToChatRoomEntity.getChatRoom().getId().toString();
+
+            // 현재 사용자가 아닌 다른 사용자를 찾기 위한 스트림 사용
+            userToChatRoomEntity.getChatRoom().getParticipants().stream()
+                    .filter(participant -> !participant.getUser().getAccountId().equals(userEmail))
+                    .findFirst() // 첫 번째로 조건을 만족하는 사용자 찾기
+                    .ifPresent(participant -> {
+                        IChatUserInfo userInfo = IChatUserInfo.of(participant.getUser());
+                        userList.put(chatRoomId, userInfo);
+                    });
         }
         return userList;
     }
@@ -107,7 +103,7 @@ public class ChatRoomService {
         chatReadStatusDeleter.deleteChatReadStatusDocs(strings, roomId);
     }
 
-    public String selectChatRoomUserInfo(String chatRoomId, String userEmail) {
+    public String selectChatRoomUserEmail(String chatRoomId, String userEmail) {
         List<String> userEmailList = chatRoomReader.selectChatRoomUserList(chatRoomId);
         if (userEmailList.isEmpty()) {
             throw new NullPointerException("해당 채팅방이 존재하지 않습니다.");

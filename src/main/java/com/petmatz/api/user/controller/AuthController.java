@@ -11,7 +11,6 @@ import com.petmatz.domain.user.response.DeleteIdResponseDto;
 import com.petmatz.domain.user.response.SignInResponseDto;
 import com.petmatz.domain.user.response.SignUpResponseDto;
 import com.petmatz.domain.user.service.AuthService;
-import com.petmatz.domain.user.service.UserService;
 import com.petmatz.user.common.LogInResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;

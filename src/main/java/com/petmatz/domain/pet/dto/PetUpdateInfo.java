@@ -18,17 +18,5 @@ public record PetUpdateInfo(
         String temperament
 ) {
 
-    public static PetUpdateInfo of(PetUpdateRequest petUpdateRequest) {
-        return PetUpdateInfo.builder()
-                .age(petUpdateRequest.age())
-                .breed(petUpdateRequest.breed())
-                .comment(petUpdateRequest.comment())
-                .gender(petUpdateRequest.gender())
-                .neuterYn(petUpdateRequest.neuterYn())
-                .petName(petUpdateRequest.petName())
-                .profileImg(petUpdateRequest.profileImg())
-                .size(petUpdateRequest.size())
-                .temperament(petUpdateRequest.temperament())
-                .build();
-    }
+
 }

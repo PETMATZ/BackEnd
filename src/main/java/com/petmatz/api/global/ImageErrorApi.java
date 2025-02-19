@@ -3,7 +3,7 @@ package com.petmatz.api.global;
 import com.petmatz.api.global.dto.ImageErrorRequest;
 import com.petmatz.api.global.dto.ImgType;
 import com.petmatz.domain.pet.PetService;
-import com.petmatz.domain.user.service.UserService;
+//import com.petmatz.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
 public class ImageErrorApi {
-    private final UserService userService;
+//    private final UserService userService;
     private final PetService petService;
 
     @DeleteMapping("/image/error")
@@ -32,7 +32,7 @@ public class ImageErrorApi {
 
     private void selectService(ImgType type, Long UUID) {
         if (type.name().equals("U")) {
-            userService.deleteUser(UUID);
+//            userService.deleteUser(UUID);
         } else if (type.name().equals("P")) {
 
         } else if (type.name().equals("H")) {

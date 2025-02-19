@@ -2,10 +2,12 @@ package com.petmatz.api.chatting;
 
 import com.petmatz.api.chatting.dto.*;
 import com.petmatz.api.global.dto.Response;
+import com.petmatz.api.global.utils.SendChatMessage;
 import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.chatting.ChatMessageService;
 import com.petmatz.domain.chatting.ChatRoomService;
 import com.petmatz.domain.chatting.dto.ChatMessageInfo;
+import com.petmatz.domain.user.service.UserService;
 import com.petmatz.domain.user.info.UserInfo;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,7 +19,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,24 +33,22 @@ import java.time.LocalDateTime;
 public class ChatController {
 
     private final ChatMessageService chatService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
-    private final UserServiceImpl userService;
+    private final UserService userService;
     private final ChatRoomService chatRoomService;
     private final JwtExtractProvider jwtExtractProvider;
+    private final SendChatMessage sendChatMessage;
 
     @MessageMapping("/chat")
     public void sendPrivateMessage(ChatMessageRequest chatMessageRequest) {
         ChatMessageInfo chatMessageInfo = chatMessageRequest.of();
         chatService.updateMessage(chatMessageInfo, chatMessageRequest.chatRoomId());
-        String destination = "/topic/chat/" + chatMessageRequest.chatRoomId();
-        simpMessagingTemplate.convertAndSend(destination, chatMessageInfo);
+        sendChatMessage.sendChatMessage(chatMessageRequest.chatRoomId(), chatMessageInfo);
     }
 
     @MessageMapping("/chat/{chatRoomId}/read")
     public void sendReadStatus(@Payload ChatReadStatusDirect chatReadStatusDirect,
                                @DestinationVariable String chatRoomId) {
-        String destination = "/topic/chat/" + chatRoomId;
-        simpMessagingTemplate.convertAndSend(destination, chatReadStatusDirect);
+        sendChatMessage.sendChatMessage(chatRoomId, chatReadStatusDirect);
     }
 
 
@@ -68,7 +67,7 @@ public class ChatController {
                                          @RequestParam(defaultValue = "1") int startPage
     ) {
         String userEmail = jwtExtractProvider.findAccountIdFromJwt();
-        String receiverEmail = chatRoomService.selectChatRoomUserInfo(chatRoomId, userEmail);
+        String receiverEmail = chatRoomService.selectChatRoomUserEmail(chatRoomId, userEmail);
         Page<ChatMessageInfo> chatMessageInfos = chatService.selectMessage(receiverEmail, chatRoomId, startPage, pageSize, lastFetchTimestamp);
         UserInfo userInfo = userService.selectUserInfo(receiverEmail);
 

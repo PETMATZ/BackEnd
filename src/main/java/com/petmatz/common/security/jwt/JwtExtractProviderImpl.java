@@ -65,6 +65,7 @@ public class JwtExtractProviderImpl implements JwtExtractProvider {
             } else if (principal instanceof String) {
                 // Principal이 String 타입인 경우 JWT로 간주하고 accountId 추출
                 Map<String, Object> claims = jwtManager.validate((String) principal);
+
                 if (claims != null && claims.containsKey("accountId")) {
                     return (String) claims.get("accountId");
                 }

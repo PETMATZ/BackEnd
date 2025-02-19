@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserToPetMissionRepository extends JpaRepository<UserToPetMissionEntity, Long> {
 
     @Query("select utr from UserToPetMissionEntity utr where utr.user.id = :userId")
-    Optional<List<UserToPetMissionEntity>> selectUserToPetMissionList(@Param("userId") Long userId);
+    List<UserToPetMissionEntity> selectUserToPetMissionList(@Param("userId") Long userId);
 
 
     @Query("SELECT utr FROM UserToPetMissionEntity utr " +
@@ -26,7 +26,7 @@ public interface UserToPetMissionRepository extends JpaRepository<UserToPetMissi
 
 
     @Query("select utr from UserToPetMissionEntity utr where utr.petMission.id = :petMissionId")
-    Optional<List<UserToPetMissionEntity>> selectUserToPetMissionList(@Param("petMissionId") String petMissionId);
+    List<UserToPetMissionEntity> selectUserToPetMissionList(@Param("petMissionId") String petMissionId);
 
 
 //    @Query("select pm from UserToPetMissionEntity pm where pm.user.id = :userId")

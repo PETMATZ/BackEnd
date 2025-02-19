@@ -5,6 +5,9 @@ build/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+### log 파일 제외 ###
+/logs/
+
 ### STS ###
 .apt_generated
 .classpath

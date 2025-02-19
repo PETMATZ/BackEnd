@@ -18,8 +18,7 @@ public class UserToPetMissionReader {
 
     //TODO 예외 처리 필요
     public List<UserToPetMissionEntity> selectUserToPetMissionList(Long userId) {
-        Optional<List<UserToPetMissionEntity>> userToPetMissionEntities = userToPetMissionRepository.selectUserToPetMissionList(userId);
-        return userToPetMissionEntities.get();
+        return userToPetMissionRepository.selectUserToPetMissionList(userId);
     }
 
     public List<UserToPetMissionEntity> selectUserToPetMissionList(Long userId, LocalDate petMissionStart) {
@@ -27,13 +26,11 @@ public class UserToPetMissionReader {
     }
 
     public List<UserToPetMissionEntity> selectUserToPetMissionList(PetMissionUpdateRequest petMissionUpdateRequest) {
-        Optional<List<UserToPetMissionEntity>> userToPetMissionEntities = userToPetMissionRepository.selectUserToPetMissionList(petMissionUpdateRequest.petMissionId());
-        return userToPetMissionEntities.get();
+        return userToPetMissionRepository.selectUserToPetMissionList(petMissionUpdateRequest.petMissionId());
     }
 
     public List<UserToPetMissionEntity> selectUserToPetMissionList(String petMissionId) {
-        Optional<List<UserToPetMissionEntity>> petMissionEntity = userToPetMissionRepository.selectUserToPetMissionList(petMissionId);
-        return petMissionEntity.get();
+        return  userToPetMissionRepository.selectUserToPetMissionList(petMissionId);
     }
 
 

@@ -2,7 +2,7 @@ package com.petmatz.api.pet;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.global.dto.S3ImgDataResponse;
-import com.petmatz.api.pet.dto.PetApiRequest;
+import com.petmatz.api.pet.dto.PetRegisterNoRequest;
 import com.petmatz.api.pet.dto.PetInfoResponse;
 import com.petmatz.api.pet.dto.PetRequest;
 import com.petmatz.api.pet.dto.PetUpdateRequest;
@@ -10,13 +10,11 @@ import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.global.S3ImgDataInfo;
 import com.petmatz.domain.pet.PetService;
 import com.petmatz.domain.pet.dto.OpenApiPetInfo;
-import com.petmatz.domain.pet.dto.PetInf;
-import com.petmatz.domain.pet.dto.PetUpdateInfo;
-import com.petmatz.domain.user.component.UserReader;
+import com.petmatz.domain.user.service.UserService;
 import com.petmatz.domain.user.entity.User;
-import com.petmatz.domain.user.repository.UserRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,19 +27,18 @@ import java.net.MalformedURLException;
 public class PetController {
 
     private final PetService petService;
-    //TODO 바꿔야 됨 -> userReader -> userService로
-//    private final UserService userService;
-    private final UserReader userReader;
-
-    private final UserRepository userRepository;
+    private final UserService userService;
     private final JwtExtractProvider jwtExtractProvider;
 
     // 동물등록번호 조회
     @PostMapping("/fetch")
     @Operation(summary = "동물등록번호 조회", description = "외부 API를 통해 동물등록번호 정보를 조회합니다.")
-    public Response<PetInfoResponse> fetchPetInfo(@RequestBody PetApiRequest request) {
-        PetInf serviceDto = PetApiRequest.toServiceDto(request);
-        OpenApiPetInfo openApiPetInfo = petService.fetchPetInfo(serviceDto.dogRegNo(), serviceDto.ownerNm());
+    @Parameters({
+            @Parameter(name = "dogRegNo", description = "강아지 고유 No", example = "1123412"),
+            @Parameter(name = "ownerNm", description = "사용자 이름", example = "홍길동"),
+    })
+    public Response<PetInfoResponse> fetchPetInfo(@RequestBody PetRegisterNoRequest request) {
+        OpenApiPetInfo openApiPetInfo = petService.fetchPetInfo(request.dogRegNo(), request.ownerNm());
         PetInfoResponse responseDto = PetInfoResponse.of(openApiPetInfo);
         return Response.success(responseDto);
     }
@@ -51,8 +48,8 @@ public class PetController {
     @Operation(summary = "반려동물 등록", description = "사용자의 반려동물 정보를 등록합니다.")
     public Response<S3ImgDataResponse> registerPet(@RequestBody PetRequest request) throws MalformedURLException {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userReader.getAuthenticatedUser(userId);
-        S3ImgDataInfo petSaveInfo = petService.savePet(user, PetInf.of(request));
+        User user = userService.findUser(userId);
+        S3ImgDataInfo petSaveInfo = petService.savePet(user, request.of());
         return Response.success(S3ImgDataResponse.of(petSaveInfo));
     }
 
@@ -62,8 +59,8 @@ public class PetController {
     @Parameter(name = "id", description = "반려동물 ID", example = "1")
     public Response<S3ImgDataResponse> updatePet(@PathVariable Long id, @RequestBody PetUpdateRequest petUpdateRequest) throws MalformedURLException {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userReader.getAuthenticatedUser(userId);
-        S3ImgDataInfo petSaveInfo = petService.updatePet(id, user, PetUpdateInfo.of(petUpdateRequest));
+        User user = userService.findUser(userId);
+        S3ImgDataInfo petSaveInfo = petService.updatePet(id, user, petUpdateRequest.of());
         return Response.success(S3ImgDataResponse.of(petSaveInfo));
     }
 
@@ -73,7 +70,7 @@ public class PetController {
     @Parameter(name = "id", description = "반려동물 ID", example = "1")
     public Response<Void> deletePet(@PathVariable Long id) {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userReader.getAuthenticatedUser(userId);
+        User user = userService.findUser(userId);
         petService.deletePet(id, user);
         return Response.success("댕댕이 정보가 성공적으로 삭제되었습니다.");
     }

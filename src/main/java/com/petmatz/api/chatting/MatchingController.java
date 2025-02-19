@@ -47,11 +47,11 @@ public class MatchingController {
     ) {
         String userEmail = jwtExtractProvider.findAccountIdFromJwt();
 
-        return Response.success(
-                chatRoomService.selectChatRoomList(pageSize, startPage, userEmail).stream()
-                        .map(ChatRoomMetaDataInfoResponse::of)
-                        .collect(Collectors.toList())
-        );
+        List<ChatRoomMetaDataInfoResponse> chatRoomMetaDataInfoResponseList = chatRoomService.selectChatRoomList(pageSize, startPage, userEmail).stream()
+                .map(ChatRoomMetaDataInfoResponse::of)
+                .collect(Collectors.toList());
+
+        return Response.success(chatRoomMetaDataInfoResponseList);
     }
 
     @DeleteMapping

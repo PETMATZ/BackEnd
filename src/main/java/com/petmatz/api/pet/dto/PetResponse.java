@@ -1,6 +1,5 @@
 package com.petmatz.api.pet.dto;
 
-import com.petmatz.domain.pet.dto.PetInf;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.sosboard.dto.SosBoardPet;
 
@@ -18,22 +17,6 @@ public record PetResponse(
         String preferredWalkingLocation,
         String comment
 ) {
-    public static PetResponse of(PetInf serviceDto) {
-        return new PetResponse(
-                serviceDto.id(), // ID 추가
-                serviceDto.dogRegNo(),
-                serviceDto.petName(),
-                serviceDto.gender(),
-                serviceDto.breed(),
-                serviceDto.neuterYn().equalsIgnoreCase("YES") ? "중성" : "미중성",
-                serviceDto.profileImg(),
-                serviceDto.age(),
-                serviceDto.temperament(),
-                serviceDto.size(),
-                serviceDto.preferredWalkingLocation(),
-                serviceDto.comment()
-        );
-    }
 
     public static PetResponse of(SosBoardPet dto) {
         return new PetResponse(

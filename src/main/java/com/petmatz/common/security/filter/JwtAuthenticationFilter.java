@@ -1,6 +1,7 @@
 package com.petmatz.common.security.filter;
 
 import com.petmatz.common.security.jwt.JwtManager;
+import com.petmatz.common.security.jwt.JwtProvider;
 import com.petmatz.domain.user.constant.LoginRole;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
