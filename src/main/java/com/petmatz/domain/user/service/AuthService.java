@@ -1,9 +1,12 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.jwt.JwtProvider;
+
+import com.petmatz.common.security.jwt.JwtManager;
+
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.user.component.AuthenticationComponent;
+import com.petmatz.domain.user.component.CookieComponent;
 import com.petmatz.domain.user.entity.Certification;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;
@@ -44,7 +47,8 @@ public class AuthService {
     private final CertificationRepository certificationRepository;
     private final GeocodingComponent geocodingComponent;
     private final AwsClient awsClient; // 추후에 수정
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
+    private final CookieComponent cookieComponent;
     private final AuthenticationComponent authenticationComponent;
 
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -80,16 +84,12 @@ public class AuthService {
 
     public SignInResponseDto signIn(SignInInfo info, HttpServletResponse response) throws AuthenticationException {
         User user = authenticationComponent.validateSignInCredentials(info);
-        String token = authenticationComponent.createJwtToken(user);
+        String accessToken = authenticationComponent.createJwtAccessToken(user);
+        String refreshToken = authenticationComponent.createJwtRefreshToken(user);
 
-        ResponseCookie responseCookie = ResponseCookie.from("jwt", token)
-                .httpOnly(true)           // XSS 방지
-                .secure(true)             // HTTPS만 허용
-                .path("/")                // 모든 경로에서 접근 가능
-                .sameSite("None")         // SameSite=None 설정
-                .maxAge((3600))
-                .build();
-        response.addHeader("Set-Cookie", responseCookie.toString());
+        cookieComponent.setAccessTokenCookie(response, accessToken);
+        cookieComponent.setRefreshTokenCookie(response, refreshToken);
+
         // 로그인 성공 응답 반환
         return new SignInResponseDto(user);
     }

@@ -6,7 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.PASSWORD_MISMATCH;
+import static com.petmatz.domain.user.exception.UserErrorCode.PASSWORD_MISMATCH;
 
 @Component
 @RequiredArgsConstructor

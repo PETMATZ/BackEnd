@@ -1,5 +1,6 @@
 package com.petmatz.common.security.handler;
 
+import com.petmatz.common.security.jwt.JwtManager;
 import com.petmatz.common.security.jwt.JwtProvider;
 import com.petmatz.domain.user.entity.CustomOAuthUser;
 import com.petmatz.domain.user.entity.User;
@@ -19,7 +20,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    private final JwtProvider jwtProvider;
+    private final JwtManager jwtManager;
     private final UserRepository userRepository;
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -30,7 +31,7 @@ public class OAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         String accountId = oAuth2User.getName();
 
         // JWT 생성
-        String token = jwtProvider.create(userId, accountId);
+        String token = jwtManager.createAccessToken(userId, accountId);
 
         // JWT 쿠키 설정
         ResponseCookie jwtCookie = ResponseCookie.from("jwt", token)

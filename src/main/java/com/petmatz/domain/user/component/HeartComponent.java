@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.*;
+import static com.petmatz.domain.user.exception.UserErrorCode.*;
 
 @RequiredArgsConstructor
 @Component

@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.petmatz.domain.user.exception.MatchErrorCode.*;
+import static com.petmatz.domain.user.exception.UserErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
