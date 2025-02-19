@@ -10,7 +10,7 @@ import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.global.S3ImgDataInfo;
 import com.petmatz.domain.pet.PetService;
 import com.petmatz.domain.pet.dto.OpenApiPetInfo;
-import com.petmatz.domain.user.component.UserService;
+import com.petmatz.domain.user.service.UserService;
 import com.petmatz.domain.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -13,12 +13,11 @@ import com.petmatz.domain.petmission.dto.PetMissionData;
 import com.petmatz.domain.petmission.dto.PetMissionDetails;
 import com.petmatz.domain.petmission.dto.UserToPetMissionListInfo;
 import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
-import com.petmatz.domain.user.component.UserService;
+import com.petmatz.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
 import lombok.RequiredArgsConstructor;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.MalformedURLException;
