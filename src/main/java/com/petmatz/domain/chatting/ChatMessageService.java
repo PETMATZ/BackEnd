@@ -1,5 +1,6 @@
 package com.petmatz.domain.chatting;
 
+import com.petmatz.api.chatting.dto.ChatReadStatusDirect;
 import com.petmatz.domain.chatting.component.ChatMessageReader;
 import com.petmatz.domain.chatting.component.ChatMessageUpdater;
 import com.petmatz.domain.chatting.docs.ChatReadStatusDocs;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -20,8 +22,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ChatMessageService {
 
+
     private final ChatMessageReader chatMessageReader;
     private final ChatMessageUpdater chatMessageUpdater;
+
 
 
     public Page<ChatMessageInfo> selectMessage(String receiver, String chatRoomsId, int pageNumber, int pageSize, LocalDateTime lastFetchTimestamp) {
@@ -55,6 +59,5 @@ public class ChatMessageService {
     public void updateMessage(ChatMessagePetMissionInfo chatMessageInfo, PetMissionData petMissionData, String receiverEmail) {
         chatMessageUpdater.updateMessage(chatMessageInfo.of(receiverEmail, petMissionData.petMissionId()),petMissionData.chatRoomId());
     }
-
 
 }
