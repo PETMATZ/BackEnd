@@ -1,6 +1,5 @@
 package com.petmatz.domain.chatting;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
 import com.petmatz.domain.chatting.component.*;
 import com.petmatz.domain.chatting.docs.ChatReadStatusDocs;
 import com.petmatz.domain.chatting.dto.ChatRoomInfo;

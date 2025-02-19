@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.component;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtProvider;
 import com.petmatz.domain.user.entity.Certification;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.exception.UserException;

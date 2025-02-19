@@ -3,7 +3,7 @@ package com.petmatz.api.sosboard;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.api.sosboard.dto.*;
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.sosboard.SosBoardService;
 import com.petmatz.domain.sosboard.dto.*;
 import com.petmatz.domain.user.entity.User;

@@ -1,4 +1,4 @@
-package com.petmatz.common.security.utils;
+package com.petmatz.common.security.jwt;
 
 
 public interface JwtExtractProvider {

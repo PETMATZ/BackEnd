@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;

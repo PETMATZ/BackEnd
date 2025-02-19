@@ -1,6 +1,6 @@
 package com.petmatz.domain.match.service;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.match.component.BoundingBoxCalculator;
 import com.petmatz.domain.match.component.MatchScoreCalculator;
 import com.petmatz.domain.match.component.MatchScoreProcessor;

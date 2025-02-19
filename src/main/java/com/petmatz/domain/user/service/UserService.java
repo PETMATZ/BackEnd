@@ -1,7 +1,7 @@
 package com.petmatz.domain.user.service;
 
 import com.petmatz.api.user.request.DeleteIdRequestDto;
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
 import com.petmatz.domain.user.component.PasswordComponent;

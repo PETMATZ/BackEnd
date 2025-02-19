@@ -1,6 +1,6 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtProvider;
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.user.component.AuthenticationComponent;
@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

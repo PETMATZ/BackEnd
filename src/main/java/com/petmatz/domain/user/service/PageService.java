@@ -1,18 +1,15 @@
 package com.petmatz.domain.user.service;
 
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.EditMyProfileInfo;
-import com.petmatz.domain.user.repository.HeartRepository;
-import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.EditMyProfileResponseDto;
 import com.petmatz.domain.user.response.GetMyProfileResponseDto;
 import com.petmatz.domain.user.response.GetOtherProfileResponseDto;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 

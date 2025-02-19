@@ -4,7 +4,7 @@ import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.global.utils.SendChatMessage;
 import com.petmatz.api.petmission.dto.*;
 import com.petmatz.common.constants.PetMissionStatusZip;
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.chatting.ChatMessageService;
 import com.petmatz.domain.chatting.dto.ChatMessageInfo;
 import com.petmatz.domain.petmission.PetMissionService;

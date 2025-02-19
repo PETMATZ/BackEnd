@@ -1,7 +1,7 @@
 package com.petmatz.domain.user.service;
 
 import com.petmatz.api.user.request.UpdateRecommendationRequestDto;
-import com.petmatz.common.security.utils.JwtExtractProvider;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.user.component.RecommendComponent;
 import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.Recommendation;

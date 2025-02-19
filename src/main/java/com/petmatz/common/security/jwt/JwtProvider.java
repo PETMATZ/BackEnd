@@ -1,4 +1,4 @@
-package com.petmatz.common.security.utils;
+package com.petmatz.common.security.jwt;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

@@ -1,6 +1,6 @@
 package com.petmatz.common.security.handler;
 
-import com.petmatz.common.security.utils.JwtProvider;
+import com.petmatz.common.security.jwt.JwtProvider;
 import com.petmatz.domain.user.entity.CustomOAuthUser;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
