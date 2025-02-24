@@ -25,7 +25,6 @@ public class MatchingController {
     @PostMapping
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성하는 API API")
     @Parameters({
-            @Parameter(name = "JWT [ caregiverInfo 추후 대체 ]", description = "토큰을 받아와 쓸 예정", example = "입력금지"),
             @Parameter(name = "caregiverEmail", description = "반려인 닉네임", example = "반려인이름"),
             @Parameter(name = "entrustedEmail", description = "돌봄이 닉네임", example = "돌봄이이름")
     })
@@ -55,9 +54,9 @@ public class MatchingController {
     }
 
     @DeleteMapping
-    @Operation(summary = "채팅방 삭제", description = "해당 사용자가 지정한 채팅방을 삭제한다")
+    @Operation(summary = "채팅방 삭제", description = "해당 사용자가 지정한 채팅방을 삭제 API")
     @Parameters({
-            @Parameter(name = "romId", description = "삭제하려는 Chat Room Id", example = "1"),
+            @Parameter(name = "roomId", description = "삭제하려는 채팅방 고유 NO", example = "1"),
     })
     public Response<Void> deleteChatRoom(@RequestParam String roomId) {
         chatRoomService.deletRoom(roomId);
