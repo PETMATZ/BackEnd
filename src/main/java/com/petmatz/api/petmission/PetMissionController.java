@@ -76,6 +76,8 @@ public class PetMissionController {
 
     @Operation(summary = "멍멍이의 부탁 상태 업데이트", description = "멍멍이의 부탁 상태를 업데이트 하는 API")
     @Parameters({
+            @Parameter(name = "careEmail", description = "맡김이 Email", example = "2"),
+            @Parameter(name = "receiverEmail", description = "돌봄이 Email", example = "2"),
             @Parameter(name = "petMissionId", description = "펫 미션 ID", example = "2"),
             @Parameter(name = "missionStatusZip", description = "미션 상태 [ PLG, END ]", example = "PLG"),
     })

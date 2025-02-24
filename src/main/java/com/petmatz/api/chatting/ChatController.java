@@ -39,6 +39,14 @@ public class ChatController {
     private final SendChatMessage sendChatMessage;
 
     @MessageMapping("/chat")
+    @Operation(summary = "메세지 전송", description = "양방향 통신 소켓 메세지 전송 API")
+    @Parameters({
+            @Parameter(name = "chatRoomId", description = "채팅방 번호", example = "1"),
+            @Parameter(name = "senderEmail  ", description = "메세지 보내는 이의 Email", example = "test1@naver.com"),
+            @Parameter(name = "receiverEmail  ", description = "메세지 받는 이의 Email", example = "test2@naver.com"),
+            @Parameter(name = "msg", description = "메세지 내용", example = "안녕하세요"),
+            @Parameter(name = "msg_type", description = "메세지 타입", example = "PLG [PLG, MSG, END]")
+    })
     public void sendPrivateMessage(ChatMessageRequest chatMessageRequest) {
         ChatMessageInfo chatMessageInfo = chatMessageRequest.of();
         chatService.updateMessage(chatMessageInfo, chatMessageRequest.chatRoomId());
@@ -58,7 +66,7 @@ public class ChatController {
             @Parameter(name = "chatRoomId", description = "채팅방 번호", example = "1"),
             @Parameter(name = "pageSize", description = "긁어올 페이지의 사이즈", example = "20 ( Default : 15 )"),
             @Parameter(name = "startPage", description = "현재 페이지의 번호 ( 0은 안됨!! )", example = "3 ( Default 1 )"),
-            @Parameter(name = "lastReadTimestamp", description = "현재 페이지의 번호 ( 0은 안됨!! )", example = "3 ( Default 1 )")
+            @Parameter(name = "lastReadTimestamp", description = "마지막으로 잃은 메시지 타임", example = "2025-02-24T14:30:45.123456")
     })
     public Response<ChatMessageResponse> selectChatMessage(
                                          @RequestParam String chatRoomId,
