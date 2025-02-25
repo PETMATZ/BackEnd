@@ -24,7 +24,7 @@ public class PasswordService {
     private final PasswordComponent passwordComponent;
 
     @Transactional
-    public SendRepasswordResponseDto sendRepassword(SendRepasswordRequestDto dto) {
+    public void sendRepassword(SendRepasswordRequestDto dto) {
         String accountId = dto.getAccountId();
         User user = userUtils.findUser(accountId);
 
@@ -33,8 +33,6 @@ public class PasswordService {
         rePasswordEmailProvider.sendVerificationEmail(accountId, rePasswordNum);
         String encodedRePasswordNum = passwordComponent.encodePassword(rePasswordNum);
         user.updatePassword(encodedRePasswordNum);
-
-        return new SendRepasswordResponseDto();
     }
 
     @Transactional

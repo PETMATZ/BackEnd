@@ -18,8 +18,7 @@ import javax.naming.AuthenticationException;
 import java.security.cert.CertificateException;
 import java.time.LocalDateTime;
 
-import static com.petmatz.domain.user.exception.UserErrorCode.CERTIFICATION_EXPIRED;
-import static com.petmatz.domain.user.exception.UserErrorCode.MISS_MATCH_CODE;
+import static com.petmatz.domain.user.exception.UserErrorCode.*;
 
 @Component
 @RequiredArgsConstructor
@@ -47,7 +46,7 @@ public class AuthenticationComponent {
 
         String encodedPassword = user.getPassword();
         if (!passwordEncoder.matches(password, encodedPassword)) {
-//            throw new UserException();
+            throw new UserException(PASS_WORD_MISMATCH);
         }
         return user;
     }

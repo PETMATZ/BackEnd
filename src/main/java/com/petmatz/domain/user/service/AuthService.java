@@ -17,6 +17,7 @@ import com.petmatz.domain.user.info.SignUpInfo;
 import com.petmatz.domain.user.repository.CertificationRepository;
 import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.SignInResponseDto;
+import com.petmatz.domain.user.response.SignUpResponse;
 import com.petmatz.domain.user.response.SignUpResponseDto;
 import com.petmatz.domain.user.component.GeocodingComponent;
 import jakarta.servlet.http.HttpServletResponse;
@@ -54,13 +55,13 @@ public class AuthService {
     private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
-    public SignUpResponseDto signUp(SignUpInfo info) throws MalformedURLException {
+    public SignUpResponse signUp(SignUpInfo info) throws MalformedURLException {
         String accountId = info.getAccountId();
         String certificationNumber = info.getCertificationNumber();
         String password = info.getPassword();
 
         authenticationComponent.validateRequiredFields(accountId, certificationNumber, password);
-        authenticationComponent.validateCertification(accountId);
+//        authenticationComponent.validateCertification(accountId);
         authenticationComponent.validateDuplicateAccountId(accountId);
 
         String encodedPassword = passwordEncoder.encode(info.getPassword());
@@ -78,7 +79,7 @@ public class AuthService {
         //인증 엔티티 삭제
         certificationRepository.deleteAllByAccountId(accountId);
 
-        return new SignUpResponseDto(user.getId(), petImg.checkResultImg());
+        return new SignUpResponse(user.getId(), petImg.checkResultImg());
     }
 
 

@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class SendRepasswordResponseDto extends LogInResponseDto{
+public class SendRepasswordResponseDto{
 
     public SendRepasswordResponseDto(){
     }

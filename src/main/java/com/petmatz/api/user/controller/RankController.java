@@ -5,17 +5,19 @@ import com.petmatz.domain.user.response.RankUserResponse;
 import com.petmatz.domain.user.service.RankService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class RankController {
 
     private final RankService rankService;
 
-    @GetMapping("/api/top-rankings")
+    @GetMapping("/top-rankings")
     public Response<List<RankUserResponse>> getTopRankings() {
         List<RankUserResponse> topRankings = rankService.getTopRankingsByRegion();
         return Response.success(topRankings);

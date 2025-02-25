@@ -3,6 +3,7 @@ package com.petmatz.domain.user.component;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.user.response.KakaoGeocodingResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import java.util.List;
 import static com.petmatz.domain.user.exception.UserErrorCode.INSUFFICIENT_LOCATION_DATA;
 
 @Service
+@Slf4j
 public class GeocodingComponent {
     @Value("${kakao-api-url}")
     private String KAKAO_API_URL;
@@ -65,8 +67,10 @@ public class GeocodingComponent {
      */
     public KakaoRegion getValidRegion(double latitude, double longitude) {
         KakaoRegion kakaoRegion = getRegionFromCoordinates(latitude, longitude);
+        System.out.println("kakao region : " + kakaoRegion);
         // 지역 정보 검증
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
+            System.out.println("kakao region get code어쩌구  : " + kakaoRegion.getCodeAsInteger());
             throw new UserException(INSUFFICIENT_LOCATION_DATA);
         }
         return kakaoRegion;
