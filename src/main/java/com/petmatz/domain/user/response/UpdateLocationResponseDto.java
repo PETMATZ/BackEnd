@@ -8,22 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class UpdateLocationResponseDto extends LogInResponseDto{
+public class UpdateLocationResponseDto {
     private String region;
     private Integer regionCode;
 
     public UpdateLocationResponseDto(String region, Integer regionCode){
         this.region = region;
         this.regionCode=regionCode;
-    }
-
-    public static ResponseEntity<LogInResponseDto> wrongLocation(){
-        LogInResponseDto responseBody = new LogInResponseDto(ResponseCode.WRONG_LOCATION, ResponseMessage.WRONG_LOCATION);
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(responseBody);
-    }
-
-    public static ResponseEntity<UpdateLocationResponseDto> success(String region,Integer regionCode) { // 반환 타입 수정
-        UpdateLocationResponseDto responseBody = new UpdateLocationResponseDto(region,regionCode);
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
     }
 }

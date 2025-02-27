@@ -8,11 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class EditMyProfileResponseDto extends LogInResponseDto {
+public class EditMyProfileResponseDto {
     private String resultImgURL;
 
     public EditMyProfileResponseDto(String resultImgURL){
-        super();
         this.resultImgURL=resultImgURL;
     }
 

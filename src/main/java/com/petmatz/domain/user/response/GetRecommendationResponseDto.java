@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 @Getter
-public class GetRecommendationResponseDto extends LogInResponseDto {
+public class GetRecommendationResponseDto{
 
     private boolean isRecommended;
     public GetRecommendationResponseDto(boolean isRecommended) {

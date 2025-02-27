@@ -6,10 +6,7 @@ import com.petmatz.api.user.request.DeleteIdRequestDto;
 import com.petmatz.api.user.request.SignInRequestDto;
 import com.petmatz.api.user.request.SignUpRequestDto;
 import com.petmatz.domain.user.entity.User;
-import com.petmatz.domain.user.response.CheckCertificationResponseDto;
-import com.petmatz.domain.user.response.DeleteIdResponseDto;
-import com.petmatz.domain.user.response.SignInResponseDto;
-import com.petmatz.domain.user.response.SignUpResponseDto;
+import com.petmatz.domain.user.response.*;
 import com.petmatz.domain.user.service.AuthService;
 import com.petmatz.user.common.LogInResponseDto;
 import jakarta.servlet.http.HttpServletResponse;
@@ -45,8 +42,8 @@ public class AuthController {
     }
 
     @PostMapping("/sign-up")
-    public Response<SignUpResponseDto> signUp(@RequestBody @Valid SignUpRequestDto requestBody) throws MalformedURLException {
-        SignUpResponseDto responseDto = authService.signUp(SignUpRequestDto.of(requestBody));
+    public Response<SignUpResponse> signUp(@RequestBody @Valid SignUpRequestDto requestBody) throws MalformedURLException {
+        SignUpResponse responseDto = authService.signUp(SignUpRequestDto.of(requestBody));
         return Response.success(responseDto);
     }
 

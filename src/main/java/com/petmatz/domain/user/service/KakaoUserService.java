@@ -35,7 +35,6 @@ public class KakaoUserService {
     public void editKakaoProfile(EditKakaoProfileInfo info) {
         Long userId = jwtExtractProvider.findIdFromJwt();
         userUtils.findJwtUser(userId);
-        userUtils.checkDuplicateId(userId);
         User user = userUtils.findIdUser(userId);
 
         KakaoRegion kakaoRegion = geocodingComponent.getRegionFromCoordinates(info.getLatitude(), info.getLongitude());

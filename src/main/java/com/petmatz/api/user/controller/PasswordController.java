@@ -11,18 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class PasswordController {
 
     private final PasswordService passwordService;
 
     @PostMapping("/send-repassword")
-    public Response<SendRepasswordResponseDto> sendRepassword(@RequestBody @Valid SendRepasswordRequestDto requestBody) {
-        SendRepasswordResponseDto sendRepasswordResponseDto = passwordService.sendRepassword(requestBody);
-        return Response.success(sendRepasswordResponseDto);
+    public Response<Void> sendRepassword(@RequestBody @Valid SendRepasswordRequestDto requestBody) {
+        passwordService.sendRepassword(requestBody);
+        return Response.success();
     }
 
     @PostMapping("/repassword")

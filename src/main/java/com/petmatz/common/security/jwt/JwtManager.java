@@ -69,11 +69,11 @@ public class  JwtManager {
     }
 
     public String createRefreshToken(Long userId) {
-        Date expireDate = Date.from(Instant.now().plus(2, ChronoUnit.WEEKS));
+        Date expireDate = Date.from(Instant.now().plus(7 * 7, ChronoUnit.DAYS));
         SecretKey secretKey = Keys.hmacShaKeyFor(refreshKey.getBytes(StandardCharsets.UTF_8));
 
         String refreshToken = Jwts.builder()
-                .signWith(secretKey, SignatureAlgorithm.RS256)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .setSubject(userId.toString())
                 .setIssuedAt(new Date())
                 .setExpiration(expireDate)

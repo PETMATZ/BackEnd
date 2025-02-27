@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @Getter
-public class GetOtherProfileResponseDto extends LogInResponseDto {
+public class GetOtherProfileResponseDto{
     private Long id;
     private String accountId;
     private String nickname;
@@ -31,7 +31,6 @@ public class GetOtherProfileResponseDto extends LogInResponseDto {
     private boolean isMyHeartUser;
 
     public GetOtherProfileResponseDto(User user, boolean isMyHeartUser) {
-        super();
         this.id = user.getId();
         this.accountId = user.getAccountId();
         this.nickname = user.getNickname();
@@ -49,14 +48,14 @@ public class GetOtherProfileResponseDto extends LogInResponseDto {
         this.regionCode=user.getRegionCode();
     }
 
-    public static ResponseEntity<LogInResponseDto> userNotFound() {
-        LogInResponseDto responseBody=new LogInResponseDto(ResponseCode.ID_NOT_FOUND, ResponseMessage.ID_NOT_FOUND);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
-    }
-
-    public static ResponseEntity<LogInResponseDto> success(User user,boolean isMyHeartUser) {
-        GetOtherProfileResponseDto responseBody = new GetOtherProfileResponseDto(user,isMyHeartUser);
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
+//    public static ResponseEntity<LogInResponseDto> userNotFound() {
+//        LogInResponseDto responseBody=new LogInResponseDto(ResponseCode.ID_NOT_FOUND, ResponseMessage.ID_NOT_FOUND);
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+//    }
+//
+//    public static ResponseEntity<LogInResponseDto> success(User user,boolean isMyHeartUser) {
+//        GetOtherProfileResponseDto responseBody = new GetOtherProfileResponseDto(user,isMyHeartUser);
+//        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+//    }
 
 }

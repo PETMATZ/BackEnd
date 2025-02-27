@@ -5,17 +5,12 @@ import com.petmatz.domain.user.constant.LoginRole;
 import com.petmatz.domain.user.constant.LoginType;
 import com.petmatz.domain.user.constant.PreferredSize;
 import com.petmatz.domain.user.entity.User;
-import com.petmatz.user.common.LogInResponseDto;
-import com.petmatz.user.common.ResponseCode;
-import com.petmatz.user.common.ResponseMessage;
 import lombok.Getter;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 @Getter
-public class SignInResponseDto extends LogInResponseDto {
+public class SignInResponseDto {
     private Long id;
     private String accountId;
     private String nickname;
@@ -32,7 +27,6 @@ public class SignInResponseDto extends LogInResponseDto {
     private Integer regionCode;
 
     public SignInResponseDto(User user) {
-        super();
         this.id = user.getId();
         this.accountId = user.getAccountId();
         this.nickname = user.getNickname();

@@ -26,9 +26,6 @@ public class LocationService {
             Long userId = jwtExtractProvider.findIdFromJwt();
             User user = userUtils.findIdUser(userId);
 
-            /**
-             * 현재는 static 클래스라 이렇게 접근
-             */
             KakaoRegion kakaoRegion = geocodingComponent.getValidRegion(info.getLatitude(), info.getLongitude());
             user.updateLocation(info, kakaoRegion.getRegionName(), kakaoRegion.getCodeAsInteger());
 

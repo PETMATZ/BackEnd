@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 @Getter
-public class GetMyProfileResponseDto extends LogInResponseDto {
+public class GetMyProfileResponseDto {
     private Long id;
     private String accountId;
     private String nickname;
@@ -45,14 +45,14 @@ public class GetMyProfileResponseDto extends LogInResponseDto {
         this.region = user.getRegion();
         this.regionCode=user.getRegionCode();   
     }
-
-    public static ResponseEntity<LogInResponseDto> idNotFound() {
-        LogInResponseDto responseBody = new LogInResponseDto(ResponseCode.ID_NOT_FOUND, ResponseMessage.ID_NOT_FOUND);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
-    }
-
-    public static ResponseEntity<GetMyProfileResponseDto> success(User user) { // 반환 타입 수정
-        GetMyProfileResponseDto responseBody = new GetMyProfileResponseDto(user);
-        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
-    }
+//
+//    public static ResponseEntity<LogInResponseDto> idNotFound() {
+//        LogInResponseDto responseBody = new LogInResponseDto(ResponseCode.ID_NOT_FOUND, ResponseMessage.ID_NOT_FOUND);
+//        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(responseBody);
+//    }
+//
+//    public static ResponseEntity<GetMyProfileResponseDto> success(User user) { // 반환 타입 수정
+//        GetMyProfileResponseDto responseBody = new GetMyProfileResponseDto(user);
+//        return ResponseEntity.status(HttpStatus.OK).body(responseBody);
+//    }
 }

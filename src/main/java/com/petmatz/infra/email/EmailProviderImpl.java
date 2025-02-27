@@ -32,7 +32,6 @@ public class EmailProviderImpl implements EmailProvider {
     @Override
     public void sendVerificationEmail(String email, String certificationNumber) {
         try {
-            System.out.println(certificationNumber);
             // MIME 타입의 이메일 메시지 생성
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper messageHelper = new MimeMessageHelper(message, true);
