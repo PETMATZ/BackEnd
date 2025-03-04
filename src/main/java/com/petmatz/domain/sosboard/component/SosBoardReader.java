@@ -1,7 +1,11 @@
 package com.petmatz.domain.sosboard.component;
 
+import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.SosBoardRepository;
+import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
+import com.petmatz.domain.sosboard.dto.PageResponse;
 import com.petmatz.domain.sosboard.dto.SosBoardInfoList;
+import com.petmatz.domain.sosboard.entity.PetSosBoard;
 import com.petmatz.domain.sosboard.entity.SosBoard;
 import com.petmatz.domain.sosboard.exception.SosBoardErrorCode;
 import com.petmatz.domain.sosboard.exception.SosBoardServiceException;
@@ -10,6 +14,7 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -43,5 +48,30 @@ public class SosBoardReader {
         } else {
             return sosBoardRepository.findByUserRegion(region, pageable);
         }
+    }
+
+    public PageResponse<LegercySosBoardInfo> getUserSosBoardsByNickname(String nickname, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+
+        Page<SosBoard> sosBoardPage = sosBoardRepository.findByUserNickname(nickname, pageable);
+
+        // SosBoard → SosBoardServiceDto 변환
+        List<LegercySosBoardInfo> serviceDtos = sosBoardPage.getContent().stream()
+                .map(sosBoard -> {
+                    List<PetResponse> petResponses = sosBoard.getPetSosBoards().stream()
+                            .map(PetSosBoard::getPet)
+                            .map(PetResponse::of)
+                            .collect(Collectors.toList());
+                    return LegercySosBoardInfo.from(sosBoard, petResponses);
+                })
+                .collect(Collectors.toList());
+
+        // PageResponseDto 생성
+        return new PageResponse<>(
+                serviceDtos,
+                sosBoardPage.getTotalElements(),
+                sosBoardPage.getTotalPages(),
+                page + 1
+        );
     }
 }

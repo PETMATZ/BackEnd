@@ -69,6 +69,7 @@ public class PetMissionService {
                 .map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
                 .toList();
 
+        petMissionAppend.insertPetMission(petMissionEntity);
         userToPetMissionAppend.insertUserToPetMission(userToPetMissionEntities);
         return PetMissionData.of(chatRoomId, petMissionEntity);
     }

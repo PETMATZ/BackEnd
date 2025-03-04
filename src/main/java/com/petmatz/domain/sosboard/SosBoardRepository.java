@@ -16,5 +16,7 @@ public interface SosBoardRepository extends JpaRepository<SosBoard, Long> {
     Page<SosBoard> findByUserRegion(@Param("region") String region, Pageable pageable);
 
     Page<SosBoard> findByUserNickname(String nickname, Pageable pageable);
+
+    void deleteByUserId(Long id);
 }
 

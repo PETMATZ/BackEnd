@@ -4,6 +4,7 @@ import com.petmatz.api.user.request.DeleteIdRequestDto;
 import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
+import com.petmatz.domain.sosboard.component.SosBoardDelete;
 import com.petmatz.domain.user.component.PasswordComponent;
 import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
@@ -29,6 +30,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PetRepository petRepository;
 
+    private final SosBoardDelete sosBoardDelete;
 
     private final CertificationRepository certificationRepository;
     private final JwtExtractProvider jwtExtractProvider;
@@ -44,12 +46,22 @@ public class UserService {
         String password = dto.getPassword();
         String encodedPassword = user.getPassword();
 
+        //패스워드 검증
         passwordComponent.validatePassword(password, encodedPassword);
+
+        //인증번호 관련 전부 삭제
+        //TODO 인증 번호를 굳이 DB에서 관리해야 하나?
         certificationRepository.deleteById(userId);
-        // 사용자 삭제
-        List<Pet> pets = petRepository.findAllByUserId(user.getId()); // Pet 엔티티에서 User를 참조하는 기준으로 조회
+
+        //sos보드 삭제
+        sosBoardDelete.deleteSosBoardByUser(userId);
+
+        //채팅방 삭제
+
         // 명시적으로 Pet 삭제
-        petRepository.deleteAll(pets);
+//        petRepository.deleteAll(pets);
+        petRepository.deleteByUserId(userId);
+
         userRepository.delete(user);
     }
 

@@ -29,6 +29,7 @@ public class EmailService {
 
         // 인증 번호 생성 및 이메일 전송
         String certificationNumber = CertificationNumberProvider.generateNumber();
+        System.out.println("certificationNumber :: " + certificationNumber);
         emailProvider.sendVerificationEmail(accountId, certificationNumber);
 
         emailComponent.saveCertification(accountId, certificationNumber);

@@ -17,7 +17,7 @@ public class PetMissionAskEntity {
 
     private String comment;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_mission_id", nullable = false) // 외래 키
     private PetMissionEntity petMission;
 
