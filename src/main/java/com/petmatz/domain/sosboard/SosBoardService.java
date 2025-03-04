@@ -5,6 +5,7 @@ import com.petmatz.domain.pet.component.PetReader;
 import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
 import com.petmatz.domain.sosboard.component.SosBoardAppend;
+import com.petmatz.domain.sosboard.component.SosBoardDelete;
 import com.petmatz.domain.sosboard.component.SosBoardReader;
 import com.petmatz.domain.sosboard.dto.*;
 import com.petmatz.domain.sosboard.entity.PetSosBoard;
@@ -28,7 +29,7 @@ public class SosBoardService {
     private final SosBoardAppend sosBoardAppend;
     private final PetReader petReader;
 
-    private final SosBoardRepository sosBoardRepository;
+    private final SosBoardDelete sosBoardDelete;
     private final UserRepository userRepository;
     private final PetRepository petRepository;
 
@@ -89,11 +90,7 @@ public class SosBoardService {
     //게시글 삭제
     public void deleteSosBoard(Long boardId, User user) {
         SosBoard sosBoard = sosBoardReader.selectSosBoard(boardId);
-
-        //사용자 권한 확인
-        sosBoard.checkUserId(user.getId());
-
-        sosBoardRepository.delete(sosBoard);
+        sosBoardDelete.deleteSosBoard(sosBoard, user);
     }
 
     // User의 Pet 정보 불러오기
@@ -110,28 +107,7 @@ public class SosBoardService {
 
     // 해당 닉네임에 해당하는 글 불러오기
     public PageResponse<LegercySosBoardInfo> getUserSosBoardsByNickname(String nickname, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
-
-        Page<SosBoard> sosBoardPage = sosBoardRepository.findByUserNickname(nickname, pageable);
-
-        // SosBoard → SosBoardServiceDto 변환
-        List<LegercySosBoardInfo> serviceDtos = sosBoardPage.getContent().stream()
-                .map(sosBoard -> {
-                    List<PetResponse> petResponses = sosBoard.getPetSosBoards().stream()
-                            .map(PetSosBoard::getPet)
-                            .map(PetResponse::of)
-                            .collect(Collectors.toList());
-                    return LegercySosBoardInfo.from(sosBoard, petResponses);
-                })
-                .collect(Collectors.toList());
-
-        // PageResponseDto 생성
-        return new PageResponse<>(
-                serviceDtos,
-                sosBoardPage.getTotalElements(),
-                sosBoardPage.getTotalPages(),
-                page + 1
-        );
+        return sosBoardReader.getUserSosBoardsByNickname(nickname, page, size);
     }
 }
 

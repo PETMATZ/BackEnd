@@ -64,7 +64,8 @@ public class PetController {
     })
     public Response<S3ImgDataResponse> registerPet(@RequestBody PetRequest request) throws MalformedURLException {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userUtils.findUser(userId);
+        System.out.println("userId :: " + userId);
+        User user = userUtils.findIdUser(userId);
         S3ImgDataInfo petSaveInfo = petService.savePet(user, request.of());
         return Response.success(S3ImgDataResponse.of(petSaveInfo));
     }
@@ -86,7 +87,7 @@ public class PetController {
     })
     public Response<S3ImgDataResponse> updatePet(@PathVariable Long id, @RequestBody PetUpdateRequest petUpdateRequest) throws MalformedURLException {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userUtils.findUser(userId);
+        User user = userUtils.findIdUser(userId);
         S3ImgDataInfo petSaveInfo = petService.updatePet(id, user, petUpdateRequest.of());
         return Response.success(S3ImgDataResponse.of(petSaveInfo));
     }
@@ -97,7 +98,7 @@ public class PetController {
     @Parameter(name = "id", description = "반려동물 ID", example = "1")
     public Response<Void> deletePet(@PathVariable Long id) {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userUtils.findUser(userId);
+        User user = userUtils.findIdUser(userId);
         petService.deletePet(id, user);
         return Response.success("댕댕이 정보가 성공적으로 삭제되었습니다.");
     }
