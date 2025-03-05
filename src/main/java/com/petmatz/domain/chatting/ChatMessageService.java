@@ -1,6 +1,5 @@
 package com.petmatz.domain.chatting;
 
-import com.petmatz.api.chatting.dto.ChatReadStatusDirect;
 import com.petmatz.domain.chatting.component.ChatMessageReader;
 import com.petmatz.domain.chatting.component.ChatMessageUpdater;
 import com.petmatz.domain.chatting.docs.ChatReadStatusDocs;
@@ -11,7 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

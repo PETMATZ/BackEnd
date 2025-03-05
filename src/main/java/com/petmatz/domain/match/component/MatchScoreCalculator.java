@@ -2,7 +2,6 @@ package com.petmatz.domain.match.component;
 
 import com.petmatz.domain.match.dto.response.MatchScoreResponse;
 import com.petmatz.domain.match.dto.response.UserResponse;
-import com.petmatz.domain.pet.PetService;
 import com.petmatz.domain.pet.component.PetReader;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.infra.redis.component.RedisMatchComponent;

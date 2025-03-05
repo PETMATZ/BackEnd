@@ -3,7 +3,6 @@ package com.petmatz.api.global.exception;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.common.exception.BaseErrorCode;
 import com.petmatz.common.exception.ErrorReason;
-import com.petmatz.domain.user.exception.UserErrorCode;
 import com.petmatz.domain.user.exception.UserException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

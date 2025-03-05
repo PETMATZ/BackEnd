@@ -3,11 +3,9 @@ package com.petmatz.api.user.controller;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.user.request.UpdateRecommendationRequestDto;
 import com.petmatz.domain.user.response.GetRecommendationResponseDto;
-import com.petmatz.domain.user.response.UpdateRecommendationResponseDto;
 import com.petmatz.domain.user.service.RecommendService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

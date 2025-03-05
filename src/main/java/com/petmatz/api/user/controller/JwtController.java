@@ -4,7 +4,6 @@ import com.petmatz.api.global.dto.Response;
 import com.petmatz.common.security.jwt.JwtManager;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseCookie;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

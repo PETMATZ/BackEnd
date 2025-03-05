@@ -9,6 +9,8 @@ import com.petmatz.domain.petmission.component.*;
 import com.petmatz.domain.petmission.dto.*;
 import com.petmatz.domain.petmission.entity.*;
 import com.petmatz.domain.petmission.exception.ExistPetMissionAnswerException;
+import com.petmatz.domain.petmission.utils.PetMissionMapper;
+import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import java.net.MalformedURLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
@@ -34,17 +37,20 @@ public class PetMissionService {
     private final PetMissionAppend petMissionAppend;
     private final PetMissionAskReader petMissionAskReader;
     private final AwsClient awsClient;
+    private final UserUtils userUtils;
 
 
+    //TODO 이건 chatRoom으로 옮겨져야 하는데 왜 여기?
     public String selectChatRoomId(String careEmail, String receiverEmail) {
         return userToChatRoomReader.selectChatRoomId(careEmail, receiverEmail);
     }
     @Transactional
     public PetMissionData insertPetMission(PetMissionInfo petMissionInfo, Long careId) {
 
-        List<User> users = makeUserEntityList(careId, petMissionInfo.receiverId());
+        User careUser = userUtils.findIdUser(careId);
+        User receiverUser = userUtils.findIdUser(petMissionInfo.receiverId());
 
-        String chatRoomId = userToChatRoomReader.selectChatRoomId(users.get(0).getAccountId(), users.get(1).getAccountId());
+        String chatRoomId = userToChatRoomReader.selectChatRoomId(careUser.getAccountId(), receiverUser.getAccountId());
 
         List<Pet> pets = petRepository.findPetListByPetId(petMissionInfo.petId());
         if (pets.isEmpty()) {
@@ -59,18 +65,20 @@ public class PetMissionService {
         PetMissionEntity petMissionEntity = PetMissionEntity.of(petMissionInfo);
         petMissionEntity.addPetMissionAsk(petMissionAskEntityList);
 
-        List<PetToPetMissionEntity> petToPetMissionEntities = pets.stream()
-                .map(pet -> PetToPetMissionEntity.of(pet, petMissionEntity))
-                .toList();
+        List<PetToPetMissionEntity> petToPetMissionEntities = PetMissionMapper.of(pets, petMissionEntity);
+
+//        List<PetToPetMissionEntity> petToPetMissionEntities = pets.stream()
+//                .map(pet -> PetToPetMissionEntity.of(pet, petMissionEntity))
+//                .toList();
 
         petToPetMissionEntities.forEach(petMissionEntity::addPetToPetMission);
 
-        List<UserToPetMissionEntity> userToPetMissionEntities = users.stream()
-                .map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
+        List<UserToPetMissionEntity> userToPetMissionEntities = Stream.of(careUser, receiverUser).map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
                 .toList();
 
         petMissionAppend.insertPetMission(petMissionEntity);
         userToPetMissionAppend.insertUserToPetMission(userToPetMissionEntities);
+
         return PetMissionData.of(chatRoomId, petMissionEntity);
     }
 
@@ -102,14 +110,6 @@ public class PetMissionService {
 
         return PetMissionDetails.of(petMissionEntity, userToPetMissionEntities);
     }
-
-    private List<User> makeUserEntityList(Long careId, Long receiverId) {
-        ArrayList<User> userList = new ArrayList<>();
-        userList.add(userRepository.findById(careId).get());
-        userList.add(userRepository.findById(receiverId).get());
-        return userList;
-    }
-
 
     @Transactional
     public String updatePetMissionComment(PetMissionCommentInfo petMissionCommentInfo, String userEmail) throws MalformedURLException {

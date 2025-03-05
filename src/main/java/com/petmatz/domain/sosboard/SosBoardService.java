@@ -15,7 +15,6 @@ import com.petmatz.domain.sosboard.exception.SosBoardServiceException;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

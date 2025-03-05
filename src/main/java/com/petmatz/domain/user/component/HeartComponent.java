@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 
-import static com.petmatz.domain.user.exception.UserErrorCode.*;
+import static com.petmatz.domain.user.exception.UserErrorCode.HEART_USER_NOT_FOUND;
 
 @RequiredArgsConstructor
 @Component

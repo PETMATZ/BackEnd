@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.sosboard.PaymentType;
 import com.petmatz.domain.sosboard.entity.SosBoard;
-import com.petmatz.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.util.List;

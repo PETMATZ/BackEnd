@@ -4,13 +4,19 @@ import com.petmatz.domain.chatting.entity.UserToChatRoomEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface UserToChatRoomRepository extends JpaRepository<UserToChatRoomEntity, Long> {
 
-    Optional<List<UserToChatRoomEntity>> findByUser_AccountId(String userEmail);
+    @Query("SELECT DISTINCT cr.chatRoom.id FROM UserToChatRoomEntity cr WHERE cr.user.accountId = :accountId")
+    List<Long> findDistinctByUserAccountId(@Param("accountId") String accountId);
+
+    @Query("SELECT cr FROM UserToChatRoomEntity cr WHERE cr.chatRoom.id IN :chatRoomIdList AND cr.user.accountId != :accountId")
+    List<UserToChatRoomEntity> selectChatRoomUserList(@Param("chatRoomIdList") List<Long> chatRoomIdList,
+                                                      @Param("accountId") String accountId);
 
     void deleteByChatRoom_Id(Long chatRoomId);
 

@@ -11,7 +11,6 @@ import com.petmatz.domain.pet.repository.PetRepository;
 import com.petmatz.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.net.MalformedURLException;
 

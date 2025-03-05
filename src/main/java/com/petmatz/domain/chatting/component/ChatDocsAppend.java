@@ -24,7 +24,6 @@ public class ChatDocsAppend {
         ChatReadStatusDocs caregiverChatReadStatusDocs = createdChatReadStatusDocs(chatRoomInfo.caregiverInfo(),chatRoomID);
         ChatReadStatusDocs entrustedChatReadStatusDocs = createdChatReadStatusDocs(chatRoomInfo.entrustedInfo(),chatRoomID);
 
-
         mongoTemplate.save(caregiverChatReadStatusDocs);
         mongoTemplate.save(entrustedChatReadStatusDocs);
         mongoTemplate.save(chatRoomDocs);
