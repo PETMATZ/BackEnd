@@ -1,6 +1,5 @@
 package com.petmatz.api.sosboard.dto;
 
-import com.petmatz.domain.sosboard.dto.SosBoardInfoList;
 import com.petmatz.domain.sosboard.dto.SosBoardPetInfo;
 import lombok.Builder;
 

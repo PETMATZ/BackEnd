@@ -4,6 +4,7 @@ import com.petmatz.domain.chatting.utils.ChatUtils;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,12 +14,13 @@ import java.time.LocalDateTime;
 public class ChatReadStatusDocs {
 
     @Id
-    private String chatRoomId;
-    private String userEmail;
-    private String lastReadMessageId;
-    private LocalDateTime lastReadTimestamp;
+    private final String chatRoomId;
+    private final String userEmail;
+    private final String lastReadMessageId;
+    private final LocalDateTime lastReadTimestamp;
 
     @Builder
+    @PersistenceCreator
     public ChatReadStatusDocs(String chatRoomId, String userEmail, String lastReadMessageId, LocalDateTime lastReadTimestamp) {
         this.chatRoomId = chatRoomId;
         this.userEmail = userEmail;

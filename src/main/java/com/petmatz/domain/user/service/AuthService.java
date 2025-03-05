@@ -2,11 +2,11 @@ package com.petmatz.domain.user.service;
 
 
 import com.petmatz.common.security.jwt.JwtManager;
-
 import com.petmatz.domain.aws.AwsClient;
 import com.petmatz.domain.aws.vo.S3Imge;
 import com.petmatz.domain.user.component.AuthenticationComponent;
 import com.petmatz.domain.user.component.CookieComponent;
+import com.petmatz.domain.user.component.GeocodingComponent;
 import com.petmatz.domain.user.entity.Certification;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;
@@ -18,8 +18,6 @@ import com.petmatz.domain.user.repository.CertificationRepository;
 import com.petmatz.domain.user.repository.UserRepository;
 import com.petmatz.domain.user.response.SignInResponseDto;
 import com.petmatz.domain.user.response.SignUpResponse;
-import com.petmatz.domain.user.response.SignUpResponseDto;
-import com.petmatz.domain.user.component.GeocodingComponent;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

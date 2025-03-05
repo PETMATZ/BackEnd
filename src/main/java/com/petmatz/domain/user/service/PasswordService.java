@@ -7,7 +7,6 @@ import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.RepasswordInfo;
 import com.petmatz.domain.user.provider.RePasswordProvider;
-import com.petmatz.domain.user.response.SendRepasswordResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

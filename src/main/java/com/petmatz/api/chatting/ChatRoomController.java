@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/match")
-public class MatchingController {
+public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
     private final JwtExtractProvider jwtExtractProvider;

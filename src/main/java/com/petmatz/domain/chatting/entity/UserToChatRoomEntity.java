@@ -36,4 +36,12 @@ public class UserToChatRoomEntity {
             chatRoom.getParticipants().add(this); // 양방향 관계 설정
         }
     }
+
+    @Override
+    public String toString() {
+        return "UserToChatRoomEntity{" +
+                "id=" + id +
+                ", user.getNickname=" + user.getNickname() +
+                '}';
+    }
 }

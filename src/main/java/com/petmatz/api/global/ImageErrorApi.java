@@ -3,7 +3,6 @@ package com.petmatz.api.global;
 import com.petmatz.api.global.dto.ImageErrorRequest;
 import com.petmatz.api.global.dto.ImgType;
 import com.petmatz.domain.pet.PetService;
-//import com.petmatz.domain.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;

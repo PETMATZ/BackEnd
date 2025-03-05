@@ -2,7 +2,6 @@ package com.petmatz.api.sosboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.dto.SosBoardPetInfo;
 import com.petmatz.domain.sosboard.dto.SpecificSosBoardInfo;
 import lombok.Builder;
 

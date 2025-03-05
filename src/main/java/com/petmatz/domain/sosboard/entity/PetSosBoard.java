@@ -3,7 +3,9 @@ package com.petmatz.domain.sosboard.entity;
 import com.petmatz.domain.global.BaseEntity;
 import com.petmatz.domain.pet.entity.Pet;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 

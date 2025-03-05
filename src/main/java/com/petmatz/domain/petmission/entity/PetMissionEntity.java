@@ -59,13 +59,13 @@ public class PetMissionEntity {
         ask.forEach(petMissionAskEntity -> petMissionAskEntity.addPetMission(this));
     }
 
+    public void addPetToPetMission(PetToPetMissionEntity pet) {
+        this.petToPetMissions.add(pet);
+    }
 
     public void updatePetMissionStatusZip(PetMissionStatusZip updateStatus) {
         status = updateStatus;
     }
 
-    public void addPetToPetMission(PetToPetMissionEntity pet) {
-        this.petToPetMissions.add(pet);
-    }
 
 }

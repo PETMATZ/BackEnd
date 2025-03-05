@@ -20,10 +20,12 @@ public class ChatRoomReader {
 
     //TODO 예외처리 해야 함.
     //자기자신이 속한 채팅방을 전부 조회
-    public List<UserToChatRoomEntity> findChatRoomNumber(String userEmail) {
-        Optional<List<UserToChatRoomEntity>> chatRoomEntities = userToChatRoomRepository.findByUser_AccountId(userEmail);
-        System.out.println(chatRoomEntities.get());
-        return chatRoomEntities.get();
+    public List<Long> findChatRoomNumber(String userEmail) {
+        return userToChatRoomRepository.findDistinctByUserAccountId(userEmail);
+    }
+
+    public List<UserToChatRoomEntity> selectChatRoomUserList(List<Long> chatRoomIdList, String accountId) {
+        return userToChatRoomRepository.selectChatRoomUserList(chatRoomIdList, accountId);
     }
 
     public Optional<ChatRoomEntity> selectChatRoom(ChatRoomInfo chatRoomInfo) {

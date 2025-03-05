@@ -11,10 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -48,41 +46,28 @@ public class ChatRoomService {
         return chatRoomId;
     }
 
-    public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String userEmail) {
+    public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String accountId) {
 
-        List<UserToChatRoomEntity> chatRoomNumber = chatRoomReader.findChatRoomNumber(userEmail);
-        List<String> roomNumberList = chatRoomNumber.stream()
-                .map(chatRoomEntity -> String.valueOf(chatRoomEntity.getChatRoom().getId()))
-                .distinct()
-                .toList();
+        List<Long> chatRoomNumber = chatRoomReader.findChatRoomNumber(accountId);
+        List<UserToChatRoomEntity> userToChatRoomEntities = chatRoomReader.selectChatRoomUserList(chatRoomNumber, accountId);
 
-        Map<String, Integer> unreadCountList = updateMessageStatus(roomNumberList, userEmail, pageSize, startPage);
-        Map<String, IChatUserInfo> userList = getUserList(chatRoomNumber, userEmail);
+        Map<String, Integer> unreadCountList = updateMessageStatus(chatRoomNumber, accountId, pageSize, startPage);
+        Map<String, IChatUserInfo> userList = getUserList(userToChatRoomEntities, accountId);
 
-        return chatRoomMetaDataReader.findChatRoomMetaDataInfo(roomNumberList, unreadCountList, userList);
+        return chatRoomMetaDataReader.findChatRoomMetaDataInfo(chatRoomNumber, unreadCountList, userList);
     }
 
     private Map<String, IChatUserInfo> getUserList(List<UserToChatRoomEntity> chatRoomNumber, String userEmail) {
-        Map<String, IChatUserInfo> userList = new HashMap<>();
-
-        for (UserToChatRoomEntity userToChatRoomEntity : chatRoomNumber) {
-            String chatRoomId = userToChatRoomEntity.getChatRoom().getId().toString();
-
-            // 현재 사용자가 아닌 다른 사용자를 찾기 위한 스트림 사용
-            userToChatRoomEntity.getChatRoom().getParticipants().stream()
-                    .filter(participant -> !participant.getUser().getAccountId().equals(userEmail))
-                    .findFirst() // 첫 번째로 조건을 만족하는 사용자 찾기
-                    .ifPresent(participant -> {
-                        IChatUserInfo userInfo = IChatUserInfo.of(participant.getUser());
-                        userList.put(chatRoomId, userInfo);
-                    });
-        }
-        return userList;
+        return chatRoomNumber.stream()
+                .collect(Collectors.toMap(
+                        userToChatRoomEntity -> userToChatRoomEntity.getChatRoom().getId().toString(), // key: chatRoomId
+                        userToChatRoomEntity -> IChatUserInfo.of(userToChatRoomEntity.getUser()) // value: IChatUserInfo
+                ));
     }
 
-    private Map<String, Integer> updateMessageStatus(List<String> chatRoomNumber,String userEmail, int pageSize, int startPage) {
+    private Map<String, Integer> updateMessageStatus(List<Long> chatRoomNumber,String userEmail, int pageSize, int startPage) {
         Map<String, Integer> unreadCountList = new HashMap<>();
-        for (String roomId : chatRoomNumber) {
+        for (Long roomId : chatRoomNumber) {
             String chatRoomId = String.valueOf(roomId);
             ChatReadStatusDocs chatReadStatusDocs = chatReadStatusReader.selectChatMessageLastStatus(chatRoomId, userEmail);
             LocalDateTime lastReadTimestamp = chatReadStatusDocs.checkLastReadTimestamp();

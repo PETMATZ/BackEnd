@@ -2,8 +2,8 @@ package com.petmatz.api.pet;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.global.dto.S3ImgDataResponse;
-import com.petmatz.api.pet.dto.PetRegisterNoRequest;
 import com.petmatz.api.pet.dto.PetInfoResponse;
+import com.petmatz.api.pet.dto.PetRegisterNoRequest;
 import com.petmatz.api.pet.dto.PetRequest;
 import com.petmatz.api.pet.dto.PetUpdateRequest;
 import com.petmatz.common.security.jwt.JwtExtractProvider;
@@ -11,7 +11,6 @@ import com.petmatz.domain.global.S3ImgDataInfo;
 import com.petmatz.domain.pet.PetService;
 import com.petmatz.domain.pet.dto.OpenApiPetInfo;
 import com.petmatz.domain.user.component.UserUtils;
-import com.petmatz.domain.user.service.UserService;
 import com.petmatz.domain.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

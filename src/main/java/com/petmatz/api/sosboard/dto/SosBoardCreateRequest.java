@@ -2,10 +2,7 @@ package com.petmatz.api.sosboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.petmatz.api.pet.dto.PetResponse;
-import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.dto.LegercySosBoardInfo;
 import com.petmatz.domain.sosboard.dto.SosBoardCreateInfo;
-import com.petmatz.domain.user.entity.User;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

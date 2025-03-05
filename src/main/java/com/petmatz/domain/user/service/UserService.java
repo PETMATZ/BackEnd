@@ -2,7 +2,6 @@ package com.petmatz.domain.user.service;
 
 import com.petmatz.api.user.request.DeleteIdRequestDto;
 import com.petmatz.common.security.jwt.JwtExtractProvider;
-import com.petmatz.domain.pet.entity.Pet;
 import com.petmatz.domain.pet.repository.PetRepository;
 import com.petmatz.domain.sosboard.component.SosBoardDelete;
 import com.petmatz.domain.user.component.PasswordComponent;
@@ -15,8 +14,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor

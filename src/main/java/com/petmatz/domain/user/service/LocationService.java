@@ -1,12 +1,12 @@
 package com.petmatz.domain.user.service;
 
 import com.petmatz.common.security.jwt.JwtExtractProvider;
+import com.petmatz.domain.user.component.GeocodingComponent;
 import com.petmatz.domain.user.component.UserUtils;
 import com.petmatz.domain.user.entity.KakaoRegion;
 import com.petmatz.domain.user.entity.User;
 import com.petmatz.domain.user.info.UpdateLocationInfo;
 import com.petmatz.domain.user.response.UpdateLocationResponseDto;
-import com.petmatz.domain.user.component.GeocodingComponent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

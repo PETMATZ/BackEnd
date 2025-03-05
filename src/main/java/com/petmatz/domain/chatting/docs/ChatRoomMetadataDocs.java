@@ -2,9 +2,11 @@ package com.petmatz.domain.chatting.docs;
 
 import com.petmatz.domain.chatting.dto.ChatMessageInfo;
 import com.petmatz.domain.chatting.dto.ChatRoomInfo;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.PersistenceCreator;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -13,14 +15,15 @@ import java.time.LocalDateTime;
 @Getter
 public class ChatRoomMetadataDocs {
     @Id
-    private String room_id;
-    private String lastMessage;
-    private LocalDateTime lastMessageTimestamp;
-    private String msg_type;
-    private int messageCount;
-    private int unreadCount;
+    private final String room_id;
+    private final String lastMessage;
+    private final LocalDateTime lastMessageTimestamp;
+    private final String msg_type;
+    private final int messageCount;
+    private final int unreadCount;
 
     @Builder
+    @PersistenceCreator
     public ChatRoomMetadataDocs(String room_id, String lastMessage, LocalDateTime lastMessageTimestamp, String msg_type, int messageCount, int unreadCount) {
         this.room_id = room_id;
         this.lastMessage = lastMessage;

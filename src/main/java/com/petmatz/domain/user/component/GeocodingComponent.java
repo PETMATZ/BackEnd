@@ -9,7 +9,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-
 import java.util.List;
 
 import static com.petmatz.domain.user.exception.UserErrorCode.INSUFFICIENT_LOCATION_DATA;

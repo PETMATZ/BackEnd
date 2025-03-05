@@ -1,6 +1,5 @@
 package com.petmatz.domain.pet.dto;
 
-import com.petmatz.api.pet.dto.PetUpdateRequest;
 import com.petmatz.domain.pet.Gender;
 import com.petmatz.domain.pet.Size;
 import lombok.Builder;

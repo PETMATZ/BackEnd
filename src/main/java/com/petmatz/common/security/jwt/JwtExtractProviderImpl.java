@@ -1,7 +1,6 @@
 package com.petmatz.common.security.jwt;
 
 import com.petmatz.domain.user.repository.UserRepository;
-import com.petmatz.infra.redis.component.RedisTokenComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

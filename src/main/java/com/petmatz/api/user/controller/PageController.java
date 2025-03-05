@@ -2,10 +2,10 @@ package com.petmatz.api.user.controller;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.user.request.EditMyProfileRequestDto;
-import com.petmatz.domain.user.service.PageService;
 import com.petmatz.domain.user.response.EditMyProfileResponseDto;
 import com.petmatz.domain.user.response.GetMyProfileResponseDto;
 import com.petmatz.domain.user.response.GetOtherProfileResponseDto;
+import com.petmatz.domain.user.service.PageService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

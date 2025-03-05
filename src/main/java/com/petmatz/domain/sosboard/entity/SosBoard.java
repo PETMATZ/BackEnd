@@ -10,7 +10,6 @@ import com.petmatz.domain.sosboard.exception.SosBoardServiceException;
 import com.petmatz.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
