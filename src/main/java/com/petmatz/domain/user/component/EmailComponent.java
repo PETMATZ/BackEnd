@@ -9,8 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class EmailComponent {
-
-    private final UserRepository userRepository;
+    
     private final CertificationRepository certificationRepository;
 
     public void saveCertification(String accountId, String certificationNumber) {

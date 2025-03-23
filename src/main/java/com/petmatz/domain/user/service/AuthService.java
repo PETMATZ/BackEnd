@@ -59,7 +59,7 @@ public class AuthService {
         String password = info.getPassword();
 
         authenticationComponent.validateRequiredFields(accountId, certificationNumber, password);
-//        authenticationComponent.validateCertification(accountId);
+        authenticationComponent.validateCertification(accountId);
         authenticationComponent.validateDuplicateAccountId(accountId);
 
         String encodedPassword = passwordEncoder.encode(info.getPassword());

@@ -55,8 +55,14 @@ public class AuthenticationComponent {
      * 필수 정보 누락 확인
      */
     public void validateRequiredFields(String accountId, String certificationNumber, String password) {
-        if (accountId == null || certificationNumber == null || password == null) {
-            throw new IllegalArgumentException("필수 정보가 누락되었습니다.");
+        if (accountId == null) {
+            throw new UserException(FIELD_ACCOUNT_ID_REQUIRED);
+        }
+        if (certificationNumber == null) {
+            throw new UserException(FIELD_CERTIFICATION_NUMBER_REQUIRED);
+        }
+        if (password == null) {
+            throw new UserException(FIELD_PASSWORD_REQUIRED);
         }
     }
 
@@ -66,7 +72,7 @@ public class AuthenticationComponent {
     public void validateCertification(String accountId) {
         Certification certification = certificationRepository.findTopByAccountIdOrderByCreatedAtDesc(accountId);
         if (certification == null || !certification.getIsVerified()) {
-            throw new IllegalStateException("인증 번호가 유효하지 않거나 인증되지 않았습니다.");
+            throw new UserException(CERTIFICATION_REQUIRED);
         }
     }
 
@@ -75,7 +81,7 @@ public class AuthenticationComponent {
      */
     public void validateDuplicateAccountId(String accountId) {
         if (userRepository.existsByAccountId(accountId)) {
-            throw new IllegalArgumentException("중복된 ID가 존재합니다.");
+            throw new UserException(USER_ID_DUPLICATE);
         }
     }
 
@@ -85,7 +91,7 @@ public class AuthenticationComponent {
     public Certification validateCertification(CheckCertificationInfo info) throws CertificateException {
         Certification certification = certificationRepository.findTopByAccountIdOrderByCreatedAtDesc(info.getAccountId());
         if (certification == null) {
-            throw new CertificateException("인증 정보가 없습니다.");
+            throw new UserException(CERTIFICATION_REQUIRED);
         }
         // 인증 번호와 계정 ID 일치 여부 확인
         boolean isMatch = certification.getAccountId().equals(info.getAccountId())

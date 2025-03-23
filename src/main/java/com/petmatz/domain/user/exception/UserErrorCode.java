@@ -17,11 +17,17 @@ public enum UserErrorCode implements BaseErrorCode {
     CERTIFICATION_EXPIRED(400, "CERTIFICATION_EXPIRED", "인증 시간이 만료되었습니다."),
     MISS_MATCH_CODE(400, "MISS_MATCH_CODE", "인증 번호가 일치하지 않습니다."),
     USER_DUPLICATE(400, "USER_DUPLICATE", "중복된 사용자가 있습니다."),
+    USER_ID_DUPLICATE(400, "USER_ID_DUPLICATE", "중복된 id가 있습니다."),
     HEART_USER_NOT_FOUND(404, "HEART_USER_NOT_FOUND", "찜한 사용자를 찾을 수 없습니다."),
     FAIL_MAIL_SEND(400, "FAIL_MAIL_SEND", "메일 전송에 실패하였습니다."),
     PASSWORD_MISMATCH(403, "PASSWORD_MISMATCH", "비밀번호가 일치하지 않습니다."),
     HEART_USER_DUPLICATE(400, "HEART_USER_DUPLICATE", "찜한 사용자가 이미 존재합니다."),
-    PASS_WORD_MISMATCH(401, "LOGIN_FAILED", "비밀번호 불일치");
+    PASS_WORD_MISMATCH(401, "LOGIN_FAILED", "비밀번호 불일치"),
+    FIELD_ACCOUNT_ID_REQUIRED(400, "FIELD_ACCOUNT_ID_REQUIRED", "계정 ID가 누락되었습니다."),
+    FIELD_CERTIFICATION_NUMBER_REQUIRED(400, "FIELD_CERTIFICATION_NUMBER_REQUIRED", "인증번호가 누락되었습니다."),
+    FIELD_PASSWORD_REQUIRED(400, "FIELD_PASSWORD_REQUIRED", "비밀번호가 누락되었습니다."),
+    CERTIFICATION_REQUIRED(401, "CERTIFICATION_REQUIRED", "인증 되지 않았습니다. 인증이 필요합니다.");
+
 
 
     private final Integer status;
