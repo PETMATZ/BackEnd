@@ -9,4 +9,4 @@ COPY build/libs/petmatz-0.0.1-SNAPSHOT.jar petmatz.jar
 
 
 # 컨테이너 실행 시 실행할 명령어
-CMD ["java", "-jar", "busdocker.jar"]
+CMD ["java", "-jar", "petmatz.jar"]
