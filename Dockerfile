@@ -1,15 +1,12 @@
-# 1. Use an official OpenJDK runtime as a parent image
-FROM openjdk:17-jdk-slim
+# OpenJDK 17 사용
+FROM openjdk:17-jdk
 
-# 2. Set the working directory inside the container
+# 작업 디렉토리 설정
 WORKDIR /app
 
-# 3. Copy the built JAR file into the container
-# Replace 'build/libs' with your actual build output directory
-COPY build/libs/*.jar app.jar
+# 빌드된 JAR 파일을 컨테이너 내부로 복사
+COPY build/libs/petmatz-0.0.1-SNAPSHOT.jar petmatz.jar
 
-# 4. Expose the application port
-EXPOSE 8080
 
-# 5. Run the JAR file
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# 컨테이너 실행 시 실행할 명령어
+CMD ["java", "-jar", "busdocker.jar"]

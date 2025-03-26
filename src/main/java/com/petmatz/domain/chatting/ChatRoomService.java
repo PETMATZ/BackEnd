@@ -7,6 +7,9 @@ import com.petmatz.domain.chatting.dto.ChatRoomMetaDataInfo;
 import com.petmatz.domain.chatting.dto.IChatUserInfo;
 import com.petmatz.domain.chatting.entity.ChatRoomEntity;
 import com.petmatz.domain.chatting.entity.UserToChatRoomEntity;
+import com.petmatz.domain.chatting.exception.NotFoundChatRoom;
+import com.petmatz.domain.user.exception.UserErrorCode;
+import com.petmatz.domain.user.exception.UserException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -31,21 +34,28 @@ public class ChatRoomService {
     private final ChatRoomMetaDataDeleter chatRoomMetaDataDeleter;
     private final ChatReadStatusDeleter chatReadStatusDeleter;
 
-    
-    //채팅방 신규 생성, 존재시 해당 ChatRoomID 반환
+    /**
+     * 채팅방을 새로 생성한다, 단 채팅방이 이미 존재하면 해당 ID를 반환한다.
+     * @param chatRoomInfo
+     * @return
+     */
     public long createdChatRoom(ChatRoomInfo chatRoomInfo) {
         Optional<ChatRoomEntity> chatRoomEntity = chatRoomReader.selectChatRoom(chatRoomInfo);
-
         if (chatRoomEntity.isPresent()) {
             return chatRoomEntity.get().getId();
         }
-
         long chatRoomId = chatRoomAppend.append(chatRoomInfo);
-
         chatDocsAppend.init(chatRoomInfo,chatRoomId);
         return chatRoomId;
     }
 
+    /**
+     * 채팅방 리스틑 가져온다. [ 본인이 포함되어 있는거 전부 ]
+     * @param pageSize
+     * @param startPage
+     * @param accountId
+     * @return
+     */
     public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String accountId) {
 
         List<Long> chatRoomNumber = chatRoomReader.findChatRoomNumber(accountId);
@@ -57,6 +67,12 @@ public class ChatRoomService {
         return chatRoomMetaDataReader.findChatRoomMetaDataInfo(chatRoomNumber, unreadCountList, userList);
     }
 
+    /**
+     *
+     * @param chatRoomNumber
+     * @param userEmail
+     * @return
+     */
     private Map<String, IChatUserInfo> getUserList(List<UserToChatRoomEntity> chatRoomNumber, String userEmail) {
         return chatRoomNumber.stream()
                 .collect(Collectors.toMap(
@@ -77,10 +93,10 @@ public class ChatRoomService {
         return unreadCountList;
     }
 
-    public void deletRoom(String roomId) {
+    public void deleteRoom(String roomId) {
         List<String> strings = chatRoomReader.selectChatRoomUserList(roomId);
         if (strings.isEmpty()) {
-            throw new NullPointerException("해당 채팅방이 존재하지 않습니다.");
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
         }
         chatRoomDeleter.deleteChatRoom(roomId);
         chatMessageDeleter.deleteChatMessageDocs(roomId);
@@ -91,7 +107,7 @@ public class ChatRoomService {
     public String selectChatRoomUserEmail(String chatRoomId, String userEmail) {
         List<String> userEmailList = chatRoomReader.selectChatRoomUserList(chatRoomId);
         if (userEmailList.isEmpty()) {
-            throw new NullPointerException("해당 채팅방이 존재하지 않습니다.");
+            throw new UserException(UserErrorCode.USER_NOT_FOUND);
         }
         return userEmail.equals(userEmailList.get(0)) ? userEmailList.get(1) : userEmailList.get(0);
     }

@@ -59,7 +59,7 @@ public class ChatRoomController {
             @Parameter(name = "roomId", description = "삭제하려는 채팅방 고유 NO", example = "1"),
     })
     public Response<Void> deleteChatRoom(@RequestParam String roomId) {
-        chatRoomService.deletRoom(roomId);
+        chatRoomService.deleteRoom(roomId);
         return Response.success("성공적으로 삭제 되었습니다.");
     }
 

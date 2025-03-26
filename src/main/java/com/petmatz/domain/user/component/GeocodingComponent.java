@@ -40,7 +40,6 @@ public class GeocodingComponent {
 
                 if (!regions.isEmpty()) {
                     KakaoRegion region = regions.get(0);
-                    logInfo(region);
                     return region;
                 } else {
                     System.err.println("No region data found for coordinates: " + latitude + ", " + longitude);
@@ -56,20 +55,13 @@ public class GeocodingComponent {
         return null;
     }
 
-    private void logInfo(KakaoRegion region) {
-        System.out.println("Region Name: " + region.getRegionName());
-        System.out.println("Region Code: " + region.getCode());
-    }
-
     /**
      * 좌표를 기반으로 지역 정보를 가져오고 유효성을 검증
      */
     public KakaoRegion getValidRegion(double latitude, double longitude) {
         KakaoRegion kakaoRegion = getRegionFromCoordinates(latitude, longitude);
-        System.out.println("kakao region : " + kakaoRegion);
         // 지역 정보 검증
         if (kakaoRegion == null || kakaoRegion.getCodeAsInteger() == null) {
-            System.out.println("kakao region get code어쩌구  : " + kakaoRegion.getCodeAsInteger());
             throw new UserException(INSUFFICIENT_LOCATION_DATA);
         }
         return kakaoRegion;

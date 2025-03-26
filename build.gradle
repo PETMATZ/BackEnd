@@ -7,6 +7,12 @@ plugins {
 group = 'com'
 version = '0.0.1-SNAPSHOT'
 
+jar {
+	archiveBaseName = 'petmatz'  // JAR 파일 이름을 지정
+	archiveVersion = '1.0.0'   // 버전 지정
+}
+
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
@@ -35,8 +41,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-commons:4.1.4'
 
 	// ELK integration
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-	implementation 'net.logstash.logback:logstash-logback-encoder:7.0'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+//	implementation 'net.logstash.logback:logstash-logback-encoder:7.0'
 
 	// WebSocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
