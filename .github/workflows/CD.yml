@@ -1,4 +1,4 @@
-wwname: Deploy
+name: Deploy
 
 # main에 push가 감지되면 실행
 on:
