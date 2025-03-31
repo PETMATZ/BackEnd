@@ -36,10 +36,6 @@ public class WebSocketEventListener {
             String userEmail = matcher.group(2);
 
             chatReadStatusUpdater.updateMessageStatusTime(chatRoomId, userEmail);
-
-            System.out.println("Chat Room ID: " + chatRoomId);
-            System.out.println("User Email: " + userEmail);
-
         }else {
             throw RegularExpressionNotMatchException.EXCEPTION;
         }

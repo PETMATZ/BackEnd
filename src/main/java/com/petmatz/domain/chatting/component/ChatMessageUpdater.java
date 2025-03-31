@@ -26,7 +26,6 @@ public class ChatMessageUpdater {
     public void updateMessage(ChatMessageInfo chatMessageInfo, String chatRoomId) {
         String getSenderEmail = jwtExtractProvider.findAccountIdFromJwt();
         chatMessageInfo.addSenderEmail(getSenderEmail);
-        System.out.println("chatMessageInfo.getMsg_type().toString() : " + chatMessageInfo.getMsg_type().toString());
         Query selectChatRoomDocsQuery = new Query(Criteria.where("_id").is(chatRoomId));
         Query selectChatReadStatusDocs = new Query(Criteria.where("_id").is(ChatUtils.addString(chatRoomId,getSenderEmail)));
 

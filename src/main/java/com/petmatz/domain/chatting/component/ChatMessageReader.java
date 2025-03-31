@@ -22,10 +22,18 @@ import java.util.List;
 public class ChatMessageReader {
 
     private final MongoTemplate mongoTemplate;
-    
-    //채팅방 목록에서 각 채팅방에 대한 도착한 메세지 갯수 조회
-    public Integer countChatMessagesHistoryToLastDataAndUserName(String chatRoomsId,String user2Email,LocalDateTime lastReadTimestamp, int pageNumber, int pageSize) {
-        Aggregation query = createQuerySelectChatMessagesPaging(chatRoomsId,user2Email,lastReadTimestamp, pageNumber, pageSize);
+
+    /**
+     * 채팅방 목록에서 각 채팅방에 대한 도착한 메세지 갯수를 조회한다.
+     * @param chatRoomsId
+     * @param userEmail
+     * @param lastReadTimestamp
+     * @param pageNumber
+     * @param pageSize
+     * @return
+     */
+    public Integer countChatMessagesHistoryToLastDataAndUserName(String chatRoomsId,String userEmail,LocalDateTime lastReadTimestamp, int pageNumber, int pageSize) {
+        Aggregation query = createQuerySelectChatMessagesPaging(chatRoomsId,userEmail,lastReadTimestamp, pageNumber, pageSize);
 
         AggregationResults<Document> aggregate =
                 mongoTemplate.aggregate(query, "chat_rooms", Document.class);
@@ -35,7 +43,14 @@ public class ChatMessageReader {
         return uniqueMappedResult != null ? uniqueMappedResult.getInteger("messageCount") : 0;
     }
 
-    //채팅 내역을 전부 조회, Page을 사용해 Page단위로 끊어서 조회 및 날짜순으로 정렬
+    /**
+     * Page단위로 채팅 내역을 날짜순으로 정렬해서 전부 조회한다.
+     * @param chatRoomsId
+     * @param pageNumber
+     * @param pageSize
+     * @param lastFetchTimestamp
+     * @return
+     */
     public List<ChatMessageInfo> selectChatMessagesHistory(String chatRoomsId, int pageNumber, int pageSize, LocalDateTime lastFetchTimestamp) {
         Aggregation query = createQuerySelectChatMessagesPaging(chatRoomsId, pageNumber, pageSize, lastFetchTimestamp);
 
@@ -45,7 +60,11 @@ public class ChatMessageReader {
         return aggregate.getMappedResults();
     }
 
-    //해당 채팅 내역의 전체 메세지 갯수를 조회
+    /**
+     * 채팅방 내역의 전체 메세지 갯수를 조회한다.
+     * @param chatRoomId
+     * @return
+     */
     public long countChatMessages(String chatRoomId) {
         Aggregation aggregation = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where("_id").is(chatRoomId)),
@@ -62,10 +81,13 @@ public class ChatMessageReader {
         return result.getMessages().size();
     }
 
-
-    //chat_read_status의 마지막 시간대를 조회, 조회대는 대상은 자기자신을 기준으로 상대방의 마지막 채팅 시간 조회
+    /**
+     * 채팅의 마지막 시간대를 조회한다. [ 상대방을 대상으로 ]
+     * @param chatRoomId
+     * @param userEmail
+     * @return
+     */
     public ChatReadStatusDocs selectChatMessageLastStatus(String chatRoomId, String userEmail) {
-        System.out.println("chatRoomId :: " + chatRoomId);
         Query query = new Query(Criteria.where("_id").is(ChatUtils.addString(chatRoomId,userEmail)).and("userEmail").is(userEmail));
         return mongoTemplate.findOne(query, ChatReadStatusDocs.class);
     }

@@ -40,8 +40,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-commons:4.1.4'
 
 	// ELK integration
-	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
-	implementation 'net.logstash.logback:logstash-logback-encoder:7.0'
+//	implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+//	implementation 'net.logstash.logback:logstash-logback-encoder:7.0'
 
 	// WebSocket
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'

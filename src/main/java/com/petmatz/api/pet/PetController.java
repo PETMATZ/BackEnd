@@ -63,7 +63,6 @@ public class PetController {
     })
     public Response<S3ImgDataResponse> registerPet(@RequestBody PetRequest request) throws MalformedURLException {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        System.out.println("userId :: " + userId);
         User user = userUtils.findIdUser(userId);
         S3ImgDataInfo petSaveInfo = petService.savePet(user, request.of());
         return Response.success(S3ImgDataResponse.of(petSaveInfo));
