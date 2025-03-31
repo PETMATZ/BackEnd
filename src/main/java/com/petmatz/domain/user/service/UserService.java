@@ -53,12 +53,13 @@ public class UserService {
         //sos보드 삭제
         sosBoardDelete.deleteSosBoardByUser(userId);
 
+        //찜 목록 삭제
+
         //채팅방 삭제
 
         // 명시적으로 Pet 삭제
 //        petRepository.deleteAll(pets);
         petRepository.deleteByUserId(userId);
-
         userRepository.delete(user);
     }
 
