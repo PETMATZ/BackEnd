@@ -17,6 +17,8 @@ import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.HashMap;
@@ -68,7 +70,11 @@ public class  JwtManager {
     }
 
     public String createRefreshToken(Long userId) {
-        Date expireDate = Date.from(Instant.now().plus(7 * 7, ChronoUnit.DAYS));
+        Date expireDate = Date.from(LocalDateTime.now()
+                .plusWeeks(7) // 7주 추가
+                .atZone(ZoneId.systemDefault())
+                .toInstant());
+
         SecretKey secretKey = Keys.hmacShaKeyFor(refreshKey.getBytes(StandardCharsets.UTF_8));
 
         String refreshToken = Jwts.builder()
