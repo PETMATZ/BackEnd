@@ -30,7 +30,7 @@ public class SignUpRequestDto {
     private String profileImg;
 
     @NotBlank
-    private Gender gender; // 'Male' 또는 'Female'
+    private Gender gender;
 
     @NotBlank
     private List<PreferredSize> preferredSizes; // 여러 값을 허용하도록 변경

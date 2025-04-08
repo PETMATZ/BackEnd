@@ -25,7 +25,15 @@ public class ChatMessageService {
     private final ChatMessageUpdater chatMessageUpdater;
 
 
-
+    /**
+     *
+     * @param receiver 채팅 받는이
+     * @param chatRoomsId 채팅방 고유 번호
+     * @param pageNumber 페이지 번호
+     * @param pageSize 페이지 크기
+     * @param lastFetchTimestamp 마지막 채팅 시간
+     * @return Page<ChatMessageInfo> 형태로 채팅 기록을 반환한다.
+     */
     public Page<ChatMessageInfo> selectMessage(String receiver, String chatRoomsId, int pageNumber, int pageSize, LocalDateTime lastFetchTimestamp) {
         // 페이징된 메시지 가져오기
         List<ChatMessageInfo> chatMessageInfos = chatMessageReader.selectChatMessagesHistory(chatRoomsId, pageNumber, pageSize,lastFetchTimestamp);

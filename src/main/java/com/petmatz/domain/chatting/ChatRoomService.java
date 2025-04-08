@@ -36,8 +36,8 @@ public class ChatRoomService {
 
     /**
      * 채팅방을 새로 생성한다, 단 채팅방이 이미 존재하면 해당 ID를 반환한다.
-     * @param chatRoomInfo
-     * @return
+     * @param chatRoomInfo 돌봄이, 맡김이 Email
+     * @return 생성된 채팅방 수를 반환한다. : long
      */
     public long createdChatRoom(ChatRoomInfo chatRoomInfo) {
         Optional<ChatRoomEntity> chatRoomEntity = chatRoomReader.selectChatRoom(chatRoomInfo);
@@ -50,11 +50,11 @@ public class ChatRoomService {
     }
 
     /**
-     * 채팅방 리스틑 가져온다. [ 본인이 포함되어 있는거 전부 ]
-     * @param pageSize
-     * @param startPage
-     * @param accountId
-     * @return
+     * 채팅방 리스트를 가져온다. [ 본인이 포함되어 있는거 전부 ]
+     * @param pageSize 한 페이지당 가져올 채팅방 개수
+     * @param startPage 시작 페이지 번호
+     * @param accountId 채팅방을 조회할 사용자 계정 ID
+     * @return ChatRoomMetaDataInfo 형태의 채팅방 리스트
      */
     public List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String accountId) {
 
@@ -62,18 +62,17 @@ public class ChatRoomService {
         List<UserToChatRoomEntity> userToChatRoomEntities = chatRoomReader.selectChatRoomUserList(chatRoomNumber, accountId);
 
         Map<String, Integer> unreadCountList = updateMessageStatus(chatRoomNumber, accountId, pageSize, startPage);
-        Map<String, IChatUserInfo> userList = getUserList(userToChatRoomEntities, accountId);
+        Map<String, IChatUserInfo> userList = getUserList(userToChatRoomEntities);
 
         return chatRoomMetaDataReader.findChatRoomMetaDataInfo(chatRoomNumber, unreadCountList, userList);
     }
 
     /**
      *
-     * @param chatRoomNumber
-     * @param userEmail
-     * @return
+     * @param chatRoomNumber 채팅방 고유 번호
+     * @return 유저의 값을 반환한다 : Key -> chatRoomId, Value -> IChatUserInfo
      */
-    private Map<String, IChatUserInfo> getUserList(List<UserToChatRoomEntity> chatRoomNumber, String userEmail) {
+    private Map<String, IChatUserInfo> getUserList(List<UserToChatRoomEntity> chatRoomNumber) {
         return chatRoomNumber.stream()
                 .collect(Collectors.toMap(
                         userToChatRoomEntity -> userToChatRoomEntity.getChatRoom().getId().toString(), // key: chatRoomId

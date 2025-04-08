@@ -31,7 +31,6 @@ import javax.naming.AuthenticationException;
 import java.net.MalformedURLException;
 import java.security.cert.CertificateException;
 
-//@Component
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -50,7 +49,7 @@ public class AuthService {
     private final CookieComponent cookieComponent;
     private final AuthenticationComponent authenticationComponent;
 
-    private PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    private final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Transactional
     public SignUpResponse signUp(SignUpInfo info) throws MalformedURLException {

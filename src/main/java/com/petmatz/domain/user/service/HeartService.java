@@ -36,7 +36,6 @@ public class HeartService {
 
     public List<HeartedUserDto> getHeartedList() {
         Long userId = jwtExtractProvider.findIdFromJwt();
-        List<HeartedUserDto> heartedUsers = heartComponent.getHeartedUsers(userId);
-        return heartedUsers;
+        return heartComponent.getHeartedUsers(userId);
     }
 }
