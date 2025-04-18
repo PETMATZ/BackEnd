@@ -1,6 +1,6 @@
 package com.petmatz.api.global.dto;
 
-import com.petmatz.domain.global.S3ImgDataInfo;
+import com.petmatz.persistence.global.S3ImgDataInfo;
 
 public record S3ImgDataResponse(
 

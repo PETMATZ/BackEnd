@@ -1,6 +1,6 @@
 package com.petmatz.api.sosboard.dto;
 
-import com.petmatz.domain.sosboard.dto.UpdateSosBoardInfo;
+import com.petmatz.domain.old.sosboard.dto.UpdateSosBoardInfo;
 
 public record UpdateSosBoardRequest(
 

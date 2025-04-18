@@ -1,7 +1,7 @@
 package com.petmatz.api.petmission.dto;
 
-import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
-import com.petmatz.domain.user.entity.User;
+import com.petmatz.domain.old.petmission.entity.UserToPetMissionEntity;
+import com.petmatz.garbege.service.user.User;
 import lombok.Builder;
 
 @Builder

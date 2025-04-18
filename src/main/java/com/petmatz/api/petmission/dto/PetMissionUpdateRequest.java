@@ -2,7 +2,7 @@ package com.petmatz.api.petmission.dto;
 
 import com.petmatz.common.constants.ChatMessageMsgType;
 import com.petmatz.common.constants.PetMissionStatusZip;
-import com.petmatz.domain.chatting.dto.ChatMessageInfo;
+import com.petmatz.domain.old.chatting.dto.ChatMessageInfo;
 
 import java.time.LocalDateTime;
 

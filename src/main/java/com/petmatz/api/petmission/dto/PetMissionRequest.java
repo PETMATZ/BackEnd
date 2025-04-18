@@ -1,9 +1,9 @@
 package com.petmatz.api.petmission.dto;
 
 import com.petmatz.common.constants.ChatMessageMsgType;
-import com.petmatz.domain.chatting.dto.ChatMessageInfo;
-import com.petmatz.domain.chatting.dto.ChatMessagePetMissionInfo;
-import com.petmatz.domain.petmission.dto.PetMissionInfo;
+import com.petmatz.domain.old.chatting.dto.ChatMessageInfo;
+import com.petmatz.domain.old.chatting.dto.ChatMessagePetMissionInfo;
+import com.petmatz.domain.old.petmission.dto.PetMissionInfo;
 
 import java.time.LocalDateTime;
 import java.util.List;

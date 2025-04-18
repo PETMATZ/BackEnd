@@ -1,7 +1,7 @@
 package com.petmatz.api.chatting.dto;
 
-import com.petmatz.domain.chatting.dto.IChatUserInfo;
-import com.petmatz.domain.user.info.UserInfo;
+import com.petmatz.domain.old.chatting.dto.IChatUserInfo;
+import garbege.service.user.info.UserInfo;
 import lombok.Builder;
 
 @Builder

@@ -1,10 +1,10 @@
 package com.petmatz.api.sosboard.dto;
 
 import com.petmatz.api.pet.dto.PetResponse;
-import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.entity.PetSosBoard;
-import com.petmatz.domain.sosboard.entity.SosBoard;
-import com.petmatz.domain.user.entity.User;
+import com.petmatz.domain.old.sosboard.PaymentType;
+import com.petmatz.domain.old.sosboard.entity.PetSosBoard;
+import com.petmatz.domain.old.sosboard.entity.SosBoard;
+import com.petmatz.garbege.service.user.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

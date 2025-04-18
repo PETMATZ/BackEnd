@@ -2,9 +2,9 @@ package com.petmatz.api.match.controller;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.match.request.PenaltyScore;
-import com.petmatz.domain.match.dto.response.PaginatedMatchResponse;
-import com.petmatz.domain.match.service.MatchScoreService;
-import com.petmatz.domain.match.service.MatchService;
+import com.petmatz.domain.old.match.dto.response.PaginatedMatchResponse;
+import com.petmatz.domain.old.match.service.MatchScoreService;
+import com.petmatz.domain.old.match.service.MatchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,5 +32,4 @@ public class MatchController {
         return Response.success();
     }
 }
-
 

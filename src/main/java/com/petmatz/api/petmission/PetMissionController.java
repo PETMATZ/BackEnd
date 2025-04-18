@@ -1,19 +1,18 @@
 package com.petmatz.api.petmission;
 
 import com.petmatz.api.global.dto.Response;
-import com.petmatz.api.global.utils.SendChatMessage;
 import com.petmatz.api.petmission.dto.*;
+import com.petmatz.api.utils.SendChatMessage;
 import com.petmatz.common.constants.PetMissionStatusZip;
-import com.petmatz.common.security.jwt.JwtExtractProvider;
-import com.petmatz.domain.chatting.ChatMessageService;
-import com.petmatz.domain.chatting.dto.ChatMessageInfo;
-import com.petmatz.domain.petmission.PetMissionService;
-import com.petmatz.domain.petmission.dto.PetMissionAnswerInfo;
-import com.petmatz.domain.petmission.dto.PetMissionData;
-import com.petmatz.domain.petmission.dto.PetMissionDetails;
-import com.petmatz.domain.petmission.dto.UserToPetMissionListInfo;
-import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
-import com.petmatz.domain.user.service.UserService;
+import com.petmatz.domain.old.chatting.ChatMessageService;
+import com.petmatz.domain.old.chatting.dto.ChatMessageInfo;
+import com.petmatz.domain.old.petmission.PetMissionService;
+import com.petmatz.domain.old.petmission.dto.PetMissionAnswerInfo;
+import com.petmatz.domain.old.petmission.dto.PetMissionData;
+import com.petmatz.domain.old.petmission.dto.PetMissionDetails;
+import com.petmatz.domain.old.petmission.dto.UserToPetMissionListInfo;
+import com.petmatz.domain.old.petmission.entity.UserToPetMissionEntity;
+import garbege.service.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import java.net.MalformedURLException;
 import java.util.List;
 
+
+//TODO 펫미션 고민
 @RestController
 @RequestMapping("/api/v1/pet/mission")
 @RequiredArgsConstructor

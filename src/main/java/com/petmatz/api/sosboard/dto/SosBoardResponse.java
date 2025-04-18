@@ -1,8 +1,8 @@
 package com.petmatz.api.sosboard.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.petmatz.domain.sosboard.PaymentType;
-import com.petmatz.domain.sosboard.dto.SosBoardInfo;
+import com.petmatz.domain.old.sosboard.PaymentType;
+import com.petmatz.domain.old.sosboard.dto.SosBoardInfo;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

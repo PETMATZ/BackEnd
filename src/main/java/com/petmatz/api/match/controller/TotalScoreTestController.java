@@ -2,8 +2,8 @@ package com.petmatz.api.match.controller;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.match.request.UserIdRequest;
-import com.petmatz.domain.match.dto.response.UserResponse;
-import com.petmatz.domain.match.service.MatchScoreService;
+import com.petmatz.domain.old.match.dto.response.UserResponse;
+import com.petmatz.domain.old.match.service.MatchScoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

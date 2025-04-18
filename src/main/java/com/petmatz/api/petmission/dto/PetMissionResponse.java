@@ -1,6 +1,6 @@
 package com.petmatz.api.petmission.dto;
 
-import com.petmatz.domain.petmission.dto.PetMissionData;
+import com.petmatz.domain.old.petmission.dto.PetMissionData;
 import lombok.Builder;
 
 @Builder

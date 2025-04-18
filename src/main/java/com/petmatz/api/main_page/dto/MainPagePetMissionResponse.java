@@ -1,10 +1,10 @@
 package com.petmatz.api.main_page.dto;
 
 import com.petmatz.common.constants.PetMissionStatusZip;
-import com.petmatz.domain.petmission.dto.RoleType;
-import com.petmatz.domain.petmission.entity.PetMissionAskEntity;
-import com.petmatz.domain.petmission.entity.PetMissionEntity;
-import com.petmatz.domain.petmission.entity.UserToPetMissionEntity;
+import com.petmatz.domain.old.petmission.dto.RoleType;
+import com.petmatz.domain.old.petmission.entity.PetMissionAskEntity;
+import com.petmatz.domain.old.petmission.entity.PetMissionEntity;
+import com.petmatz.domain.old.petmission.entity.UserToPetMissionEntity;
 import lombok.Builder;
 
 import java.util.List;

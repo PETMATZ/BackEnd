@@ -1,9 +1,9 @@
 package com.petmatz.common.security.filter;
 
-import com.petmatz.common.security.jwt.JwtManager;
+import com.petmatz.infra.jwt.JwtManager;
 import com.petmatz.domain.user.constant.LoginRole;
-import com.petmatz.domain.user.entity.User;
-import com.petmatz.domain.user.repository.UserRepository;
+import com.petmatz.garbege.service.user.User;
+import com.petmatz.persistence.user.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;

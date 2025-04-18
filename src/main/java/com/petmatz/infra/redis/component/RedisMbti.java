@@ -1,6 +1,6 @@
 package com.petmatz.infra.redis.component;
 
-import com.petmatz.domain.match.exception.MatchException;
+import com.petmatz.domain.old.match.exception.MatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static com.petmatz.domain.match.exception.MatchErrorCode.INVALID_REDIS_DATA;
-import static com.petmatz.domain.match.exception.MatchErrorCode.TARGET_MBTI_EMPTY;
+import static com.petmatz.domain.old.match.exception.MatchErrorCode.INVALID_REDIS_DATA;
+import static com.petmatz.domain.old.match.exception.MatchErrorCode.TARGET_MBTI_EMPTY;
 
 @RequiredArgsConstructor
 @Component

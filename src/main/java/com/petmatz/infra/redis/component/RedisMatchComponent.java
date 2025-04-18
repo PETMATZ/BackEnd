@@ -3,8 +3,8 @@ package com.petmatz.infra.redis.component;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.petmatz.domain.match.dto.response.MatchScoreResponse;
-import com.petmatz.domain.match.exception.MatchException;
+import com.petmatz.domain.old.match.dto.response.MatchScoreResponse;
+import com.petmatz.domain.old.match.exception.MatchException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.List;
 
-import static com.petmatz.domain.match.exception.MatchErrorCode.INVALID_REDIS_DATA;
-import static com.petmatz.domain.match.exception.MatchErrorCode.NULL_MATCH_DATA;
+import static com.petmatz.domain.old.match.exception.MatchErrorCode.INVALID_REDIS_DATA;
+import static com.petmatz.domain.old.match.exception.MatchErrorCode.NULL_MATCH_DATA;
 
 @Component
 @RequiredArgsConstructor
