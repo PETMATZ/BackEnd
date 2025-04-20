@@ -1,11 +1,11 @@
 package garbege.service.user.service;
 
-import garbege.api.user.request1.DeleteIdRequestDto;
-import com.petmatz.domain.pet.repository.PetRepository;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
+import com.petmatz.domain.user.User;
+import com.petmatz.api.auth.dto.UserDeleteRequest;
 import com.petmatz.domain.old.sosboard.component.SosBoardDelete;
-import garbege.service.user.component.PasswordComponent;
+import com.petmatz.application.user.validator.PasswordComponent;
 import garbege.service.user.provider.UserUtils;
-import com.petmatz.garbege.service.user.User;
 import garbege.service.user.info.UserInfo;
 import com.petmatz.persistence.email.repository.CertificationRepository;
 import com.petmatz.persistence.user.repository.UserRepository;
@@ -24,7 +24,6 @@ public class UserService {
      */
 
     private final UserRepository userRepository;
-    private final PetRepository petRepository;
 
     private final SosBoardDelete sosBoardDelete;
 
@@ -34,39 +33,39 @@ public class UserService {
     private final PasswordComponent passwordComponent;
 
 
-    @Transactional
-    public void deleteId(DeleteIdRequestDto dto) {
-        Long userId = jwtExtractProvider.findIdFromJwt();
-        User user = userUtils.findIdUser(userId);
-
-        String password = dto.getPassword();
-        String encodedPassword = user.getPassword();
-
-        //패스워드 검증
-        passwordComponent.validatePassword(password, encodedPassword);
-
-        //인증번호 관련 전부 삭제
-        //TODO 인증 번호를 굳이 DB에서 관리해야 하나?
-        certificationRepository.deleteById(userId);
-
-        //sos보드 삭제
-        sosBoardDelete.deleteSosBoardByUser(userId);
-
-        //찜 목록 삭제
-
-        //채팅방 삭제
-
-        // 명시적으로 Pet 삭제
-//        petRepository.deleteAll(pets);
-        petRepository.deleteByUserId(userId);
-        userRepository.delete(user);
-    }
-
-
-    public UserInfo selectUserInfo(String receiverEmail) {
-        User otherUser = userRepository.findByAccountId(receiverEmail);
-        return otherUser.of();
-    }
+//    @Transactional
+//    public void deleteId(UserDeleteRequest dto) {
+//        Long userId = jwtExtractProvider.findIdFromJwt();
+//        User user = userUtils.findIdUser(userId);
+//
+//        String password = dto.getPassword();
+//        String encodedPassword = user.getPassword();
+//
+//        //패스워드 검증
+//        passwordComponent.validatePassword(password, encodedPassword);
+//
+//        //인증번호 관련 전부 삭제
+//        //TODO 인증 번호를 굳이 DB에서 관리해야 하나?
+//        certificationRepository.deleteById(userId);
+//
+//        //sos보드 삭제
+//        sosBoardDelete.deleteSosBoardByUser(userId);
+//
+//        //찜 목록 삭제
+//
+//        //채팅방 삭제
+//
+//        // 명시적으로 Pet 삭제
+////        petRepository.deleteAll(pets);
+////        petRepository.deleteByUserId(userId);
+//        userRepository.delete(user);
+//    }
+//
+//
+//    public UserInfo selectUserInfo(String receiverEmail) {
+//        User otherUser = userRepository.find(receiverEmail);
+//        return otherUser.of();
+//    }
 
     public String findByUserEmail(Long userId) {
         return userRepository.findById(userId).get().getAccountId();

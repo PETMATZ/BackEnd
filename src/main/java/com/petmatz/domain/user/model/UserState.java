@@ -10,5 +10,4 @@ import lombok.RequiredArgsConstructor;
 public class UserState {
     private Integer recommendationCount;
     private Integer careCompletionCount;
-
 }

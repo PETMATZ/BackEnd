@@ -7,4 +7,6 @@ public interface EmailUseCasePort {
     void emailCertification(String accountId);
 
     void checkCertification(String accountId, String certificationNumber);
+
+    void sendRepassword(String accountId);
 }

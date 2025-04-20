@@ -1,6 +1,6 @@
 //package garbege.service.user.service;
 //
-//import com.petmatz.api.user.dto.EmailCertificationRequest;
+//import com.petmatz.api.user.dto.request.EmailCertificationRequest;
 //import garbege.service.user.component.EmailComponent;
 //import garbege.service.user.provider.UserUtils;
 //import com.petmatz.garbege.service.user.User;

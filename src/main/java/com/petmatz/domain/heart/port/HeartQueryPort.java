@@ -8,4 +8,6 @@ public interface HeartQueryPort {
 
     List<Heart> getHeartedUsers(Long myId);
 
+    boolean existsByMyIdAndHeartedId(Long myId, Long userId);
+
 }

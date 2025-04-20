@@ -3,7 +3,9 @@ package com.petmatz.api.petmission;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.petmission.dto.*;
 import com.petmatz.api.utils.SendChatMessage;
+import com.petmatz.application.user.port.UserUseCasePort;
 import com.petmatz.common.constants.PetMissionStatusZip;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.old.chatting.ChatMessageService;
 import com.petmatz.domain.old.chatting.dto.ChatMessageInfo;
 import com.petmatz.domain.old.petmission.PetMissionService;
@@ -31,7 +33,7 @@ public class PetMissionController {
 
     private final PetMissionService petMissionService;
     private final ChatMessageService chatService;
-    private final UserService userService;
+    private final UserUseCasePort userUseCasePort;
     private final SendChatMessage sendChatMessage;
 
     private final JwtExtractProvider jwtExtractProvider;
@@ -48,8 +50,7 @@ public class PetMissionController {
     public Response<PetMissionResponse> savePetMissionList(@RequestBody PetMissionRequest petMissionRequest) {
         Long careId = jwtExtractProvider.findIdFromJwt();
         String careEmail = jwtExtractProvider.findAccountIdFromJwt();
-
-        String receiverEmail = userService.findByUserEmail(petMissionRequest.receiverId());
+        String receiverEmail = userUseCasePort.selectUserAccountId(petMissionRequest.receiverId());
         PetMissionData petMissionData = petMissionService.insertPetMission(petMissionRequest.of(), careId);
 
         chatService.updateMessage(petMissionRequest.ofto(), petMissionData, receiverEmail);

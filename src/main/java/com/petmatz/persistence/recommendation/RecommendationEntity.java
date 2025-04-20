@@ -23,4 +23,9 @@ public class RecommendationEntity extends BaseEntity {
 
     @Column(name = "recommended_id", nullable = false)
     private Long recommendedId;
+
+    public RecommendationEntity(Long myId, Long recommendedId) {
+        this.myId = myId;
+        this.recommendedId = recommendedId;
+    }
 }

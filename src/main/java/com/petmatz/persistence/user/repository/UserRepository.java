@@ -35,4 +35,7 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     List<UserEntity> findByRegionCodeOrderByRecommendationCountDesc(Integer regionCode);
 
 
+    //---------TODO 아래는 임시
+
+
 }

@@ -17,4 +17,8 @@ public class UserStatsEntity {
         this.recommendationCount = recommendationCount;
         this.careCompletionCount = careCompletionCount;
     }
+
+    public void updateRecommendation() {
+        this.recommendationCount += 1;
+    }
 }

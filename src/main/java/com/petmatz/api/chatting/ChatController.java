@@ -3,6 +3,8 @@ package com.petmatz.api.chatting;
 import com.petmatz.api.chatting.dto.*;
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.utils.SendChatMessage;
+import com.petmatz.application.user.port.UserUseCasePort;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.old.chatting.ChatMessageService;
 import com.petmatz.domain.old.chatting.ChatRoomService;
 import com.petmatz.domain.old.chatting.dto.ChatMessageInfo;
@@ -31,8 +33,9 @@ import java.time.LocalDateTime;
 @Slf4j
 public class ChatController {
 
+    private final UserUseCasePort userUseCasePort;
+
     private final ChatMessageService chatService;
-    private final UserService userService;
     private final ChatRoomService chatRoomService;
     private final JwtExtractProvider jwtExtractProvider;
     private final SendChatMessage sendChatMessage;
@@ -76,7 +79,7 @@ public class ChatController {
         String userEmail = jwtExtractProvider.findAccountIdFromJwt();
         String receiverEmail = chatRoomService.selectChatRoomUserEmail(chatRoomId, userEmail);
         Page<ChatMessageInfo> chatMessageInfos = chatService.selectMessage(receiverEmail, chatRoomId, startPage, pageSize, lastFetchTimestamp);
-        UserInfo userInfo = userService.selectUserInfo(receiverEmail);
+        UserInfo userInfo = userUseCasePort.selectUserInfo(receiverEmail);
 
         return Response.success(ChatMessageResponse.of(
                 chatMessageInfos.getContent()

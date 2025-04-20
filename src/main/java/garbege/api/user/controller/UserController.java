@@ -1,10 +1,8 @@
 package garbege.api.user.controller;
 
+import com.petmatz.api.auth.dto.UserDeleteRequest;
 import com.petmatz.api.global.dto.Response;
 import garbege.api.user.request1.*;
-import garbege.service.user.response.EditMyProfileResponseDto;
-import com.petmatz.api.user.dto.MyProfileResponse;
-import garbege.service.user.response.GetOtherProfileResponseDto;
 import garbege.service.user.service.HeartService;
 import garbege.service.user.service.KakaoUserService;
 import garbege.service.user.service.PageService;
@@ -12,8 +10,6 @@ import garbege.service.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.MalformedURLException;
 
 @RestController
 @RequiredArgsConstructor
@@ -27,7 +23,7 @@ public class UserController {
 
 
     @DeleteMapping("/delete-user")
-    public Response<Void> deleteUser(@RequestBody @Valid DeleteIdRequestDto requestBody) {
+    public Response<Void> deleteUser(@RequestBody @Valid UserDeleteRequest requestBody) {
         userService.deleteId(requestBody);
         return Response.success();
     }
@@ -56,15 +52,15 @@ public class UserController {
 //        return Response.success(myPage);
 //    }
 
-    @GetMapping("/get-otherprofile")
-    public Response<GetOtherProfileResponseDto> getOtherMypage(@RequestParam @Valid Long userId) {
-        GetOtherProfileResponseDto otherMypage = pageService.getOtherMypage(userId);
-        return Response.success(otherMypage);
-    }
+//    @GetMapping("/get-otherprofile")
+//    public Response<OtherProfileResponse> getOtherMypage(@RequestParam @Valid Long userId) {
+//        OtherProfileResponse otherMypage = pageService.getOtherMypage(userId);
+//        return Response.success(otherMypage);
+//    }
 
-    @PostMapping("/edit-myprofile")
-    public Response<EditMyProfileResponseDto> editMyProfile(@RequestBody @Valid EditMyProfileRequestDto requestBody) throws MalformedURLException {
-        EditMyProfileResponseDto editMyProfileResponseDto = pageService.editMyProfile(EditMyProfileRequestDto.of(requestBody));
-        return Response.success(editMyProfileResponseDto);
-    }
+//    @PostMapping("/edit-myprofile")
+//    public Response<EditMyProfileResponse> editMyProfile(@RequestBody @Valid EditMyProfileRequest requestBody) throws MalformedURLException {
+//        EditMyProfileResponse editMyProfileResponse = pageService.editMyProfile(EditMyProfileRequest.of(requestBody));
+//        return Response.success(editMyProfileResponse);
+//    }
 }

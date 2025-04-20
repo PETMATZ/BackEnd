@@ -1,5 +1,6 @@
 package com.petmatz.application.page.dto;
 
+import com.petmatz.domain.user.User;
 import com.petmatz.domain.user.constant.Gender;
 import com.petmatz.domain.user.constant.PreferredSize;
 import lombok.Builder;
@@ -26,5 +27,23 @@ public class MyPageInfo {
     private String mbti;
     private String region;
     private Integer regionCode;
+
+    public static MyPageInfo to(User user) {
+        return MyPageInfo.builder()
+                .id(user.getId())
+                .accountId(user.getAccount().getAccountId())
+                .nickname(user.getProfile().getNickname())
+                .profileImg(user.getProfile().getProfileImg())
+                .preferredSizes(user.getProfile().getPreferredSizes())
+                .gender(user.getProfile().getGender())
+                .introduction(user.getProfile().getIntroduction())
+                .recommendationCount(user.getStats().getRecommendationCount())
+                .careCompletionCount(user.getStats().getCareCompletionCount())
+                .isCareAvailable(user.getProfile().getCareAvailable())
+                .mbti(user.getProfile().getMbti())
+                .region(user.getLocation().getRegion())
+                .regionCode(user.getLocation().getRegionCode())
+                .build();
+    }
 
 }

@@ -1,6 +1,7 @@
 package com.petmatz.domain.old.match.service;
 
 
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.old.match.component.MatchScoreProcessor;
 import com.petmatz.domain.old.match.component.UserMapper;
 import com.petmatz.domain.old.match.dto.response.DetailedMatchResultResponse;

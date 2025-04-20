@@ -21,4 +21,12 @@ public class Profile {
     private List<PreferredSize> preferredSizes;
     private Boolean careAvailable;
 
+
+    public void updateProfile(String nickname, List<PreferredSize> preferredSizes, String introduction, boolean careAvailable, String imgURL) {
+        this.nickname = nickname;
+        this.preferredSizes = preferredSizes;
+        this.introduction = introduction;
+        this.careAvailable = careAvailable;
+        this.profileImg = imgURL;
+    }
 }

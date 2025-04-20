@@ -1,6 +1,6 @@
 package garbege.service.user.service;
 
-import com.petmatz.garbege.service.user.User;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.persistence.user.repository.UserRepository;
 import garbege.service.user.response.RankUserResponse;
 import lombok.RequiredArgsConstructor;

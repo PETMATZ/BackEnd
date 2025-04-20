@@ -33,4 +33,8 @@ public class AccountEntity {
     @Column(name = "login_type")
     private LoginType loginType;
 
+    public void updatePassword(String rePassword) {
+        this.password = rePassword;
+    }
+
 }

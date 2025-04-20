@@ -1,7 +1,9 @@
 package com.petmatz.persistence.user.adapter;
 
+import com.petmatz.application.user.exception.UserException;
 import com.petmatz.common.exception.PersistenceException;
 import com.petmatz.domain.user.User;
+import com.petmatz.domain.user.model.Profile;
 import com.petmatz.domain.user.port.UserCommandPort;
 import com.petmatz.domain.user.port.UserQueryPort;
 import com.petmatz.persistence.exception.PersistenceErrorCode;
@@ -12,6 +14,8 @@ import com.petmatz.persistence.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+
+import static com.petmatz.application.user.exception.UserErrorCode.USER_NOT_FOUND;
 
 @Repository
 @RequiredArgsConstructor
@@ -51,6 +55,33 @@ public class UserAdapter implements UserCommandPort, UserQueryPort {
     public User findById(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND));
         return UserDomainMapper.fromDomain(userEntity);
+    }
+
+    @Override
+    public void updateUser(User user, Long userId) {
+        Profile profile = user.getProfile();
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND));
+        userEntity.getProfileEntity().updateProfile(profile.getNickname(), profile.getPreferredSizes(), profile.getIntroduction(), profile.getCareAvailable(), profile.getProfileImg());
+    }
+
+    @Override
+    public void updatePassword(String currentPassword, String newPassword, Long userId) {
+        UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND));
+        userEntity.getAccountEntity().updatePassword(newPassword);
+    }
+
+    @Override
+    public void updateRecommendation(Long recommendedId) {
+        UserEntity userEntity = userRepository.findById(recommendedId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND));
+        userEntity.getUserStatsEntity().updateRecommendation();
+    }
+
+    @Override
+    public void deleteUser(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserException(USER_NOT_FOUND);
+        }
+        userRepository.deleteById(userId);
     }
 
 

@@ -2,6 +2,7 @@ package com.petmatz.api.main_page;
 
 import com.petmatz.api.global.dto.Response;
 import com.petmatz.api.main_page.dto.MainPagePetMissionResponse;
+import com.petmatz.common.security.jwt.JwtExtractProvider;
 import com.petmatz.domain.old.petmission.PetMissionService;
 import com.petmatz.domain.old.petmission.entity.UserToPetMissionEntity;
 import garbege.service.user.response.RankUserResponse;

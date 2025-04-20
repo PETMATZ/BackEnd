@@ -1,8 +1,7 @@
 package com.petmatz.persistence.user;
 
-import com.petmatz.domain.pet.PetGender;
 import com.petmatz.domain.user.constant.Gender;
-import garbege.service.user.entity.PreferredSizeConverter;
+import com.petmatz.persistence.user.utils.PreferredSizeConverter;
 import com.petmatz.domain.user.constant.PreferredSize;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -34,4 +33,12 @@ public class ProfileEntity {
 
     @Column(name = "is_care_available")
     private Boolean careAvailable;
+
+    public void updateProfile(String nickname, List<PreferredSize> preferredSizes, String introduction, boolean careAvailable, String imgURL) {
+        this.nickname = nickname;
+        this.preferredSizes = preferredSizes;
+        this.introduction = introduction;
+        this.careAvailable = careAvailable;
+        this.profileImg = imgURL;
+    }
 }

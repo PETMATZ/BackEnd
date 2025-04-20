@@ -1,7 +1,7 @@
 //package garbege.service.user.service;
 //
 //import garbege.api.user.request1.HeartedUserDto;
-//import garbege.api.user.request1.HeartingRequestDto;
+//import com.petmatz.api.user.dto.HeartingRequestDto;
 //import garbege.service.user.component.HeartComponent;
 //import garbege.service.user.provider.UserUtils;
 //import com.petmatz.garbege.service.user.User;

@@ -8,6 +8,7 @@ import com.petmatz.domain.email.port.CertificationQueryPort;
 import com.petmatz.domain.email.port.EmailSenderPort;
 import com.petmatz.domain.user.port.UserQueryPort;
 import com.petmatz.application.hepler.CertificationNumberProvider;
+import com.petmatz.application.email.support.RePasswordProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class EmailUseCase implements EmailUseCasePort {
     private final CertificationQueryPort certificationQueryPort;
     private final UserQueryPort userQueryPort;
     private final EmailSenderPort emailSenderPort;
+
 
     @Override
     public void deleteCertification(String accountId) {
@@ -48,5 +50,11 @@ public class EmailUseCase implements EmailUseCasePort {
             certificationQueryPort.findCertification(accountId);
     }
 
+    @Override
+    public void sendRepassword(String accountId) {
+        userQueryPort.findByUserInfo(accountId);
+        String rePasswordNum = RePasswordProvider.generatePassword();
+        emailSenderPort.sendRePasswordEmail(accountId, rePasswordNum);
+    }
 
 }

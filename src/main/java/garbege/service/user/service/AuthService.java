@@ -1,7 +1,7 @@
 //package com.petmatz.garbege.service.user.service;
 //
 //
-//import com.petmatz.api.user.dto.SignUpResponse;
+//import com.petmatz.api.auth.dto.SignUpResponse;
 //import com.petmatz.domain.aws.AwsClient;
 //import com.petmatz.domain.aws.vo.S3Imge;
 //import com.petmatz.application.user.validator.AuthenticationValidator;
