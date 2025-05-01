@@ -1,17 +1,17 @@
-package com.petmatz.application.chat.port;
-
-import com.petmatz.application.chat.dto.ChatRoomInfo;
-import com.petmatz.application.chat.dto.ChatRoomMetaDataInfo;
-
-import java.util.List;
-
-public interface ChatRoomUserCasePort {
-
-    long createdChatRoom(ChatRoomInfo chatRoomInfo);
-
-    List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String accountId);
-
-    void deleteRoom(String roomId);
-
-    String selectChatRoomUserEmail(String chatRoomId, String userEmail);
-}
+//package com.petmatz.application.chat.port;
+//
+//import com.petmatz.application.chat.dto.ChatRoomInfo;
+//import com.petmatz.application.chat.dto.ChatRoomMetaDataInfo;
+//
+//import java.util.List;
+//
+//public interface ChatRoomUserCasePort {
+//
+//    long createdChatRoom(ChatRoomInfo chatRoomInfo);
+//
+//    List<ChatRoomMetaDataInfo> selectChatRoomList(int pageSize, int startPage, String accountId);
+//
+//    void deleteRoom(String roomId);
+//
+//    String selectChatRoomUserEmail(String chatRoomId, String userEmail);
+//}

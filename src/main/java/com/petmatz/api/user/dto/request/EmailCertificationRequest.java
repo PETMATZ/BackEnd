@@ -12,6 +12,6 @@ import lombok.Setter;
 public class EmailCertificationRequest {
     @Email
     @NotBlank
-    @Schema(description = "사용자 이메일", "test@gmail.com")
+    @Schema(description = "사용자 이메일", example = "test@gmail.com")
     private final String accountId;
 }

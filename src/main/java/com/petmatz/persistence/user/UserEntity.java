@@ -1,8 +1,6 @@
 package com.petmatz.persistence.user;
 
-import com.petmatz.persistence.caht.entity.UserToChatRoomEntity;
 import com.petmatz.persistence.global.BaseEntity;
-import com.petmatz.domain.old.petmission.entity.UserToPetMissionEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -36,10 +34,10 @@ public class UserEntity extends BaseEntity {
     @Embedded
     private UserStatsEntity userStatsEntity;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserToChatRoomEntity> chatRooms = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<UserToChatRoomEntity> chatRooms = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<UserToPetMissionEntity> userPetMissions = new ArrayList<>();
+//    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<UserToPetMissionEntity> userPetMissions = new ArrayList<>();
 
 }

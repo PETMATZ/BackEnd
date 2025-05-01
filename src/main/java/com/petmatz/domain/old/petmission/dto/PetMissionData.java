@@ -1,28 +1,28 @@
-package com.petmatz.domain.old.petmission.dto;
-
-import com.petmatz.domain.old.petmission.entity.PetMissionEntity;
-import lombok.Builder;
-
-@Builder
-public record PetMissionData(
-
-        String chatRoomId,
-
-
-        Long petMissionId
-) {
-
-    public static PetMissionData of(String chatRoomId, PetMissionEntity petMissionEntity) {
-        return PetMissionData.builder()
-                .chatRoomId(chatRoomId)
-                .petMissionId(petMissionEntity.getId())
-                .build();
-    }
-
-    public static PetMissionData of(String chatRoomId, String petMissionId) {
-        return PetMissionData.builder()
-                .chatRoomId(chatRoomId)
-                .petMissionId(Long.valueOf(petMissionId))
-                .build();
-    }
-}
+//package com.petmatz.domain.old.petmission.dto;
+//
+//import com.petmatz.domain.old.petmission.entity.PetMissionEntity;
+//import lombok.Builder;
+//
+//@Builder
+//public record PetMissionData(
+//
+//        String chatRoomId,
+//
+//
+//        Long petMissionId
+//) {
+//
+//    public static PetMissionData of(String chatRoomId, PetMissionEntity petMissionEntity) {
+//        return PetMissionData.builder()
+//                .chatRoomId(chatRoomId)
+//                .petMissionId(petMissionEntity.getId())
+//                .build();
+//    }
+//
+//    public static PetMissionData of(String chatRoomId, String petMissionId) {
+//        return PetMissionData.builder()
+//                .chatRoomId(chatRoomId)
+//                .petMissionId(Long.valueOf(petMissionId))
+//                .build();
+//    }
+//}

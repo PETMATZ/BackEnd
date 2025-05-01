@@ -16,10 +16,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class AccountEntity {
 
-    @Column(name = "accountId")
+    @Column(name = "account_id")
     private String accountId;
 
-    @Column(name = "registrationId")
+    @Column(name = "registrationid")
     private String registrationId;
 
     @Column(name = "password")
