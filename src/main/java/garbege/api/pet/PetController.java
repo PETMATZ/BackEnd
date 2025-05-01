@@ -6,7 +6,7 @@
 //import com.petmatz.api.pet.dto.PetRegisterNoRequest;
 //import com.petmatz.api.pet.dto.PetRequest;
 //import com.petmatz.api.pet.dto.PetUpdateRequest;
-//import com.petmatz.common.security.jwt.JwtExtractProvider;
+//import com.petmatz.infra.jwt.JwtExtractProvider;
 //import com.petmatz.domain.global.S3ImgDataInfo;
 //import com.petmatz.domain.pet.PetService;
 //import com.petmatz.domain.pet.dto.OpenApiPetInfo;

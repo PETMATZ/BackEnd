@@ -13,10 +13,10 @@ import static com.petmatz.domain.old.match.exception.MatchErrorCode.INSUFFICIENT
 @RequiredArgsConstructor
 public class Location {
 
-    private Double latitude;
-    private Double longitude;
-    private String region;
-    private Integer regionCode;
+    private final Double latitude;
+    private final Double longitude;
+    private final String region;
+    private final Integer regionCode;
 
 
     public void checkLatitudeLongitude() {

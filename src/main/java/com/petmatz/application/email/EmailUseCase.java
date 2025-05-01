@@ -2,12 +2,12 @@ package com.petmatz.application.email;
 
 import com.petmatz.application.email.port.EmailUseCasePort;
 
+import com.petmatz.application.email.support.CertificationNumberProvider;
 import com.petmatz.application.user.exception.UserException;
 import com.petmatz.domain.email.port.CertificationCommandPort;
 import com.petmatz.domain.email.port.CertificationQueryPort;
 import com.petmatz.domain.email.port.EmailSenderPort;
 import com.petmatz.domain.user.port.UserQueryPort;
-import com.petmatz.application.hepler.CertificationNumberProvider;
 import com.petmatz.application.email.support.RePasswordProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -52,7 +52,7 @@ public class EmailUseCase implements EmailUseCasePort {
 
     @Override
     public void sendRepassword(String accountId) {
-        userQueryPort.findByUserInfo(accountId);
+        userQueryPort.findAccountIdByUserInfo(accountId);
         String rePasswordNum = RePasswordProvider.generatePassword();
         emailSenderPort.sendRePasswordEmail(accountId, rePasswordNum);
     }

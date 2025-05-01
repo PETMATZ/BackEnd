@@ -1,6 +1,5 @@
 package com.petmatz.persistence.user.mapper;
 
-
 import com.petmatz.domain.user.User;
 import com.petmatz.domain.user.model.Account;
 import com.petmatz.domain.user.model.Location;
@@ -8,7 +7,6 @@ import com.petmatz.domain.user.model.Profile;
 import com.petmatz.domain.user.model.UserState;
 import com.petmatz.persistence.user.*;
 
-// persistence.user.mapper.UserMapper.java
 public class UserEntityMapper {
 
     public static UserEntity toEntity(User user) {

@@ -1,6 +1,8 @@
 package com.petmatz.persistence.user.mapper;
 
 import com.petmatz.domain.user.User;
+import com.petmatz.domain.user.constant.LoginRole;
+import com.petmatz.domain.user.constant.LoginType;
 import com.petmatz.domain.user.model.Account;
 import com.petmatz.domain.user.model.Location;
 import com.petmatz.domain.user.model.Profile;

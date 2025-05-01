@@ -1,6 +1,5 @@
 package com.petmatz.domain.old.sosboard.component;
 
-import com.petmatz.api.pet.dto.PetResponse;
 import com.petmatz.domain.old.sosboard.SosBoardRepository;
 import com.petmatz.domain.old.sosboard.dto.LegercySosBoardInfo;
 import com.petmatz.domain.old.sosboard.dto.PageResponse;
@@ -50,28 +49,28 @@ public class SosBoardReader {
         }
     }
 
-    public PageResponse<LegercySosBoardInfo> getUserSosBoardsByNickname(String nickname, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
-
-        Page<SosBoard> sosBoardPage = sosBoardRepository.findByUserNickname(nickname, pageable);
-
-        // SosBoard → SosBoardServiceDto 변환
-        List<LegercySosBoardInfo> serviceDtos = sosBoardPage.getContent().stream()
-                .map(sosBoard -> {
-                    List<PetResponse> petResponses = sosBoard.getPetSosBoards().stream()
-                            .map(PetSosBoard::getPet)
-                            .map(PetResponse::of)
-                            .collect(Collectors.toList());
-                    return LegercySosBoardInfo.from(sosBoard, petResponses);
-                })
-                .collect(Collectors.toList());
-
-        // PageResponseDto 생성
-        return new PageResponse<>(
-                serviceDtos,
-                sosBoardPage.getTotalElements(),
-                sosBoardPage.getTotalPages(),
-                page + 1
-        );
-    }
+//    public PageResponse<LegercySosBoardInfo> getUserSosBoardsByNickname(String nickname, int page, int size) {
+//        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "id"));
+//
+//        Page<SosBoard> sosBoardPage = sosBoardRepository.findByUserNickname(nickname, pageable);
+//
+//        // SosBoard → SosBoardServiceDto 변환
+//        List<LegercySosBoardInfo> serviceDtos = sosBoardPage.getContent().stream()
+//                .map(sosBoard -> {
+//                    List<PetResponse> petResponses = sosBoard.getPetSosBoards().stream()
+//                            .map(PetSosBoard::getPet)
+//                            .map(PetResponse::of)
+//                            .collect(Collectors.toList());
+//                    return LegercySosBoardInfo.from(sosBoard, petResponses);
+//                })
+//                .collect(Collectors.toList());
+//
+//        // PageResponseDto 생성
+//        return new PageResponse<>(
+//                serviceDtos,
+//                sosBoardPage.getTotalElements(),
+//                sosBoardPage.getTotalPages(),
+//                page + 1
+//        );
+//    }
 }

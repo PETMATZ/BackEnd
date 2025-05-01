@@ -1,6 +1,6 @@
 package com.petmatz.infra.websocket;
 
-import com.petmatz.domain.old.chatting.component.ChatReadStatusUpdater;
+import com.petmatz.persistence.caht.adapter.mongo.ChatReadStatusUpdater;
 import com.petmatz.infra.websocket.exception.RegularExpressionNotMatchException;
 import com.petmatz.infra.websocket.exception.SubscriptionUrlNotFountException;
 import lombok.RequiredArgsConstructor;

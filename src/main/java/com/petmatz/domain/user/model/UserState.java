@@ -8,6 +8,6 @@ import lombok.RequiredArgsConstructor;
 @Builder
 @RequiredArgsConstructor
 public class UserState {
-    private Integer recommendationCount;
-    private Integer careCompletionCount;
+    private final Integer recommendationCount;
+    private final Integer careCompletionCount;
 }

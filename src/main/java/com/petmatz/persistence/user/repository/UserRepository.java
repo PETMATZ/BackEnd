@@ -32,7 +32,9 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
     @Query("DELETE FROM User u WHERE u.id = :userId")
     void deleteUserById(@Param("userId") Long userId);
 
-    List<UserEntity> findByRegionCodeOrderByRecommendationCountDesc(Integer regionCode);
+    @Query("SELECT u FROM User u WHERE u.locationEntity.regionCode = :regionCode ORDER BY u.userStatsEntity.recommendationCount DESC")
+    List<UserEntity> findRank(@Param("regionCode") Integer regionCode);
+
 
 
     //---------TODO 아래는 임시

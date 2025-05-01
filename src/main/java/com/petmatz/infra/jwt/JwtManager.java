@@ -1,8 +1,8 @@
 package com.petmatz.infra.jwt;
 
 import com.petmatz.api.utils.CookieComponent;
+import com.petmatz.domain.user.port.UserQueryPort;
 import com.petmatz.infra.redis.component.RedisTokenComponent;
-import garbege.service.user.provider.UserUtils;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -38,8 +38,8 @@ public class  JwtManager {
     private String refreshKey;
 
     private final RedisTokenComponent redisTokenComponent;
+    private final UserQueryPort userQueryPort;
     private final CookieComponent cookieComponent;
-    private final UserUtils userUtils;
 
     /**
      * 주어진 사용자 ID와 계정 ID로 JWT 토큰을 생성하는 메서드.
@@ -99,7 +99,7 @@ public class  JwtManager {
                     .getBody();
 
             Long userId = Long.parseLong(claims.getSubject());
-            String accountId = userUtils.findAccountIdByUserId(userId);
+            String accountId = userQueryPort.findAccountIdByUserId(userId);
 
             String storedToken = redisTokenComponent.getRefreshTokenFromRedis(userId);
             if (storedToken == null || !storedToken.equals(refreshToken)) {
@@ -114,5 +114,6 @@ public class  JwtManager {
             // 기타 검증 실패 시 예외 처리
             log.error("Invalid refresh token." + e);
         }
+        return refreshToken;
     }
 }

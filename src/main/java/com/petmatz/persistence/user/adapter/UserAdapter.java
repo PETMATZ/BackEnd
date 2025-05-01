@@ -15,6 +15,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 import static com.petmatz.application.user.exception.UserErrorCode.USER_NOT_FOUND;
 
 @Repository
@@ -42,7 +44,7 @@ public class UserAdapter implements UserCommandPort, UserQueryPort {
     }
 
     @Override
-    public User findByUserInfo(String accountId) {
+    public User findAccountIdByUserInfo(String accountId) {
         return UserDomainMapper.fromDomain(userRepository.findUserEntityByAccountEntity_AccountId(accountId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND)));
     }
 
@@ -55,6 +57,12 @@ public class UserAdapter implements UserCommandPort, UserQueryPort {
     public User findById(Long userId) {
         UserEntity userEntity = userRepository.findById(userId).orElseThrow(() -> new PersistenceException(PersistenceErrorCode.USER_NOT_FOUND));
         return UserDomainMapper.fromDomain(userEntity);
+    }
+
+    @Override
+    public List<User> findByRegionCodeOrderByRecommendationCountDesc(Integer regionCode) {
+        List<UserEntity> rank = userRepository.findRank(regionCode);
+        return rank.stream().map(UserDomainMapper::fromDomain).toList();
     }
 
     @Override

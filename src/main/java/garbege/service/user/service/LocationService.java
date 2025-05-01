@@ -1,6 +1,6 @@
 //package garbege.service.user.service;
 //
-//import com.petmatz.common.security.jwt.JwtExtractProvider;
+//import com.petmatz.infra.jwt.JwtExtractProvider;
 //import garbege.service.user.provider.UserUtils;
 //import com.petmatz.infra.adapter.kakao.dto.KakaoRegion;
 //import com.petmatz.garbege.service.user.User;

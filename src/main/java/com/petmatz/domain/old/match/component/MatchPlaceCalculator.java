@@ -3,7 +3,7 @@ package com.petmatz.domain.old.match.component;
 import com.petmatz.domain.old.match.dto.request.DistanceRequest;
 import com.petmatz.domain.old.match.dto.response.UserResponse;
 import com.petmatz.domain.old.match.exception.MatchException;
-import com.petmatz.garbege.service.user.User;
+import com.petmatz.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -45,7 +45,7 @@ public class MatchPlaceCalculator {
         }
 
         try {
-            user.checkLatitudeLongitude();
+            user.getLocation().checkLatitudeLongitude();
             targetUser.checkTargetUserLatitudeLongitude();
 
             double distance = calculateDistance(createDistanceRequest(user, targetUser));
@@ -63,8 +63,8 @@ public class MatchPlaceCalculator {
 
     private DistanceRequest createDistanceRequest(User user, UserResponse targetUser) {
         return new DistanceRequest(
-                (user.getLatitude()),
-                (user.getLongitude()),
+                (user.getLocation().getLatitude()),
+                (user.getLocation().getLongitude()),
                 (targetUser.latitude()),
                 (targetUser.longitude())
         );

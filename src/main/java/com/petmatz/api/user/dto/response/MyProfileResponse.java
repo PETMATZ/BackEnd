@@ -1,6 +1,6 @@
 package com.petmatz.api.user.dto.response;
 
-import com.petmatz.application.page.dto.MyPageInfo;
+import com.petmatz.application.main_page.dto.MyPageInfo;
 import com.petmatz.domain.user.constant.Gender;
 import com.petmatz.domain.user.constant.PreferredSize;
 import lombok.Getter;

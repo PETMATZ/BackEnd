@@ -1,8 +1,6 @@
 package com.petmatz.domain.old.match.component;
 
 import com.petmatz.domain.old.match.exception.MatchException;
-import com.petmatz.domain.pet.component.PetReader;
-import com.petmatz.domain.pet.entity.Pet;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,23 +14,22 @@ import static com.petmatz.domain.old.match.exception.MatchErrorCode.NULL_TARGET_
 @RequiredArgsConstructor
 public class MatchSizeCalculator {
 
-    private final PetReader petReader;
-    public double calculateDogSizeScore(Long userId, List<String> targetPreferredSizes) {
-        List<Pet> userPets = petReader.getPetsByUserId(userId);
-
-        if (targetPreferredSizes == null || targetPreferredSizes.isEmpty()) {
-            throw new MatchException(NULL_PREFERRED_SIZES);
-        }
-
-        double totalScore = userPets.stream()
-                .mapToDouble(pet -> {
-                    String myPetSize = pet.getSize().name();
-                    return calculateScoreForPet(targetPreferredSizes, myPetSize);
-                })
-                .sum();
-
-        return totalScore / userPets.size();
-    }
+//    public double calculateDogSizeScore(Long userId, List<String> targetPreferredSizes) {
+//        List<Pet> userPets = petReader.getPetsByUserId(userId);
+//
+//        if (targetPreferredSizes == null || targetPreferredSizes.isEmpty()) {
+//            throw new MatchException(NULL_PREFERRED_SIZES);
+//        }
+//
+//        double totalScore = userPets.stream()
+//                .mapToDouble(pet -> {
+//                    String myPetSize = pet.getSize().name();
+//                    return calculateScoreForPet(targetPreferredSizes, myPetSize);
+//                })
+//                .sum();
+//
+//        return totalScore / userPets.size();
+//    }
 
 
     private double calculateScoreForPet(List<String> targetPreferredSizes, String myPetSize) {

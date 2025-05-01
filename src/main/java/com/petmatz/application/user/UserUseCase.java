@@ -7,17 +7,18 @@ import com.petmatz.application.user.dto.SignUpInfo;
 import com.petmatz.application.user.dto.RegionInfo;
 import com.petmatz.application.user.dto.SignInInfo;
 import com.petmatz.application.user.exception.UserException;
-import com.petmatz.application.user.port.JwtProviderPort;
+import com.petmatz.application.jwt.port.JwtProviderPort;
 import com.petmatz.application.user.port.UserUseCasePort;
 import com.petmatz.application.user.validator.PasswordValidator;
-import com.petmatz.common.security.jwt.JwtExtractProvider;
+import com.petmatz.application.user.validator.AuthenticationValidator;
+
 import com.petmatz.domain.user.model.Profile;
 import com.petmatz.domain.user.port.GeocodingPort;
 import com.petmatz.domain.user.utils.UserFactory;
 import com.petmatz.domain.user.User;
 import com.petmatz.domain.user.port.UserCommandPort;
 import com.petmatz.domain.user.port.UserQueryPort;
-import com.petmatz.application.user.validator.AuthenticationValidator;
+
 import garbege.service.user.info.UserInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +38,6 @@ public class UserUseCase implements UserUseCasePort {
     private final UserQueryPort userQueryPort;
     private final JwtProviderPort jwtProviderPort;
     private final GeocodingPort geocodingPort;
-    private final JwtExtractProvider jwtExtractProvider;
     private final AuthenticationValidator authenticationValidator;
     private final PasswordValidator passwordValidator;
 
@@ -46,7 +46,7 @@ public class UserUseCase implements UserUseCasePort {
         if (!userQueryPort.existsByAccountId(accountId)) {
             throw new UserException(USER_NOT_FOUND);
         }
-        User userInfo = userQueryPort.findByUserInfo(accountId);
+        User userInfo = userQueryPort.findAccountIdByUserInfo(accountId);
         userInfo.checkAccountIdAndPassword(accountId, passwordValidator.encodePassword(password));
         String refreshToken = jwtProviderPort.createRefreshToken(userInfo.getId());
         String accessToken = jwtProviderPort.createAccessToken(userInfo.getId(), userInfo.getAccount().getAccountId());
@@ -86,9 +86,7 @@ public class UserUseCase implements UserUseCasePort {
 
     @Override
     @Transactional
-    public void updateLocation(Double latitude, Double longitude) {
-        String accountId = jwtExtractProvider.findAccountIdFromJwt();
-
+    public void updateLocation(Double latitude, Double longitude, String accountId) {
         RegionInfo region = geocodingPort.getRegion(latitude, longitude);
         userCommandPort.updateUserLocation(latitude, longitude, region.getRegion(), region.code(), accountId);
     }
@@ -124,7 +122,7 @@ public class UserUseCase implements UserUseCasePort {
 
     @Override
     public UserInfo selectUserInfo(String receiverEmail) {
-        User user = userQueryPort.findByUserInfo(receiverEmail);
+        User user = userQueryPort.findAccountIdByUserInfo(receiverEmail);
         Profile profile = user.getProfile();
         return new UserInfo(user.getId(), profile.getNickname(), profile.getNickname(), profile.getProfileImg());
     }

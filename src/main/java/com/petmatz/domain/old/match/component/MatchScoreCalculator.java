@@ -2,8 +2,7 @@ package com.petmatz.domain.old.match.component;
 
 import com.petmatz.domain.old.match.dto.response.MatchScoreResponse;
 import com.petmatz.domain.old.match.dto.response.UserResponse;
-import com.petmatz.domain.pet.component.PetReader;
-import com.petmatz.garbege.service.user.User;
+import com.petmatz.domain.user.User;
 import com.petmatz.infra.redis.component.RedisMatchComponent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -19,25 +18,25 @@ public class MatchScoreCalculator {
     private final MatchSizeCalculator matchSizeCalculator;
     private final MatchMbtiCalculator matchMbtiCalculator;
     private final RedisMatchComponent matchComponent;
-    private final PetReader petReader;
 
     public MatchScoreResponse calculateScore(User user, UserResponse targetUser) {
         double distance = matchPlaceCalculator.calculateDistanceOnly(user, targetUser);
         double distanceScore = matchPlaceCalculator.findMatchesWithinDistance(user, targetUser);
         double careScore = matchCareCalculator.calculateCareScore(targetUser.isCareAvailable());
-        double sizeScore = matchSizeCalculator.calculateDogSizeScore(user.getId(), targetUser.preferredSize());
-        double mbtiScore = matchMbtiCalculator.calculateMbtiAverageScore(
-                targetUser.mbti(), petReader.getTemperamentsByUserId(user.getId()));
+//        double sizeScore = matchSizeCalculator.calculateDogSizeScore(user.getId(), targetUser.preferredSize());
+//        double mbtiScore = matchMbtiCalculator.calculateMbtiAverageScore(
+//                targetUser.mbti(), petReader.getTemperamentsByUserId(user.getId()));
 
-        double totalScore = distanceScore + careScore + sizeScore + mbtiScore;
+//        double totalScore = distanceScore + careScore + sizeScore + mbtiScore;
+        double totalScore = distanceScore + careScore;
 
         return new MatchScoreResponse(
                 targetUser.id(),
                 Math.round(distance * 100.0) / 100.0,
                 Math.round(distanceScore * 100.0) / 100.0,
                 Math.round(careScore * 100.0) / 100.0,
-                Math.round(sizeScore * 100.0) / 100.0,
-                Math.round(mbtiScore * 100.0) / 100.0,
+//                Math.round(sizeScore * 100.0) / 100.0,
+//                Math.round(mbtiScore * 100.0) / 100.0,
                 Math.round(totalScore * 100.0) / 100.0
         );
     }

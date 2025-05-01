@@ -1,6 +1,6 @@
 package com.petmatz.api.chatting.dto;
 
-import com.petmatz.domain.old.chatting.dto.ChatReadStatusInfo;
+import com.petmatz.application.chat.dto.ChatReadStatusInfo;
 
 import java.time.LocalDateTime;
 

@@ -3,7 +3,8 @@ package com.petmatz.api.chatting;
 import com.petmatz.api.chatting.dto.ChatRoomMetaDataInfoResponse;
 import com.petmatz.api.chatting.dto.MatchRequest;
 import com.petmatz.api.global.dto.Response;
-import com.petmatz.domain.old.chatting.ChatRoomService;
+import com.petmatz.application.chat.port.ChatRoomUserCasePort;
+import com.petmatz.application.jwt.port.JwtUserPort;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
@@ -18,8 +19,8 @@ import java.util.stream.Collectors;
 @RequestMapping("/api/v1/match")
 public class ChatRoomController {
 
-    private final ChatRoomService chatRoomService;
-    private final JwtExtractProvider jwtExtractProvider;
+    private final ChatRoomUserCasePort chatRoomUserCasePort;
+    private final JwtUserPort jwtUserPort;
 
     @PostMapping
     @Operation(summary = "채팅방 생성", description = "채팅방을 생성하는 API API")
@@ -28,7 +29,7 @@ public class ChatRoomController {
             @Parameter(name = "entrustedEmail", description = "돌봄이 닉네임", example = "돌봄이이름")
     })
     public Response<Long> matchUsers(@RequestBody MatchRequest matchRequest) {
-        long chatRoomNumber = chatRoomService.createdChatRoom(matchRequest.of());
+        long chatRoomNumber = chatRoomUserCasePort.createdChatRoom(matchRequest.of());
         return Response.success(chatRoomNumber);
     }
 
@@ -43,9 +44,9 @@ public class ChatRoomController {
             @RequestParam(defaultValue = "5") int pageSize,
             @RequestParam(defaultValue = "1") int startPage
     ) {
-        String userEmail = jwtExtractProvider.findAccountIdFromJwt();
+        String userEmail = jwtUserPort.findAccountIdFromJwt();
 
-        List<ChatRoomMetaDataInfoResponse> chatRoomMetaDataInfoResponseList = chatRoomService.selectChatRoomList(pageSize, startPage, userEmail).stream()
+        List<ChatRoomMetaDataInfoResponse> chatRoomMetaDataInfoResponseList = chatRoomUserCasePort.selectChatRoomList(pageSize, startPage, userEmail).stream()
                 .map(ChatRoomMetaDataInfoResponse::of)
                 .collect(Collectors.toList());
 
@@ -58,7 +59,7 @@ public class ChatRoomController {
             @Parameter(name = "roomId", description = "삭제하려는 채팅방 고유 NO", example = "1"),
     })
     public Response<Void> deleteChatRoom(@RequestParam String roomId) {
-        chatRoomService.deleteRoom(roomId);
+        chatRoomUserCasePort.deleteRoom(roomId);
         return Response.success("성공적으로 삭제 되었습니다.");
     }
 

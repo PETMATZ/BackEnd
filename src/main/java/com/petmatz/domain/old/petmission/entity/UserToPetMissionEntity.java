@@ -1,7 +1,7 @@
 package com.petmatz.domain.old.petmission.entity;
 
 import com.petmatz.domain.old.petmission.dto.RoleType;
-import com.petmatz.garbege.service.user.User;
+import com.petmatz.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

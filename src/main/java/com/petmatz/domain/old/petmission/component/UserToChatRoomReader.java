@@ -1,6 +1,6 @@
 package com.petmatz.domain.old.petmission.component;
 
-import com.petmatz.domain.old.chatting.repository.UserToChatRoomRepository;
+import com.petmatz.persistence.caht.repository.UserToChatRoomRepository;
 import com.petmatz.domain.old.chatting.exception.NotFoundChatRoom;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -1,6 +1,6 @@
 package com.petmatz.api.chatting.dto;
 
-import com.petmatz.domain.old.chatting.dto.ChatRoomInfo;
+import com.petmatz.application.chat.dto.ChatRoomInfo;
 
 public record MatchRequest(
 

@@ -5,8 +5,8 @@ public record MatchScoreResponse(
         double distance,
         double distanceScore,
         double careAvailabilityScore,
-        double sizePreferenceScore,
-        double mbtiScore,
+//        double sizePreferenceScore,
+//        double mbtiScore,
         double totalScore
 ) {
     public MatchScoreResponse withUpdatedScore(double newScore) {
@@ -15,8 +15,8 @@ public record MatchScoreResponse(
                 this.distance,
                 this.distanceScore,
                 this.careAvailabilityScore,
-                this.sizePreferenceScore,
-                this.mbtiScore,
+//                this.sizePreferenceScore,
+//                this.mbtiScore,
                 newScore
         );
     }

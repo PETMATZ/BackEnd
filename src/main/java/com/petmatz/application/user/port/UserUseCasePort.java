@@ -9,7 +9,7 @@ public interface UserUseCasePort {
 
     SignInInfo signIn(String accountId, String password);
     SignUpResponse signUp(SignUpInfo info);
-    void updateLocation(Double latitude, Double longitude);
+    void updateLocation(Double latitude, Double longitude, String accountId);
     void updatePassword(String currentPassword, String newPassword, Long userId);
     void secession(Long userId, String password);
     UserInfo selectUserInfo(String receiverEmail);

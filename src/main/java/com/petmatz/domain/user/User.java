@@ -48,4 +48,6 @@ public class User {
     public void updateUserInfo(String nickname, List<PreferredSize> preferredSizes, String introduction, boolean careAvailable, String imgURL) {
         profile.updateProfile(nickname, preferredSizes, introduction, careAvailable, imgURL);
     }
+
+
 }

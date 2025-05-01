@@ -2,7 +2,7 @@ package com.petmatz.domain.old.sosboard.component;
 
 import com.petmatz.domain.old.sosboard.SosBoardRepository;
 import com.petmatz.domain.old.sosboard.entity.SosBoard;
-import com.petmatz.garbege.service.user.User;
+import com.petmatz.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

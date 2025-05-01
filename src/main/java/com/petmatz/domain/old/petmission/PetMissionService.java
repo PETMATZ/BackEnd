@@ -6,16 +6,9 @@ import com.petmatz.domain.old.aws.vo.S3Imge;
 import com.petmatz.domain.old.petmission.component.*;
 import com.petmatz.domain.old.petmission.dto.*;
 import com.petmatz.domain.old.petmission.entity.*;
-import com.petmatz.domain.pet.entity.Pet;
-import com.petmatz.domain.pet.repository.PetRepository;
-import com.petmatz.domain.petmission.component.*;
-import com.petmatz.domain.petmission.dto.*;
-import com.petmatz.domain.petmission.entity.*;
 import com.petmatz.domain.old.petmission.exception.ExistPetMissionAnswerException;
-import com.petmatz.domain.old.petmission.utils.PetMissionMapper;
-import garbege.service.user.provider.UserUtils;
-import com.petmatz.garbege.service.user.User;
-import com.petmatz.persistence.user.repository.UserRepository;
+import com.petmatz.domain.user.User;
+import com.petmatz.domain.user.port.UserQueryPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,8 +22,8 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class PetMissionService {
 
-    private final UserRepository userRepository;
-    private final PetRepository petRepository;
+    //    private final PetRepository petRepository;
+    private final UserQueryPort userQueryPort;
 
     private final UserToChatRoomReader userToChatRoomReader;
     private final UserToPetMissionAppend userToPetMissionAppend;
@@ -39,7 +32,6 @@ public class PetMissionService {
     private final PetMissionAppend petMissionAppend;
     private final PetMissionAskReader petMissionAskReader;
     private final AwsClient awsClient;
-    private final UserUtils userUtils;
 
 
     //TODO 이건 chatRoom으로 옮겨져야 하는데 왜 여기?
@@ -48,16 +40,15 @@ public class PetMissionService {
     }
     @Transactional
     public PetMissionData insertPetMission(PetMissionInfo petMissionInfo, Long careId) {
+        User careUser = userQueryPort.findById(careId);
+        User receiverUser = userQueryPort.findById(petMissionInfo.receiverId());
 
-        User careUser = userUtils.findIdUser(careId);
-        User receiverUser = userUtils.findIdUser(petMissionInfo.receiverId());
+        String chatRoomId = userToChatRoomReader.selectChatRoomId(careUser.getAccount().getAccountId(), receiverUser.getAccount().getAccountId());
 
-        String chatRoomId = userToChatRoomReader.selectChatRoomId(careUser.getAccountId(), receiverUser.getAccountId());
-
-        List<Pet> pets = petRepository.findPetListByPetId(petMissionInfo.petId());
-        if (pets.isEmpty()) {
-            throw new IllegalArgumentException("해당 Pet ID에 대한 펫을 찾을 수 없습니다");
-        }
+//        List<Pet> pets = petRepository.findPetListByPetId(petMissionInfo.petId());
+//        if (pets.isEmpty()) {
+//            throw new IllegalArgumentException("해당 Pet ID에 대한 펫을 찾을 수 없습니다");
+//        }
 
         List<PetMissionAskEntity> petMissionAskEntityList = petMissionInfo.petMissionAskInfo()
                 .stream()
@@ -67,13 +58,13 @@ public class PetMissionService {
         PetMissionEntity petMissionEntity = PetMissionEntity.of(petMissionInfo);
         petMissionEntity.addPetMissionAsk(petMissionAskEntityList);
 
-        List<PetToPetMissionEntity> petToPetMissionEntities = PetMissionMapper.of(pets, petMissionEntity);
+//        List<PetToPetMissionEntity> petToPetMissionEntities = PetMissionMapper.of(pets, petMissionEntity);
 
 //        List<PetToPetMissionEntity> petToPetMissionEntities = pets.stream()
 //                .map(pet -> PetToPetMissionEntity.of(pet, petMissionEntity))
 //                .toList();
 
-        petToPetMissionEntities.forEach(petMissionEntity::addPetToPetMission);
+//        petToPetMissionEntities.forEach(petMissionEntity::addPetToPetMission);
 
         List<UserToPetMissionEntity> userToPetMissionEntities = Stream.of(careUser, receiverUser).map(user -> UserToPetMissionEntity.of(user, petMissionEntity, careId))
                 .toList();

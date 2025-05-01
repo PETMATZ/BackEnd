@@ -11,10 +11,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Account {
 
-    private String accountId;
-    private String registrationId;
-    private String password;
-    private LoginRole loginRole;
-    private LoginType loginType;
+    private final String accountId;
+    private final String registrationId;
+    private final String password;
+    private final LoginRole loginRole;
+    private final LoginType loginType;
 
 }
