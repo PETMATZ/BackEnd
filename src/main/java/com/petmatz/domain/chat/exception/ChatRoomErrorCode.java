@@ -1,4 +1,4 @@
-package com.petmatz.domain.old.chatting.exception;
+package com.petmatz.domain.chat.exception;
 
 import com.petmatz.common.exception.BaseErrorCode;
 import com.petmatz.common.exception.ErrorReason;

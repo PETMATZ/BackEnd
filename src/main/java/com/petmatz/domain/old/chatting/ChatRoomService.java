@@ -8,8 +8,8 @@
 //import com.petmatz.application.chat.dto.IChatUserInfo;
 //import com.petmatz.persistence.caht.entity.ChatRoomEntity;
 //import com.petmatz.persistence.caht.entity.UserToChatRoomEntity;
-//import com.petmatz.application.user.exception.UserErrorCode;
-//import com.petmatz.application.user.exception.UserException;
+//import com.petmatz.domain.user.exception.UserErrorCode;
+//import com.petmatz.domain.user.exception.UserException;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Service;
 //

@@ -24,7 +24,6 @@ public record SignInResponse(
         String mbti,
         String region,
         Integer regionCode
-
 ) {
 
     public static SignInResponse to(SignInInfo sign) {

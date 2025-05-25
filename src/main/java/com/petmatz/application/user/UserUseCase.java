@@ -6,7 +6,7 @@ import com.petmatz.application.email.EmailUseCase;
 import com.petmatz.application.user.dto.SignUpInfo;
 import com.petmatz.application.user.dto.RegionInfo;
 import com.petmatz.application.user.dto.SignInInfo;
-import com.petmatz.application.user.exception.UserException;
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.application.jwt.port.JwtProviderPort;
 import com.petmatz.application.user.port.UserUseCasePort;
 import com.petmatz.application.user.validator.PasswordValidator;
@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.petmatz.application.user.exception.UserErrorCode.USER_NOT_FOUND;
+import static com.petmatz.domain.user.exception.UserErrorCode.USER_NOT_FOUND;
 
 @Service
 @RequiredArgsConstructor

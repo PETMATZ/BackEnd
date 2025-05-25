@@ -1,6 +1,6 @@
 //package com.petmatz.application.chat;
 //
-//import com.petmatz.application.chat.dto.ChatMessageInfo;
+//import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 //import com.petmatz.application.chat.dto.ChatMessagePetMissionInfo;
 //import com.petmatz.application.chat.port.ChatMessageUseCasePort;
 //import com.petmatz.persistence.caht.adapter.mongo.ChatMessageReader;

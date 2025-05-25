@@ -1,7 +1,7 @@
 package com.petmatz.api.chatting.dto;
 
 import com.petmatz.common.constants.ChatMessageMsgType;
-import com.petmatz.application.chat.dto.ChatMessageInfo;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 
 import java.time.LocalDateTime;
 

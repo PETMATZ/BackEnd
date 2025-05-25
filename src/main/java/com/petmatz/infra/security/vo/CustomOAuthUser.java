@@ -1,4 +1,4 @@
-package garbege.service.user.entity;
+package com.petmatz.infra.security.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

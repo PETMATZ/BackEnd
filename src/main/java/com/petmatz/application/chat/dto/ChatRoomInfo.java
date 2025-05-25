@@ -5,8 +5,8 @@ import lombok.Builder;
 @Builder
 public record ChatRoomInfo(
 
-        String caregiverInfo,
-        String entrustedInfo
+        Long caregiverId,
+        Long entrustedId
 
 ) {
 }

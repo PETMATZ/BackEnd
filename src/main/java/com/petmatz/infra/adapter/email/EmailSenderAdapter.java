@@ -1,6 +1,6 @@
 package com.petmatz.infra.adapter.email;
 
-import com.petmatz.application.user.exception.UserException;
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.email.port.EmailSenderPort;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import static com.petmatz.application.user.exception.UserErrorCode.FAIL_MAIL_SEND;
+import static com.petmatz.domain.user.exception.UserErrorCode.FAIL_MAIL_SEND;
 
 @Component
 @RequiredArgsConstructor

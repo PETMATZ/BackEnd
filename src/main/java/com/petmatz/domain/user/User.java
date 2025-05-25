@@ -2,7 +2,7 @@ package com.petmatz.domain.user;
 
 
 //TODO 뺴야됨
-import com.petmatz.application.user.exception.UserException;
+import com.petmatz.domain.user.exception.UserException;
 
 import com.petmatz.domain.user.constant.PreferredSize;
 import com.petmatz.domain.user.model.Account;
@@ -14,8 +14,8 @@ import lombok.Getter;
 
 import java.util.List;
 
-import static com.petmatz.application.user.exception.UserErrorCode.PASS_WORD_MISMATCH;
-import static com.petmatz.application.user.exception.UserErrorCode.USER_NOT_FOUND;
+import static com.petmatz.domain.user.exception.UserErrorCode.PASS_WORD_MISMATCH;
+import static com.petmatz.domain.user.exception.UserErrorCode.USER_NOT_FOUND;
 
 @Getter
 @Builder

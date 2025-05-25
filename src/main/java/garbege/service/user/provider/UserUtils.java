@@ -1,14 +1,14 @@
 //package garbege.service.user.provider;
 //
 //import com.petmatz.garbege.service.user.User;
-//import com.petmatz.application.user.exception.UserException;
+//import com.petmatz.domain.user.exception.UserException;
 //import com.petmatz.persistence.heart.repository.HeartRepository;
 //import com.petmatz.persistence.user.repository.UserRepository;
 //import jakarta.transaction.Transactional;
 //import lombok.RequiredArgsConstructor;
 //import org.springframework.stereotype.Component;
 //
-//import static com.petmatz.application.user.exception.UserErrorCode.*;
+//import static com.petmatz.domain.user.exception.UserErrorCode.*;
 //
 //@Component
 //@RequiredArgsConstructor

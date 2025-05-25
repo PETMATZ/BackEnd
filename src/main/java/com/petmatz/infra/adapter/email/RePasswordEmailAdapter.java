@@ -1,6 +1,6 @@
 //package com.petmatz.infra.adapter.email;
 //
-//import com.petmatz.application.user.exception.UserException;
+//import com.petmatz.domain.user.exception.UserException;
 //import com.petmatz.garbege.service.user.service.RePasswordEmailProvider;
 //import jakarta.mail.internet.MimeMessage;
 //import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@
 //import org.thymeleaf.TemplateEngine;
 //import org.thymeleaf.context.Context;
 //
-//import static com.petmatz.application.user.exception.UserErrorCode.FAIL_MAIL_SEND;
+//import static com.petmatz.domain.user.exception.UserErrorCode.FAIL_MAIL_SEND;
 //
 //@Component
 //@RequiredArgsConstructor

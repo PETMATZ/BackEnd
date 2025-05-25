@@ -1,11 +1,10 @@
-package com.petmatz.infra.adapter.kakao;
+package com.petmatz.infra.kakao;
 
 import com.petmatz.domain.user.User;
 import com.petmatz.domain.user.port.UserCommandPort;
 import com.petmatz.domain.user.port.UserQueryPort;
 import com.petmatz.persistence.user.mapper.KaKaoUserDomain;
-import garbege.service.user.component.OAuth2UserLoader;
-import garbege.service.user.entity.CustomOAuthUser;
+import com.petmatz.infra.security.vo.CustomOAuthUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
@@ -17,14 +16,10 @@ import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
-public class KakaoComponent extends DefaultOAuth2UserService implements OAuth2UserLoader {
+public class KakaoComponent extends DefaultOAuth2UserService {
 
     private final UserQueryPort userQueryPort;
     private final UserCommandPort userCommandPort;
-    @Override
-    public boolean supports(String registrationId) {
-        return "kakao".equalsIgnoreCase(registrationId);
-    }
 
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {

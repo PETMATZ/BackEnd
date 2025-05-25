@@ -9,7 +9,7 @@
 //import com.petmatz.infra.jwt.JwtExtractProvider;
 //import com.petmatz.domain.old.chatting.ChatMessageService;
 //import com.petmatz.domain.old.chatting.ChatRoomService;
-//import com.petmatz.application.chat.dto.ChatMessageInfo;
+//import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 //import garbege.service.user.info.UserInfo;
 //import io.swagger.v3.oas.annotations.Operation;
 //import io.swagger.v3.oas.annotations.Parameter;

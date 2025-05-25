@@ -1,7 +1,7 @@
 package com.petmatz.persistence.caht.mongo;
 
-import com.petmatz.application.chat.dto.ChatMessageInfo;
 import com.petmatz.application.chat.dto.ChatRoomInfo;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;

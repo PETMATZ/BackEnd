@@ -1,4 +1,4 @@
-package com.petmatz.application.user.exception;
+package com.petmatz.domain.user.exception;
 
 import com.petmatz.common.exception.BaseErrorCode;
 import com.petmatz.common.exception.ErrorReason;
@@ -19,9 +19,8 @@ public enum UserErrorCode implements BaseErrorCode {
     USER_DUPLICATE(400, "USER_DUPLICATE", "중복된 사용자가 있습니다."),
     HEART_USER_NOT_FOUND(404, "HEART_USER_NOT_FOUND", "찜한 사용자를 찾을 수 없습니다."),
     FAIL_MAIL_SEND(400, "FAIL_MAIL_SEND", "메일 전송에 실패하였습니다."),
-    PASSWORD_MISMATCH(403, "PASSWORD_MISMATCH", "비밀번호가 일치하지 않습니다."),
     HEART_USER_DUPLICATE(400, "HEART_USER_DUPLICATE", "찜한 사용자가 이미 존재합니다."),
-    PASS_WORD_MISMATCH(401, "LOGIN_FAILED", "비밀번호 불일치");
+    PASS_WORD_MISMATCH(401, "PASSWORD_MISMATCH", "비밀번호 불일치");
 
 
     private final Integer status;

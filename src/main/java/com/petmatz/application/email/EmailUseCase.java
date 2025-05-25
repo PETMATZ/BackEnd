@@ -3,7 +3,7 @@ package com.petmatz.application.email;
 import com.petmatz.application.email.port.EmailUseCasePort;
 
 import com.petmatz.application.email.support.CertificationNumberProvider;
-import com.petmatz.application.user.exception.UserException;
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.domain.email.port.CertificationCommandPort;
 import com.petmatz.domain.email.port.CertificationQueryPort;
 import com.petmatz.domain.email.port.EmailSenderPort;
@@ -12,7 +12,7 @@ import com.petmatz.application.email.support.RePasswordProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.petmatz.application.user.exception.UserErrorCode.USER_DUPLICATE;
+import static com.petmatz.domain.user.exception.UserErrorCode.USER_DUPLICATE;
 
 @Service
 @RequiredArgsConstructor

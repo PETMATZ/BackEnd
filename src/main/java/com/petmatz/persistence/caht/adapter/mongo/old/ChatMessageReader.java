@@ -1,8 +1,8 @@
-package com.petmatz.persistence.caht.adapter.mongo;
+package com.petmatz.persistence.caht.adapter.mongo.old;
 
 import com.petmatz.persistence.caht.mongo.ChatReadStatusDocs;
 import com.petmatz.persistence.caht.mongo.ChatRoomDocs;
-import com.petmatz.application.chat.dto.ChatMessageInfo;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 import com.petmatz.application.chat.support.ChatUtils;
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;

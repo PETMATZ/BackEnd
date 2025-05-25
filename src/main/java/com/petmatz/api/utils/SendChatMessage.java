@@ -1,7 +1,7 @@
 package com.petmatz.api.utils;
 
 import com.petmatz.api.chatting.dto.ChatReadStatusDirect;
-import com.petmatz.application.chat.dto.ChatMessageInfo;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;

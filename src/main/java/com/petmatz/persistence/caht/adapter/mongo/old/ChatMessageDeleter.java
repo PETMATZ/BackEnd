@@ -1,4 +1,4 @@
-package com.petmatz.persistence.caht.adapter.mongo;
+package com.petmatz.persistence.caht.adapter.mongo.old;
 
 import com.petmatz.persistence.caht.mongo.ChatRoomDocs;
 import lombok.RequiredArgsConstructor;

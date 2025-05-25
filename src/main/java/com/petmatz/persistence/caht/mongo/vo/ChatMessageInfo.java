@@ -1,4 +1,4 @@
-package com.petmatz.application.chat.dto;
+package com.petmatz.persistence.caht.mongo.vo;
 
 import com.petmatz.common.constants.ChatMessageMsgType;
 import lombok.*;
@@ -11,9 +11,9 @@ import java.time.LocalDateTime;
 public class ChatMessageInfo {
 
 
-    private String senderEmail;
+    private Long senderId;
 
-    private String receiverEmail;
+    private Long receiverId;
 
     private String msg;
 
@@ -25,9 +25,9 @@ public class ChatMessageInfo {
 
 
     @Builder
-    public ChatMessageInfo(String senderEmail, String receiverEmail, String msg, LocalDateTime msgTimestamp, ChatMessageMsgType msg_type, boolean readStatus) {
-        this.senderEmail = senderEmail;
-        this.receiverEmail = receiverEmail;
+    public ChatMessageInfo(Long senderId, Long receiverId, String msg, LocalDateTime msgTimestamp, ChatMessageMsgType msg_type, boolean readStatus) {
+        this.senderId = senderId;
+        this.receiverId = receiverId;
         this.msg = msg;
         this.msgTimestamp = msgTimestamp;
         this.msg_type = msg_type;
@@ -38,10 +38,10 @@ public class ChatMessageInfo {
         this.readStatus = msgTimestamp.isBefore(lastReadTimestamp) || msgTimestamp.isEqual(lastReadTimestamp);
     }
 
-    public void addSenderEmail(String addSenderEmail) {
-        if (this.senderEmail == null || this.senderEmail.isEmpty()) {
-            this.senderEmail = addSenderEmail;
-        }
-    }
+//    public void addSenderEmail(Long senderId) {
+//        if (this.senderId == null || this.receiverId == null) {
+//            this.receiverId = senderId;
+//        }
+//    }
 
 }

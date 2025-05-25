@@ -1,4 +1,4 @@
-package com.petmatz.application.user.exception;
+package com.petmatz.domain.user.exception;
 
 import com.petmatz.common.exception.BaseErrorCode;
 import com.petmatz.common.exception.DomainException;

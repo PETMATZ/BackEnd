@@ -3,7 +3,7 @@
 //import com.petmatz.persistence.heart.HeartEntity;
 //import garbege.api.user.request1.HeartedUserDto;
 //import com.petmatz.domain.user.utils.UserFactory;
-//import com.petmatz.application.user.exception.UserException;
+//import com.petmatz.domain.user.exception.UserException;
 //import com.petmatz.persistence.heart.repository.HeartRepository;
 //import com.petmatz.persistence.user.repository.UserRepository;
 //import jakarta.transaction.Transactional;
@@ -13,7 +13,7 @@
 //import java.util.List;
 //import java.util.Optional;
 //
-//import static com.petmatz.application.user.exception.UserErrorCode.HEART_USER_NOT_FOUND;
+//import static com.petmatz.domain.user.exception.UserErrorCode.HEART_USER_NOT_FOUND;
 //
 //@RequiredArgsConstructor
 //@Component

@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class ChatUtils {
 
-    public static String addString(String chatRoomID, String userEmail) {
+    public static String addString(String chatRoomID, Long userEmail) {
         AtomicReference<StringBuilder> stringBuilder = new AtomicReference<>(new StringBuilder());
         stringBuilder.get().append(chatRoomID);
         stringBuilder.get().append("_");

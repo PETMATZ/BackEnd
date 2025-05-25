@@ -1,7 +1,7 @@
 package com.petmatz.persistence.caht.mongo;
 
-import com.petmatz.application.chat.dto.ChatMessageInfo;
 import com.petmatz.application.chat.dto.ChatRoomInfo;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
@@ -20,27 +20,27 @@ public class ChatRoomDocs {
     private final String id;
     //보내는이 User Id
     //보내는 이의 Info 추가
-    private final String caregiverInfo;
+    private final Long caregiverId;
     //받는이 User Id
     //받는 이의 Info 추가
-    private final String entrustedInfo;
+    private final Long entrustedId;
 
     private List<ChatMessageInfo> messages = new ArrayList<>();
 
     @Builder
     @PersistenceCreator
-    public ChatRoomDocs(String id, String caregiverInfo, String entrustedInfo, List<ChatMessageInfo> messages) {
+    public ChatRoomDocs(String id, Long caregiverId, Long entrustedId, List<ChatMessageInfo> messages) {
         this.id = id;
-        this.caregiverInfo = caregiverInfo;
-        this.entrustedInfo = entrustedInfo;
+        this.caregiverId = caregiverId;
+        this.entrustedId = entrustedId;
         this.messages = messages;
     }
 
     public static ChatRoomDocs initChatRoomDocs(ChatRoomInfo chatRoomInfo, long chatRoomID) {
         return ChatRoomDocs.builder()
                 .id(String.valueOf(chatRoomID))
-                .caregiverInfo(chatRoomInfo.caregiverInfo())
-                .entrustedInfo(chatRoomInfo.entrustedInfo())
+                .caregiverId(chatRoomInfo.caregiverId())
+                .entrustedId(chatRoomInfo.entrustedId())
                 .build();
     }
 

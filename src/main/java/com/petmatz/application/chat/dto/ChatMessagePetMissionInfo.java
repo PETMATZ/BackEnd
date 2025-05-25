@@ -1,6 +1,7 @@
 package com.petmatz.application.chat.dto;
 
 import com.petmatz.common.constants.ChatMessageMsgType;
+import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 import lombok.Builder;
 
 import java.time.LocalDateTime;

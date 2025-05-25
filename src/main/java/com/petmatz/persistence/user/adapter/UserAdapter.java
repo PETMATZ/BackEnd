@@ -1,6 +1,6 @@
 package com.petmatz.persistence.user.adapter;
 
-import com.petmatz.application.user.exception.UserException;
+import com.petmatz.domain.user.exception.UserException;
 import com.petmatz.common.exception.PersistenceException;
 import com.petmatz.domain.user.User;
 import com.petmatz.domain.user.model.Profile;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.petmatz.application.user.exception.UserErrorCode.USER_NOT_FOUND;
+import static com.petmatz.domain.user.exception.UserErrorCode.USER_NOT_FOUND;
 
 @Repository
 @RequiredArgsConstructor

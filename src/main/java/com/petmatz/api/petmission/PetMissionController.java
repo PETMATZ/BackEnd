@@ -7,7 +7,7 @@
 //import com.petmatz.common.constants.PetMissionStatusZip;
 //import com.petmatz.infra.jwt.JwtExtractProvider;
 //import com.petmatz.domain.old.chatting.ChatMessageService;
-//import com.petmatz.application.chat.dto.ChatMessageInfo;
+//import com.petmatz.persistence.caht.mongo.vo.ChatMessageInfo;
 //import com.petmatz.domain.old.petmission.PetMissionService;
 //import com.petmatz.domain.old.petmission.dto.PetMissionAnswerInfo;
 //import com.petmatz.domain.old.petmission.dto.PetMissionData;

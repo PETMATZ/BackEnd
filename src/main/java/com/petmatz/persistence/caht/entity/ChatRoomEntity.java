@@ -1,29 +1,28 @@
-//package com.petmatz.persistence.caht.entity;
-//
-//import com.petmatz.persistence.global.BaseEntity;
-//import jakarta.persistence.*;
-//import lombok.EqualsAndHashCode;
-//import lombok.Getter;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//@Entity
-//@Getter
-//public class ChatRoomEntity extends BaseEntity {
-//
-//    @EqualsAndHashCode.Include
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    private Long id;
-//
-//    @OneToMany(mappedBy = "chatRoom", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<UserToChatRoomEntity> participants = new ArrayList<>();
-//
-//
-//    public void addParticipant(UserToChatRoomEntity participant) {
-//        this.participants.add(participant);
-//        participant.addChatRoom(this); // 연관관계 편의 메서드
-//    }
-//
-//}
+package com.petmatz.persistence.caht.entity;
+
+import com.petmatz.persistence.global.BaseEntity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
+@Entity
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+public class ChatRoomEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private Long caregiverId;
+
+    private Long entrustedId;
+
+    public ChatRoomEntity(Long caregiverId, Long entrustedId) {
+        this.caregiverId = caregiverId;
+        this.entrustedId = entrustedId;
+    }
+}

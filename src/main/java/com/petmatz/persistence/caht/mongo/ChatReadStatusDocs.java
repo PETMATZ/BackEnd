@@ -15,29 +15,26 @@ public class ChatReadStatusDocs {
 
     @Id
     private final String chatRoomId;
-    private final String userEmail;
+    private final Long userId;
     private final String lastReadMessageId;
     private final LocalDateTime lastReadTimestamp;
 
     @Builder
     @PersistenceCreator
-    public ChatReadStatusDocs(String chatRoomId, String userEmail, String lastReadMessageId, LocalDateTime lastReadTimestamp) {
+    public ChatReadStatusDocs(String chatRoomId, Long userId, String lastReadMessageId, LocalDateTime lastReadTimestamp) {
         this.chatRoomId = chatRoomId;
-        this.userEmail = userEmail;
+        this.userId = userId;
         this.lastReadMessageId = lastReadMessageId;
         this.lastReadTimestamp = lastReadTimestamp;
     }
 
-    public static ChatReadStatusDocs initChatReadStatusData(String userEmail,long chatRoomID) {
+    public static ChatReadStatusDocs initChatReadStatusData(Long userId, long chatRoomID) {
         return ChatReadStatusDocs.builder()
                 .lastReadTimestamp(LocalDateTime.now())
-                .chatRoomId(ChatUtils.addString(String.valueOf(chatRoomID), userEmail))
-                .userEmail(userEmail)
+                .chatRoomId(ChatUtils.addString(String.valueOf(chatRoomID), userId))
+                .userId(userId)
                 .build();
     }
 
-    public LocalDateTime checkLastReadTimestamp() {
-        return this.chatRoomId != null ? this.lastReadTimestamp : null;
-    }
 
 }

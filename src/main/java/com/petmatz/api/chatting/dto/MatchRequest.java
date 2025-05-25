@@ -1,18 +1,21 @@
 package com.petmatz.api.chatting.dto;
 
 import com.petmatz.application.chat.dto.ChatRoomInfo;
+import jakarta.validation.constraints.NotNull;
 
 public record MatchRequest(
 
-        String caregiverEmail,
-        String entrustedEmail
+        @NotNull
+        Long caregiverId,
+        @NotNull
+        Long entrustedId
 
 ) {
 
     public ChatRoomInfo of() {
         return ChatRoomInfo.builder()
-                .caregiverInfo(caregiverEmail)
-                .entrustedInfo(entrustedEmail)
+                .caregiverId(caregiverId)
+                .entrustedId(entrustedId)
                 .build();
     }
 }

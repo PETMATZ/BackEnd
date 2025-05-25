@@ -1,7 +1,7 @@
 //package com.petmatz.api.aop;
 //
 //import com.petmatz.api.global.dto.Response;
-//import com.petmatz.application.user.exception.UserException;
+//import com.petmatz.domain.user.exception.UserException;
 //import com.petmatz.common.exception.BaseErrorCode;
 //import com.petmatz.common.exception.ErrorReason;
 //import org.springframework.http.HttpStatus;
