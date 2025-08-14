@@ -81,16 +81,16 @@ public class ChatMessageReader {
         return result.getMessages().size();
     }
 
-    /**
-     * 채팅의 마지막 시간대를 조회한다. [ 상대방을 대상으로 ]
-     * @param chatRoomId
-     * @param userEmail
-     * @return
-     */
-    public ChatReadStatusDocs selectChatMessageLastStatus(String chatRoomId, String userEmail) {
-        Query query = new Query(Criteria.where("_id").is(ChatUtils.addString(chatRoomId,userEmail)).and("userEmail").is(userEmail));
-        return mongoTemplate.findOne(query, ChatReadStatusDocs.class);
-    }
+//    /**
+//     * 채팅의 마지막 시간대를 조회한다. [ 상대방을 대상으로 ]
+//     * @param chatRoomId
+//     * @param userEmail
+//     * @return
+//     */
+//    public ChatReadStatusDocs selectChatMessageLastStatus(String chatRoomId, String userEmail) {
+//        Query query = new Query(Criteria.where("_id").is(ChatUtils.addString(chatRoomId,userEmail)).and("userEmail").is(userEmail));
+//        return mongoTemplate.findOne(query, ChatReadStatusDocs.class);
+//    }
 
     //----아래부터는 쿼리 생성 -----//
 
