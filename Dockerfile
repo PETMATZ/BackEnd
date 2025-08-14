@@ -14,7 +14,7 @@ COPY src ./src
 RUN gradle clean bootJar -x test --no-daemon
 
 # 2단계: 실행 환경 설정
-FROM openjdk:17-jdk
+FROM eclipse-temurin:17-jdk
 WORKDIR /app
 COPY --from=builder /app/build/libs/petmetz-0.0.1-SNAPSHOT.jar petmatz.jar
 ENTRYPOINT ["java", "-jar", "petmatz.jar"]
