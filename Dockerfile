@@ -1,17 +1,18 @@
-# 1단계: 빌드 환경 설정
-FROM gradle:8.7.0-jdk17 AS builder
+# ---- 1단계: 빌드 (JDK 17, 멀티아치)
+FROM eclipse-temurin:17-jdk AS builder
 WORKDIR /app
 
-# 1) 의존성 캐시 레이어 (kts/groovy/props 모두 커버)
+# Gradle Wrapper/설정 먼저 복사 (의존성 캐시)
+COPY gradlew gradlew
+COPY gradle gradle
 COPY settings.gradle* build.gradle* gradle.properties* ./
-RUN gradle --no-daemon --version
 
-# 2) 소스만 복사
-RUN rm -rf /app/src
+RUN chmod +x gradlew
+RUN ./gradlew --no-daemon --version
+
+# 소스 복사 후 빌드
 COPY src ./src
-
-# 3) 클린 빌드 (Spring Boot면 bootJar 권장)
-RUN gradle clean bootJar -x test --no-daemon
+RUN ./gradlew clean bootJar -x test --no-daemon
 
 # 2단계: 실행 환경 설정
 FROM eclipse-temurin:17-jdk
