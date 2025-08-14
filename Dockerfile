@@ -1,12 +1,11 @@
-# OpenJDK 17 사용
-FROM openjdk:17-jdk
-
-# 작업 디렉토리 설정
+# 1단계: 빌드 환경 설정
+FROM gradle:8.4.0-jdk17-alpine AS builder
 WORKDIR /app
+COPY --chown=gradle:gradle . .
+RUN gradle build -x test --no-daemon
 
-# 빌드된 JAR 파일을 컨테이너 내부로 복사
-COPY build/libs/petmetz-0.0.1-SNAPSHOT.jar petmatz.jar
-
-
-# 컨테이너 실행 시 실행할 명령어
-CMD ["java", "-jar", "petmatz.jar"]
+# 2단계: 실행 환경 설정
+FROM openjdk:17-jdk-alpine
+WORKDIR /app
+COPY --from=builder /app/build/libs/petmetz-0.0.1-SNAPSHOT.jar petmatz.jar
+ENTRYPOINT ["java", "-jar", "petmatz.jar"]
